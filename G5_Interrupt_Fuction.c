@@ -2,54 +2,86 @@
 
 void __attribute__((interrupt, no_auto_psv)) _T3Interrupt(void)
 {
-	if(G5_MOXA.RTIndex>0) //如果已經收到資料了
-	{
-		if(G5_MOXA.Fuc==0x06) //寫入一筆資料
-		{
-			if(G5_MOXA.RTIndex==8)
-			{
-				G5_MOXA.RIF=1;
-			}		
-			else
-			{
-				G5_MOXA.ERRIF=1;	
-				G5_MOXA.RTIndex=0;
-			}							
-		}
-		else if(G5_MOXA.Fuc==0x03) //讀取多筆資料
-		{
-			if(G5_MOXA.RTIndex==8)
-			{
-				G5_MOXA.RIF=1;
-			}		
-			else
-			{
-				G5_MOXA.ERRIF=1;	
-				G5_MOXA.RTIndex=0;
-			}				
-		}
-		else if(G5_MOXA.Fuc==0x10) //寫入多筆資料
-		{
-			if (G5_MOXA.Index==G5_MOXA.RTIndex)
-			{
-				G5_MOXA.RIF=1;		
-			}
-			else
-			{
-				G5_MOXA.ERRIF=1;	
-				G5_MOXA.RTIndex=0;
-			}				
-		}	
-		else
-		{
-			G5_MOXA.ERRIF=1;	
-			G5_MOXA.RTIndex=0;		
-		}	
-	
-	}
-	T3CONbits.TON=0; //第三個計時關閉
-	IFS0bits.T3IF=0;  //timer3未發生中斷請求
-			
+        unsigned char math_a,math_c,math_d;
+        unsigned int 	math_b;
+        unsigned int 	*index1;
+        unsigned char   Quantity,*index3;
+
+        unsigned char Erro_IF;
+
+        index1=&G5_MOXA.ID;
+        index3=&G5_MOXA.ID;
+
+        Erro_IF=0;
+
+
+        if((G5_MOXA.RTIndex>0) && (IC_data.DoIamStarted == YES))
+        {
+            if(G5_MOXA.W_R == Read)
+            {
+                if(CRC_Check())
+                {
+                    G5_MOXA.Value_L=G5_MOXA.Reg_L;
+                    G5_MOXA.Value_H=G5_MOXA.Reg_H;
+                    index1=&G5_Data.ID;
+                    index1=index1+(G5_MOXA.Value);	
+                    //取得庫倫資料陣列從哪位置開始放資料
+
+                    Quantity = G5_MOXA.Reg_H/2;
+//                    index2=&G5_MOXA.Reg_L;
+//                    for(Quantity=Quantity;Quantity>0;Quantity--)
+//                    {
+//                        ModBus_Receiver.Value_H = *index2;
+//                        *index2++;
+//                        ModBus_Receiver.Value_L = *index2;
+//                        *index1 = ModBus_Receiver.Value;
+//                        index1++;
+//                        index2++;
+//                    }
+                    G5_MOXA.RIF=1;
+                    G5_MOXA.RTIndex=0;
+                }
+                else
+                {
+                    G5_MOXA.RTIndex=0;
+                    G5_MOXA.ERRIF=1;
+                }
+
+            }
+            else if(G5_MOXA.W_R == Write)
+            {
+                if(G5_MOXA.RTIndex==8)
+                {
+                    Erro_IF=0;
+                    for(math_a=0;math_a<8;math_a++)
+                    {
+                        math_c = *index3;
+                        if( math_c != My_ID )Erro_IF=1;
+                        index3++;
+                    }
+                    if(Erro_IF)G5_MOXA.ERRIF=1;
+                    else G5_MOXA.TIF=1;
+                }		
+                else
+                {
+                    G5_MOXA.ERRIF=1;	
+                    G5_MOXA.RTIndex=0;
+                }			
+            }
+        }	
+
+        if(U3STAbits.OERR)
+        {
+            while(U3STAbits.OERR)
+            {
+                math_a=U3RXREG;
+            }
+        }
+
+        T3CONbits.TON=0; //第三個計時關閉
+        IFS0bits.T3IF=0;  //timer3未發生中斷請求
+                	
+          
 }	
 
 void __attribute__((interrupt, no_auto_psv)) _U3RXInterrupt(void)
@@ -57,8 +89,7 @@ void __attribute__((interrupt, no_auto_psv)) _U3RXInterrupt(void)
 		unsigned int math_a;
 		static unsigned char *index;
 		static unsigned char Fuction;
-		
-		if(G5_MOXA.RIF==0)
+        if((G5_MOXA.RIF==0) && (IC_data.DoIamStarted == YES))
 		{
 			TMR3=0;		
 			if(!T3CONbits.TON)

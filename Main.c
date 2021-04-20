@@ -37,13 +37,13 @@ void __attribute__((interrupt, no_auto_psv)) _MathError(void)
 	while(1);     
 }
 
-//IC_data_Define IC_Data;
+IC_data_Define IC_data;
 //IC_Data_IF IC_Data_Save_IF;
 
 
 int main (void) 
 {
-	unsigned int    math_a=0; //0=啟動鈕沒有被按過 1=啟動鈕被按過
+//	unsigned int    math_a=0; //0=啟動鈕沒有被按過 1=啟動鈕被按過
     unsigned int    math_b=0; //計數資料要不到多少次
     unsigned int    math_c=0; //計數充電次數
     
@@ -92,19 +92,24 @@ int main (void)
         if(SW==SW_Push){    //如果啟動鈕被按下
             
             while(SW==SW_Push){//到按鈕被放開才會繼續做
-                math_a=1; //按鈕被按下過
+                IC_data.DoIamStarted = YES; //按鈕被按下過
                 //然後在清空之前設的所有變數
                 //要不要寫個函式高級些
             } 
             
-            if(math_a==1){
+            if(IC_data.DoIamStarted == YES){
                 BUZZ = BUZZ_ON;
                 LED = LED_ON;
                 wait(0xFFFF);
                 wait(0xFFFF);
                 BUZZ = BUZZ_OFF;
                 LED = LED_OFF;
-                Read_ALL_G5_Data(); //跟G5要資料
+                do{
+                    Read_ALL_G5_Data(); //跟G5要資料
+                }while(G5_MOXA.ID != My_ID);
+                
+                
+                
             }
             
             

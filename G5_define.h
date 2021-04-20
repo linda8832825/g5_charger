@@ -99,6 +99,7 @@ typedef struct tagG5_MOXA_Data_struct {
         unsigned                            IF:3;
 		struct
 		{		
+            unsigned                        W_R:2;
 			unsigned						TIF:1;	
             unsigned                    	RIF :1;		//資料接收完成
             unsigned                       	ERRIF:1;	//資料接收或傳送錯誤

@@ -26,6 +26,16 @@
 #define Charge_Voltage      0x0253 //59.5v
 
 #define My_ID               0x01
+#define YES                 1//有無被按下啟動鈕
+#define NO                  2//
+
+typedef struct tedIC_data_Struct{
+        unsigned     DoIamStarted   :2 ; //有無被按下啟動鈕
+    
+}IC_data_Define;
+extern IC_data_Define IC_data;
+
+   
 
 #define read_G5_times_limt 5
 
@@ -68,8 +78,9 @@
 #define LATx_SCL		 		LATGbits.LATG2
 #define LATx_SDA		 		LATGbits.LATG3
 
-#define led_Toggle()             do { LATEbits.LATE5 = ~LATEbits.LATE5; } while(0)
+//#define led_Toggle()             do { LATEbits.LATE5 = ~LATEbits.LATE5; } while(0)
 
+//unsigned int DoIamStarted = 0;     
 
 void Initial_Clock(void); 
 void Initial_IO(void);
@@ -82,7 +93,7 @@ void master_init(void);
 void G5_reset_work(void);
 void Read_ALL_G5_Data(void);
 void Write_G5_Data(unsigned int Regest,unsigned int Data);
-unsigned int G5_CRC_Check(void);
+unsigned int CRC_Check(void);
 unsigned int CRC_Make(unsigned char *Buffer , unsigned char Quantity);
 void wait(unsigned int i);
 #endif
