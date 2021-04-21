@@ -78,7 +78,7 @@ extern IC_data_Define IC_data;
 #define LATx_SCL		 		LATGbits.LATG2
 #define LATx_SDA		 		LATGbits.LATG3
 
-//#define led_Toggle()             do { LATEbits.LATE5 = ~LATEbits.LATE5; } while(0)
+#define led_Toggle()             do { LED = ~LED; } while(0)
 
 //unsigned int DoIamStarted = 0;     
 

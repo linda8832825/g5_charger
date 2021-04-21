@@ -63,7 +63,7 @@ void Read_ALL_G5_Data(void)
     //充電過程中一直讀g5資料
     //直到電壓>=253h
     //再寫
-    
+    led_Toggle();
 		G5_MOXA.ID=0x01;
 		G5_MOXA.Fuc=0x03;	
 		
@@ -71,7 +71,7 @@ void Read_ALL_G5_Data(void)
 		G5_MOXA.Reg_L = 0x01;
         
         G5_MOXA.Data_H = 0x00;
-        G5_MOXA.Data_L = 0x0E;
+        G5_MOXA.Data_L = 0x0F;
 		
 		G5_MOXA.Index=6;
 		G5_MOXA.RTIndex=0;

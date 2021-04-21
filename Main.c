@@ -88,29 +88,24 @@ int main (void)
     
 	while(1)
 	{
-//        led_Toggle();
+        
         if(SW==SW_Push){    //如果啟動鈕被按下
-            
             while(SW==SW_Push){//到按鈕被放開才會繼續做
                 IC_data.DoIamStarted = YES; //按鈕被按下過
                 //然後在清空之前設的所有變數
                 //要不要寫個函式高級些
-            } 
-            
-            if(IC_data.DoIamStarted == YES){
-                BUZZ = BUZZ_ON;
-                LED = LED_ON;
-                wait(0xFFFF);
-                wait(0xFFFF);
-                BUZZ = BUZZ_OFF;
-                LED = LED_OFF;
-                do{
-                    Read_ALL_G5_Data(); //跟G5要資料
-                }while(G5_MOXA.ID != My_ID);
-                
-                
-                
             }
+        }
+            
+        if(IC_data.DoIamStarted == YES){
+            while((G5_MOXA.ID != My_ID) && (G5_MOXA.RIF != 1)){
+                Read_ALL_G5_Data(); //跟G5要資料
+               
+            }
+            IC_data.DoIamStarted == NO;
+
+
+        }
             
             
             
@@ -183,7 +178,7 @@ int main (void)
             
             //-----------------------------------------------------------------
         		
-        }
+        
     }
 }
 		

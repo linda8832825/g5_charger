@@ -1,16 +1,17 @@
 #include "Main_Define.h"
 
-void __attribute__((interrupt, no_auto_psv)) _T3Interrupt(void)
+void __attribute__((interrupt, no_auto_psv)) _T3Interrupt(void) //讀完g5或寫完 收到的資料做整理
 {
         unsigned char math_a,math_c,math_d;
         unsigned int 	math_b;
         unsigned int 	*index1;
-        unsigned char   Quantity,*index3;
+        unsigned char   *index2, Quantity,*index3;
 
         unsigned char Erro_IF;
 
         index1=&G5_MOXA.ID;
         index3=&G5_MOXA.ID;
+//        index2=&G5_Data.Current_Point; //第一個DATA放的位置
 
         Erro_IF=0;
 
@@ -25,19 +26,19 @@ void __attribute__((interrupt, no_auto_psv)) _T3Interrupt(void)
                     G5_MOXA.Value_H=G5_MOXA.Reg_H;
                     index1=&G5_Data.ID;
                     index1=index1+(G5_MOXA.Value);	
-                    //取得庫倫資料陣列從哪位置開始放資料
+                    //取得g5資料陣列從哪位置開始放資料
 
-                    Quantity = G5_MOXA.Reg_H/2;
-//                    index2=&G5_MOXA.Reg_L;
-//                    for(Quantity=Quantity;Quantity>0;Quantity--)
-//                    {
-//                        ModBus_Receiver.Value_H = *index2;
-//                        *index2++;
-//                        ModBus_Receiver.Value_L = *index2;
-//                        *index1 = ModBus_Receiver.Value;
-//                        index1++;
-//                        index2++;
-//                    }
+                    Quantity = G5_MOXA.Reg_H/2; //資料比數
+                    index2=&G5_MOXA.Reg_L; //第一筆data
+                    for(Quantity=Quantity;Quantity>0;Quantity--)
+                    {
+                        G5_MOXA.Value_H = *index2;
+                        *index2++;
+                        G5_MOXA.Value_L = *index2;
+                        *index1 = G5_MOXA.Value; //把DATA放進G5的資料儲存陣列裡
+                        index1++;
+                        index2++;
+                    }
                     G5_MOXA.RIF=1;
                     G5_MOXA.RTIndex=0;
                 }
@@ -55,7 +56,7 @@ void __attribute__((interrupt, no_auto_psv)) _T3Interrupt(void)
                     Erro_IF=0;
                     for(math_a=0;math_a<8;math_a++)
                     {
-                        math_c = *index3;
+                        math_c = *index3; //收到的ID
                         if( math_c != My_ID )Erro_IF=1;
                         index3++;
                     }
