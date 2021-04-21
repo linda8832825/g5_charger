@@ -37,15 +37,13 @@ void __attribute__((interrupt, no_auto_psv)) _MathError(void)
 	while(1);     
 }
 
-IC_data_Define IC_data;
+IC_Data_Define IC_Data;
 //IC_Data_IF IC_Data_Save_IF;
 
 
 int main (void) 
 {
-//	unsigned int    math_a=0; //0=啟動鈕沒有被按過 1=啟動鈕被按過
-    unsigned int    math_b=0; //計數資料要不到多少次
-    unsigned int    math_c=0; //計數充電次數
+    unsigned int    math_a=0; //計數資料要不到多少次
     
 	Initial_Clock(); 	
 //	IC_Data.ms=1000;
@@ -54,6 +52,8 @@ int main (void)
 	
 	
 	//一些數值的初始化設定-----------------------------------------------
+    IC_Data.GetTheWhatYouWant=NO;
+    IC_Data.DoIamStarted=NO;
 //	IC_Data.Wait_Coulomb_Read=1480;
 //	IC_Data.Charge_Voltage_Avg=0;		
 //	IC_Data.Charge_Voltage_Avg_Count=0;	
@@ -91,19 +91,34 @@ int main (void)
         
         if(SW==SW_Push){    //如果啟動鈕被按下
             while(SW==SW_Push){//到按鈕被放開才會繼續做
-                IC_data.DoIamStarted = YES; //按鈕被按下過
+                IC_Data.DoIamStarted = YES; //按鈕被按下過
                 //然後在清空之前設的所有變數
                 //要不要寫個函式高級些
             }
         }
             
-        if(IC_data.DoIamStarted == YES){
-            while((G5_MOXA.ID != My_ID) && (G5_MOXA.RIF != 1)){
+        if(IC_Data.DoIamStarted == YES){
+            if((G5_MOXA.RIF != 1) && (math_a<=3) && (IC_Data.GetTheWhatYouWant == NO)){//如果還沒收到資料
                 Read_ALL_G5_Data(); //跟G5要資料
-               
+                wait(0xFFFF);
+                if(G5_Data.ID == My_ID){//有要到正確資料
+                    IC_Data.GetTheWhatYouWant = YES;
+                }
+                else{// 沒有要到正確資料
+                    math_a++;
+                    //充電三十秒 
+                }
             }
-            IC_data.DoIamStarted == NO;
-
+            else{
+                IC_Data.GetTheWhatYouWant= NO;
+                math_a = 0;
+            }
+//            if(IC_Data.GetTheWhatYouWant== YES){
+//                
+//            }
+            
+            
+            
 
         }
             

@@ -12,6 +12,7 @@ void Initial_Clock(void)
 
 void Initial_IO(void)
 {
+    TRISE_POWER             = Output;
 	TRISE_BUZZ 				= Output;
 	TRISE_LED           	= Output; 		
 	TRISE_SW                = Input; 

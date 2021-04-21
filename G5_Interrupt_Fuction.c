@@ -16,7 +16,7 @@ void __attribute__((interrupt, no_auto_psv)) _T3Interrupt(void) //Åª§¹g5©Î¼g§¹ ¦
         Erro_IF=0;
 
 
-        if((G5_MOXA.RTIndex>0) && (IC_data.DoIamStarted == YES))
+        if((G5_MOXA.RTIndex>0) && (IC_Data.DoIamStarted == YES))
         {
             if(G5_MOXA.W_R == Read)
             {
@@ -25,7 +25,9 @@ void __attribute__((interrupt, no_auto_psv)) _T3Interrupt(void) //Åª§¹g5©Î¼g§¹ ¦
                     G5_MOXA.Value_L=G5_MOXA.Reg_L;
                     G5_MOXA.Value_H=G5_MOXA.Reg_H;
                     index1=&G5_Data.ID;
-                    index1=index1+(G5_MOXA.Value);	
+                    *index1=G5_MOXA.ID;
+                    index1+=2;
+//                    index1=index1+(G5_MOXA.Value);	
                     //¨ú±og5¸ê®Æ°}¦C±q­þ¦ì¸m¶}©l©ñ¸ê®Æ
 
                     Quantity = G5_MOXA.Reg_H/2; //¸ê®Æ¤ñ¼Æ
@@ -90,7 +92,7 @@ void __attribute__((interrupt, no_auto_psv)) _U3RXInterrupt(void)
 		unsigned int math_a;
 		static unsigned char *index;
 		static unsigned char Fuction;
-        if((G5_MOXA.RIF==0) && (IC_data.DoIamStarted == YES))
+        if((G5_MOXA.RIF==0) && (IC_Data.DoIamStarted==YES))
 		{
 			TMR3=0;		
 			if(!T3CONbits.TON)
@@ -99,7 +101,7 @@ void __attribute__((interrupt, no_auto_psv)) _U3RXInterrupt(void)
 			}
 			if(G5_MOXA.RTIndex==0)
 			{
-				index=&G5_Data.ID;
+				index=&G5_MOXA.ID;
 				*index=U3RXREG;
 				index++;
 				G5_MOXA.RTIndex++;	
@@ -107,7 +109,7 @@ void __attribute__((interrupt, no_auto_psv)) _U3RXInterrupt(void)
 			}
 			else
 			{
-				if(G5_Data.ID==My_ID||G5_Data.ID==0x00)
+				if(G5_MOXA.ID==My_ID||G5_MOXA.ID==0x00)
 				{
 					TMR3=0;
 					*index=U3RXREG;

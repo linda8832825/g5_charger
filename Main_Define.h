@@ -29,11 +29,12 @@
 #define YES                 1//有無被按下啟動鈕
 #define NO                  2//
 
-typedef struct tedIC_data_Struct{
-        unsigned     DoIamStarted   :2 ; //有無被按下啟動鈕
+typedef struct tedIC_Data_Struct{
+        unsigned     DoIamStarted       :2 ; //有無被按下啟動鈕
+        unsigned     GetTheWhatYouWant  :    2;//有無拿到正確資料
     
-}IC_data_Define;
-extern IC_data_Define IC_data;
+}IC_Data_Define;
+extern IC_Data_Define IC_Data;
 
    
 
@@ -59,11 +60,13 @@ extern IC_data_Define IC_data;
 #define Flick_Freq 			Flick_Slow 
 
 
-#define LED         			LATEbits.LATE5
-#define SW       				PORTEbits.RE6   //讀取現在狀態
-#define BUZZ     				LATEbits.LATE7
+#define POWER                   LATEbits.LATE4  //充電器的開與關
+#define LED         			LATEbits.LATE5  //狀態led，每次讀資料對反轉狀態
+#define SW       				PORTEbits.RE6   //啟動鈕
+#define BUZZ     				LATEbits.LATE7  //開機叫一聲
 
 
+#define TRISE_POWER             TRISEbits.TRISE4 
 #define TRISE_LED               TRISEbits.TRISE5 //1為輸入 0為輸出
 #define TRISE_SW      			TRISEbits.TRISE6	
 #define TRISE_BUZZ              TRISEbits.TRISE7
