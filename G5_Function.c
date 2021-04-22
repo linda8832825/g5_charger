@@ -1,7 +1,7 @@
 #include "Main_Define.h"
 
-G5_MOXA_Data_struct_define G5_MOXA;
-
+G5_Sent_Data_struct_define G5_Sent; 
+G5_Get_Data_struct_define G5_Get;
 
 
 void Write_G5_Data(unsigned int Regest,unsigned int Data) //用寫入安時數
@@ -17,37 +17,37 @@ void Write_G5_Data(unsigned int Regest,unsigned int Data) //用寫入安時數
 	
 
         
-		G5_MOXA.ID=0x01;
-		G5_MOXA.Fuc=0x06;	
+		G5_Sent.ID=0x01;
+		G5_Sent.Fuc=0x06;	
 		
-		G5_MOXA.Reg_H = (Regest&0xFF00)>>8;
-		G5_MOXA.Reg_L = Regest&0xFF;
+		G5_Sent.Reg_H = (Regest&0xFF00)>>8;
+		G5_Sent.Reg_L = Regest&0xFF;
 		
-		G5_MOXA.Quantity_H = (Data & 0xFF00)>>8;
-		G5_MOXA.Quantity_L = Data & 0xFF;
+		G5_Sent.Data_H = (Data & 0xFF00)>>8;
+		G5_Sent.Data_L = Data & 0xFF;
 		
-		G5_MOXA.Index=6;
-		G5_MOXA.RTIndex=0;	
+		G5_Sent.Index=6;
+		G5_Sent.RTIndex=0;	
 		
 		
-		G5_MOXA.RTIndex=0;
-		G5_MOXA.RIF=0;		
-		G5_MOXA.TIF=0;	
-        G5_MOXA.W_R = Write;
+		G5_Sent.RTIndex=0;
+		G5_Get.RIF=0;		
+		G5_Sent.TIF=0;	
+        G5_Sent.W_R = Write;
 		
-		math_a=CRC_Make(&G5_MOXA,G5_MOXA.Index);
+		math_a=CRC_Make(&G5_Sent,G5_Sent.Index);
 		
 		math_b = math_a&0xFF;
-		G5_MOXA.CRC_L = math_b;
+		G5_Sent.CRC_L = math_b;
 		
 		math_b = (math_a&0xFF00)>>8;
-		G5_MOXA.CRC_H = math_b;
-		G5_MOXA.Index+=2;			
+		G5_Sent.CRC_H = math_b;
+		G5_Sent.Index+=2;			
 		
 	
-		G5_MOXA.RTIndex=1;
+		G5_Sent.RTIndex=1;
 		if(IEC5bits.U3TXIE == 0)IEC5bits.U3TXIE = 1;
-		U3TXREG=G5_MOXA.ID;	
+		U3TXREG=G5_Sent.ID;	
 		
 	
 }
@@ -63,31 +63,31 @@ void Read_ALL_G5_Data(void)
     //充電過程中一直讀g5資料
     //直到電壓>=253h
     //再寫
-    led_Toggle();
-		G5_MOXA.ID=0x01;
-		G5_MOXA.Fuc=0x03;	
+    
+		G5_Sent.ID=0x01;
+		G5_Sent.Fuc=0x03;	
 		
-		G5_MOXA.Reg_H = 0x00;
-		G5_MOXA.Reg_L = 0x01;
+		G5_Sent.Reg_H = 0x00;
+		G5_Sent.Reg_L = 0x01;
         
-        G5_MOXA.Data_H = 0x00;
-        G5_MOXA.Data_L = 0x0F;
+        G5_Sent.Data_H = 0x00;
+        G5_Sent.Data_L = 0x0F;
 		
-		G5_MOXA.Index=6;
-		G5_MOXA.RTIndex=0;
+		G5_Sent.Index=6;
+		G5_Sent.RTIndex=0;
 
 		
-		G5_MOXA.RTIndex=0;
-        G5_MOXA.W_R = Read;
+		G5_Sent.RTIndex=0;
+        G5_Sent.W_R = Read;
 				
-		math_a=CRC_Make(&G5_MOXA, G5_MOXA.Index);
+		math_a=CRC_Make(&G5_Sent, G5_Sent.Index);
 		
 		math_b = math_a&0xFF;
-		G5_MOXA.CRC_L = math_b;
+		G5_Sent.CRC_L = math_b;
 		
 		math_b = (math_a&0xFF00)>>8;
-		G5_MOXA.CRC_H = math_b;
-		G5_MOXA.Index+=2;			
+		G5_Sent.CRC_H = math_b;
+		G5_Sent.Index+=2;			
 		
         
         if(!U3STAbits.UTXEN){
@@ -98,8 +98,8 @@ void Read_ALL_G5_Data(void)
             IEC5bits.U3TXIE=1;
         }
 		
-		U3TXREG=G5_MOXA.ID;		
-		G5_MOXA.RTIndex++;
+		U3TXREG=G5_Sent.ID;		
+		G5_Sent.RTIndex++;
 	
 }
 

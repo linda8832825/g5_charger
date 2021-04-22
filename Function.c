@@ -34,8 +34,8 @@ unsigned int CRC_Check(void) //howmuch¬O¦³¦h¤Ö­Ó!!  5®æ¼Æ¦r´N¶ñ5    ¤£¬O±q0¶}©l¼
 	
 
 
-	CRC_Address=&G5_MOXA.ID;
-	CRC_Length=G5_MOXA.RTIndex-2;	
+	CRC_Address=&G5_Get.ID;
+	CRC_Length=G5_Get.RTIndex-2;	
 	
 	while(CRC_Length--)
 	{
@@ -54,8 +54,8 @@ unsigned int CRC_Check(void) //howmuch¬O¦³¦h¤Ö­Ó!!  5®æ¼Æ¦r´N¶ñ5    ¤£¬O±q0¶}©l¼
 	}		
 		
 
-	CRC_Address=&G5_MOXA.ID;
-	CRC_Address+=G5_MOXA.RTIndex-2;	
+	CRC_Address=&G5_Get.ID;
+	CRC_Address+=G5_Get.RTIndex-2;	
 
 	
 	math_a=*CRC_Address;

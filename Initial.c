@@ -12,6 +12,7 @@ void Initial_Clock(void)
 
 void Initial_IO(void)
 {
+    TRISE_Battery           = Output;
     TRISE_POWER             = Output;
 	TRISE_BUZZ 				= Output;
 	TRISE_LED           	= Output; 		
@@ -83,11 +84,12 @@ void Initial_G5_UART(void)
 	
 	
 	T3CON=0;
-	IEC0bits.T3IE=1;
-	IFS0bits.T3IF=0;
+	IEC0bits.T3IE=1; //TIMER中斷允許位 1=允許
+	IFS0bits.T3IF=0; //TIMER中斷標誌狀態位 0=未受到中斷
 	T3CONbits.TCKPS=1;
-	T3CONbits.TCS=0;
-	PR3=1250;
+	T3CONbits.TCS=0; //內部clock (FOSC/2
+	PR3=1250; //0.625去一次 _T3Interrupt
+    //會在u3接收到東西時才讓T3CONbits.TON=1; 啟動timer3
 		
 }
 void wait(unsigned int i){

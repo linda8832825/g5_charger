@@ -44,9 +44,11 @@ IC_Data_Define IC_Data;
 int main (void) 
 {
     unsigned int    math_a=0; //計數資料要不到多少次
+    unsigned int    math_b=0; //取現在的秒數
+    unsigned int    math_c=0; //無法寫0.1安時進去的次數
     
 	Initial_Clock(); 	
-//	IC_Data.ms=1000;
+	IC_Data.ms=1000;
 	
 	//IC_Data.Wait_Coulomb_Read=0;
 	
@@ -64,14 +66,14 @@ int main (void)
 	         
 	Initial_IO();
 	Initial_G5_UART();
+    Timer1_initial();
     
     BUZZ = BUZZ_ON;
-    LED = LED_ON;
-    wait(0xFFFF);
-    wait(0xFFFF);
+    LED = Turn_ON;
+    while(IC_Data.Second <1);
     BUZZ = BUZZ_OFF;
-    LED = LED_OFF;
-//	Timer1_initial();
+    LED = Turn_OFF;
+	
 //	Initial_Coulomb_UART();    
 //	Initial_UART2();
 //	I2C_Initial();
@@ -98,32 +100,50 @@ int main (void)
         }
             
         if(IC_Data.DoIamStarted == YES){
-            if((G5_MOXA.RIF != 1) && (math_a<=3) && (IC_Data.GetTheWhatYouWant == NO)){//如果還沒收到資料
+            if((G5_Get.RIF != 1) && (math_a<=3) && (IC_Data.GetTheWhatYouWant == NO)){//如果還沒收到資料
+                BUZZ = BUZZ_ON;
+                math_b=IC_Data.Second;
+                while(math_b == IC_Data.Second);
+                BUZZ = BUZZ_OFF;
                 Read_ALL_G5_Data(); //跟G5要資料
-                wait(0xFFFF);
                 if(G5_Data.ID == My_ID){//有要到正確資料
                     IC_Data.GetTheWhatYouWant = YES;
                 }
-                else{// 沒有要到正確資料
+                else{// 沒有要到正確資料 就充電三十秒
                     math_a++;
-                    //充電三十秒 
+                    IC_Data.Thirty_Second_Count=0;
+                    POWER = Turn_ON;
+                    while(IC_Data.Thirty_Second_Count==1);
+                    POWER = Turn_OFF;
                 }
             }
-            else{
-                IC_Data.GetTheWhatYouWant= NO;
+            else{//充電4次都沒辦法讓g5傳資料出來就
+                IC_Data.GetTheWhatYouWant= NO; 
+                BatteryError = Turn_ON; //battery燈亮 代表g5沒電了
                 math_a = 0;
             }
-//            if(IC_Data.GetTheWhatYouWant== YES){
-//                
-//            }
+            if(IC_Data.GetTheWhatYouWant == YES){//如果要到資料就放電到電流=0
+                //放電
+                while(G5_Data.Current > 0x00);
+                //放電中止
+                if(G5_Data.Residual_Electricity == 0x01){//確認是否為0.1Ah
+                    IC_Data.WriteZeroAh = YES;
+                }
+                else{//沒有的話再寫一次///////////////////////////////
+                    Write_G5_Data(0x07 , 0x01); //寫0.1Ah進去 01 06 00 07 00 01 crc
+                    math_c++;
+                }
+                if(math_c>=3){
+                    //寫入0.1安時失敗
+                }
+            }
+                
+                
+    }
             
             
             
 
-        }
-            
-            
-            
 //            do
 //            {	
 //                G5_Receiver.IF = 0;
@@ -151,7 +171,7 @@ int main (void)
 //            }
 //            else{
 //                do{
-//                    // 跟電子附載機通訊讓他放電到 Discharge_Voltage
+//                     跟電子附載機通訊讓他放電到 Discharge_Voltage
 //                
 //                }while(G5_Data.Voltage <=  Discharge_Voltage);
 //                G5_reset_work(); //reset安時數

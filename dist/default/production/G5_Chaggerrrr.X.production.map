@@ -21,6 +21,7 @@ Command:
   build/default/production/G5_Function.o \
   build/default/production/Function.o \
   build/default/production/G5_Interrupt_Fuction.o \
+  build/default/production/timer1.o \
   --defsym=__MPLAB_BUILD=1 \
   -Tp24FJ128GA106.gld.00 \
   --stack=16 \
@@ -66,21 +67,21 @@ Default Scalar Model: Small
 
 section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
-.text                        0x200               0x34a           0x4ef  (1263)
-.text                        0x54a               0x3ee           0x5e5  (1509)
-.dinit                       0x938                0x1a            0x27  (39)
+.text                        0x200               0x39e           0x56d  (1389)
+.text                        0x59e               0x478           0x6b4  (1716)
+.dinit                       0xa16                0x1a            0x27  (39)
 
-                 Total "program" memory used (bytes):          0xafb  (2811) 2%
+                 Total "program" memory used (bytes):          0xc48  (3144) 2%
 
 
 "data" Memory  [Origin = 0x800, Length = 0x4000]
 
 section                    address      alignment gaps    total length  (dec)
 -------                    -------      --------------    -------------------
-.nbss                        0x800                   0             0x8  (8)
-.bss                         0x808                   0            0x6c  (108)
+.nbss                        0x800                   0             0x6  (6)
+.bss                         0x806                   0            0x7e  (126)
 
-                 Total "data" memory used (bytes):           0x74  (116) <1%
+                 Total "data" memory used (bytes):           0x84  (132) <1%
 
 
 Dynamic Memory Usage
@@ -88,24 +89,26 @@ Dynamic Memory Usage
 region                     address                      maximum length  (dec)
 ------                     -------                      ---------------------
 heap                             0                                   0  (0)
-stack                        0x874                              0x3f8c  (16268)
+stack                        0x884                              0x3f7c  (16252)
 
-                 Maximum dynamic memory (bytes):         0x3f8c  (16268)
+                 Maximum dynamic memory (bytes):         0x3f7c  (16252)
 
 Info: Project is using a large data memory model when small data memory model is sufficient.
 
 
 External Symbols in Data Memory (by address):
 
-                    0x0806                  _IC_Data
-                    0x0808                  _G5_MOXA
-                    0x084e                  _G5_Data
+                    0x0806                  _G5_Sent
+                    0x0812                  _G5_Get
+                    0x0858                  _G5_Data
+                    0x087e                  _IC_Data
 
 External Symbols in Data Memory (by name):
 
-                    0x084e                  _G5_Data
-                    0x0808                  _G5_MOXA
-                    0x0806                  _IC_Data
+                    0x0858                  _G5_Data
+                    0x0812                  _G5_Get
+                    0x0806                  _G5_Sent
+                    0x087e                  _IC_Data
 
 External Symbols in Program Memory (by address):
 
@@ -120,31 +123,35 @@ External Symbols in Program Memory (by address):
                   0x0002f0                  __T3Interrupt
                   0x00042c                  __U3RXInterrupt
                   0x0004ea                  __U3TXInterrupt
-                  0x000544                  __DefaultInterrupt
-                  0x00054a                  _Write_G5_Data
-                  0x0005f0                  _Read_ALL_G5_Data
-                  0x0006aa                  _CRC_Make
-                  0x000716                  _CRC_Check
-                  0x0007e8                  _Initial_Clock
-                  0x000812                  _Initial_IO
-                  0x00082e                  _Initial_G5_UART
-                  0x00089a                  _wait
-                  0x0008b6                  _main
+                  0x000544                  __T1Interrupt
+                  0x000598                  __DefaultInterrupt
+                  0x00059e                  _Write_G5_Data
+                  0x000644                  _Read_ALL_G5_Data
+                  0x0006e6                  _CRC_Make
+                  0x000752                  _CRC_Check
+                  0x000824                  _main
+                  0x00092c                  _Initial_Clock
+                  0x000956                  _Initial_IO
+                  0x000974                  _Initial_G5_UART
+                  0x0009de                  _wait
+                  0x0009fa                  _Timer1_initial
 
 External Symbols in Program Memory (by name):
 
-                  0x000716                  _CRC_Check
-                  0x0006aa                  _CRC_Make
-                  0x0007e8                  _Initial_Clock
-                  0x00082e                  _Initial_G5_UART
-                  0x000812                  _Initial_IO
-                  0x0005f0                  _Read_ALL_G5_Data
-                  0x00054a                  _Write_G5_Data
+                  0x000752                  _CRC_Check
+                  0x0006e6                  _CRC_Make
+                  0x00092c                  _Initial_Clock
+                  0x000974                  _Initial_G5_UART
+                  0x000956                  _Initial_IO
+                  0x000644                  _Read_ALL_G5_Data
+                  0x0009fa                  _Timer1_initial
+                  0x00059e                  _Write_G5_Data
                   0x0002ce                  __AddressError
-                  0x000544                  __DefaultInterrupt
+                  0x000598                  __DefaultInterrupt
                   0x0002ea                  __MathError
                   0x0002c8                  __OscillatorFail
                   0x0002e4                  __StackError
+                  0x000544                  __T1Interrupt
                   0x0002f0                  __T3Interrupt
                   0x00042c                  __U3RXInterrupt
                   0x0004ea                  __U3TXInterrupt
@@ -152,8 +159,8 @@ External Symbols in Program Memory (by name):
                   0x000252                  __data_init_standard
                   0x00023c                  __psv_init
                   0x000200                  __resetPRI
-                  0x0008b6                  _main
-                  0x00089a                  _wait
+                  0x000824                  _main
+                  0x0009de                  _wait
 
 Memory Configuration
 
@@ -176,6 +183,7 @@ LOAD build/default/production/Initial.o
 LOAD build/default/production/G5_Function.o
 LOAD build/default/production/Function.o
 LOAD build/default/production/G5_Interrupt_Fuction.o
+LOAD build/default/production/timer1.o
                     0x0001                  __MPLAB_BUILD = 0x1
 LOAD pPIC24Fxxx
 LOAD c:/program files/microchip/xc16/v1.50/bin/bin/../../lib\libfx-elf.a
@@ -195,7 +203,7 @@ LOAD c:/program files/microchip/xc16/v1.50/bin/bin/../../lib\libfx-elf.a
                   0x000002          0x2 SHORT 0x0 ((ABSOLUTE (__reset) >> 0x10) & 0x7f)
                   0x000003          0x2 SHORT 0x0
 
-.text             0x000200        0x34a
+.text             0x000200        0x39e
  *(.init)
  .init            0x000200         0x4c c:/program files/microchip/xc16/v1.50/bin/bin/../../lib\liblega-pic30-elf.a(crt0_standard.o)
                   0x000200                  __resetPRI
@@ -216,16 +224,18 @@ LOAD c:/program files/microchip/xc16/v1.50/bin/bin/../../lib\libfx-elf.a
                   0x0002f0                  __T3Interrupt
                   0x00042c                  __U3RXInterrupt
                   0x0004ea                  __U3TXInterrupt
- .isr             0x000544          0x4 default_isr
-                  0x000544                  __DefaultInterrupt
+ .isr.text        0x000544         0x54 build/default/production/timer1.o
+                  0x000544                  __T1Interrupt
+ .isr             0x000598          0x4 default_isr
+                  0x000598                  __DefaultInterrupt
  *(.libc)
  *(.libm)
  *(.libdsp)
  *(.lib*)
  .libpic30_crt_start_mode
-                  0x000548          0x2 c:/program files/microchip/xc16/v1.50/bin/bin/../../lib\liblega-pic30-elf.a(crt_start_mode_normal.Leo)
-                  0x000548                  __crt_start_mode
-                  0x000548                  __crt_start_mode_normal
+                  0x00059c          0x2 c:/program files/microchip/xc16/v1.50/bin/bin/../../lib\liblega-pic30-elf.a(crt_start_mode_normal.Leo)
+                  0x00059c                  __crt_start_mode
+                  0x00059c                  __crt_start_mode_normal
 
 usercode
  *(usercode)
@@ -244,46 +254,51 @@ __CONFIG1         0x0157fe          0x2
 .comment
  *(.comment)
 
-.debug_info       0x000000       0x3f5b
+.debug_info       0x000000       0x48b9
  *(.debug_info)
- .debug_info      0x000000        0xa4d build/default/production/Main.o
- .debug_info      0x000a4d       0x186a build/default/production/Initial.o
- .debug_info      0x0022b7        0x9e1 build/default/production/G5_Function.o
- .debug_info      0x002c98        0x4b0 build/default/production/Function.o
- .debug_info      0x003148        0xe13 build/default/production/G5_Interrupt_Fuction.o
+ .debug_info      0x000000        0xac0 build/default/production/Main.o
+ .debug_info      0x000ac0       0x171c build/default/production/Initial.o
+ .debug_info      0x0021dc        0xad1 build/default/production/G5_Function.o
+ .debug_info      0x002cad        0x4ac build/default/production/Function.o
+ .debug_info      0x003159       0x1044 build/default/production/G5_Interrupt_Fuction.o
+ .debug_info      0x00419d        0x71c build/default/production/timer1.o
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev     0x000000        0x718
+.debug_abbrev     0x000000        0x83f
  *(.debug_abbrev)
  .debug_abbrev    0x000000        0x17a build/default/production/Main.o
  .debug_abbrev    0x00017a        0x149 build/default/production/Initial.o
- .debug_abbrev    0x0002c3        0x186 build/default/production/G5_Function.o
- .debug_abbrev    0x000449        0x137 build/default/production/Function.o
- .debug_abbrev    0x000580        0x198 build/default/production/G5_Interrupt_Fuction.o
+ .debug_abbrev    0x0002c3        0x1a4 build/default/production/G5_Function.o
+ .debug_abbrev    0x000467        0x137 build/default/production/Function.o
+ .debug_abbrev    0x00059e        0x198 build/default/production/G5_Interrupt_Fuction.o
+ .debug_abbrev    0x000736        0x109 build/default/production/timer1.o
 
-.debug_line       0x000000        0x452
+.debug_line       0x000000        0x52d
  *(.debug_line)
- .debug_line      0x000000        0x100 build/default/production/Main.o
- .debug_line      0x000100         0xd3 build/default/production/Initial.o
- .debug_line      0x0001d3         0xdf build/default/production/G5_Function.o
- .debug_line      0x0002b2         0x77 build/default/production/Function.o
- .debug_line      0x000329        0x129 build/default/production/G5_Interrupt_Fuction.o
+ .debug_line      0x000000        0x116 build/default/production/Main.o
+ .debug_line      0x000116         0xd3 build/default/production/Initial.o
+ .debug_line      0x0001e9         0xdd build/default/production/G5_Function.o
+ .debug_line      0x0002c6         0x77 build/default/production/Function.o
+ .debug_line      0x00033d        0x129 build/default/production/G5_Interrupt_Fuction.o
+ .debug_line      0x000466         0xc7 build/default/production/timer1.o
 
-.debug_frame      0x000000        0x246
+.debug_frame      0x000000        0x298
  *(.debug_frame)
  .debug_frame     0x000000         0xa0 build/default/production/Main.o
  .debug_frame     0x0000a0         0x7c build/default/production/Initial.o
  .debug_frame     0x00011c         0x48 build/default/production/G5_Function.o
  .debug_frame     0x000164         0x48 build/default/production/Function.o
  .debug_frame     0x0001ac         0x9a build/default/production/G5_Interrupt_Fuction.o
+ .debug_frame     0x000246         0x52 build/default/production/timer1.o
 
-.debug_str        0x000000        0x14b
+.debug_str        0x000000        0x165
  *(.debug_str)
  .debug_str       0x000000         0x1f build/default/production/Main.o
- .debug_str       0x00001f         0xa8 build/default/production/Initial.o
- .debug_str       0x0000c7         0x25 build/default/production/G5_Function.o
- .debug_str       0x0000ec         0x29 build/default/production/Function.o
- .debug_str       0x000115         0x36 build/default/production/G5_Interrupt_Fuction.o
+ .debug_str       0x00001f         0x9f build/default/production/Initial.o
+ .debug_str       0x0000be         0x23 build/default/production/G5_Function.o
+ .debug_str       0x0000e1         0x29 build/default/production/Function.o
+ .debug_str       0x00010a         0x36 build/default/production/G5_Interrupt_Fuction.o
+ .debug_str       0x000140         0x25 build/default/production/timer1.o
 
 .debug_loc
  *(.debug_loc)
@@ -292,23 +307,25 @@ __CONFIG1         0x0157fe          0x2
  *(.debug_macinfo)
 
 .debug_pubnames
-                  0x000000        0x19d
+                  0x000000        0x1de
  *(.debug_pubnames)
  .debug_pubnames
                   0x000000         0x86 build/default/production/Main.o
  .debug_pubnames
                   0x000086         0x5c build/default/production/Initial.o
  .debug_pubnames
-                  0x0000e2         0x45 build/default/production/G5_Function.o
+                  0x0000e2         0x50 build/default/production/G5_Function.o
  .debug_pubnames
-                  0x000127         0x2d build/default/production/Function.o
+                  0x000132         0x2d build/default/production/Function.o
  .debug_pubnames
-                  0x000154         0x49 build/default/production/G5_Interrupt_Fuction.o
+                  0x00015f         0x49 build/default/production/G5_Interrupt_Fuction.o
+ .debug_pubnames
+                  0x0001a8         0x36 build/default/production/timer1.o
 
 .debug_ranges
  *(.debug_ranges)
 
-.debug_aranges    0x000000         0x78
+.debug_aranges    0x000000         0x90
  *(.debug_aranges)
  .debug_aranges
                   0x000000         0x18 build/default/production/Main.o
@@ -320,6 +337,8 @@ __CONFIG1         0x0157fe          0x2
                   0x000048         0x18 build/default/production/Function.o
  .debug_aranges
                   0x000060         0x18 build/default/production/G5_Interrupt_Fuction.o
+ .debug_aranges
+                  0x000078         0x18 build/default/production/timer1.o
                     0x0000                  WREG0 = 0x0
                     0x0000                  _WREG0 = 0x0
                     0x0002                  WREG1 = 0x2
@@ -1311,45 +1330,50 @@ LOAD default_isr
 LOAD data_init
 
 .debug_pubtypes
-                  0x000078        0x576
+                  0x000090        0x666
  .debug_pubtypes
-                  0x000078        0x111 build/default/production/Main.o
+                  0x000090        0x10f build/default/production/Main.o
  .debug_pubtypes
-                  0x000189        0x220 build/default/production/Initial.o
+                  0x00019f        0x203 build/default/production/Initial.o
  .debug_pubtypes
-                  0x0003a9         0xcf build/default/production/G5_Function.o
+                  0x0003a2         0xea build/default/production/G5_Function.o
  .debug_pubtypes
-                  0x000478         0x4c build/default/production/Function.o
+                  0x00048c         0x4a build/default/production/Function.o
  .debug_pubtypes
-                  0x0004c4        0x12a build/default/production/G5_Interrupt_Fuction.o
+                  0x0004d6        0x162 build/default/production/G5_Interrupt_Fuction.o
+ .debug_pubtypes
+                  0x000638         0xbe build/default/production/timer1.o
 
 __c30_signature
-                  0x0005ee         0x2a
+                  0x0006f6         0x30
  __c30_signature
-                  0x0005ee          0x6 build/default/production/Main.o
+                  0x0006f6          0x6 build/default/production/Main.o
  __c30_signature
-                  0x0005f4          0x6 build/default/production/Initial.o
+                  0x0006fc          0x6 build/default/production/Initial.o
  __c30_signature
-                  0x0005fa          0x6 build/default/production/G5_Function.o
+                  0x000702          0x6 build/default/production/G5_Function.o
  __c30_signature
-                  0x000600          0x6 build/default/production/Function.o
+                  0x000708          0x6 build/default/production/Function.o
  __c30_signature
-                  0x000606          0x6 build/default/production/G5_Interrupt_Fuction.o
+                  0x00070e          0x6 build/default/production/G5_Interrupt_Fuction.o
  __c30_signature
-                  0x00060c          0x6 c:/program files/microchip/xc16/v1.50/bin/bin/../../lib\liblega-pic30-elf.a(crt0_standard.o)
+                  0x000714          0x6 build/default/production/timer1.o
  __c30_signature
-                  0x000612          0x6 c:/program files/microchip/xc16/v1.50/bin/bin/../../lib\liblega-pic30-elf.a(data_init_standard.o)
+                  0x00071a          0x6 c:/program files/microchip/xc16/v1.50/bin/bin/../../lib\liblega-pic30-elf.a(crt0_standard.o)
+ __c30_signature
+                  0x000720          0x6 c:/program files/microchip/xc16/v1.50/bin/bin/../../lib\liblega-pic30-elf.a(data_init_standard.o)
 
-.nbss               0x0800          0x8
+.nbss               0x0800          0x6
  .nbss              0x0800          0x6 build/default/production/G5_Interrupt_Fuction.o
- .nbss              0x0806          0x2 build/default/production/Main.o
-                    0x0806                  _IC_Data
 
-.bss                0x0808         0x6c
- .bss               0x0808         0x46 build/default/production/G5_Function.o
-                    0x0808                  _G5_MOXA
- .bss               0x084e         0x26 build/default/production/Initial.o
-                    0x084e                  _G5_Data
+.bss                0x0806         0x7e
+ .bss               0x0806         0x52 build/default/production/G5_Function.o
+                    0x0806                  _G5_Sent
+                    0x0812                  _G5_Get
+ .bss               0x0858         0x26 build/default/production/Initial.o
+                    0x0858                  _G5_Data
+ .bss               0x087e          0x6 build/default/production/Main.o
+                    0x087e                  _IC_Data
 
 .ivt._OscillatorFail
                   0x000006          0x2
@@ -1386,20 +1410,27 @@ __c30_signature
  .ivt._U3TXInterrupt
                   0x0000ba          0x2 build/default/production/G5_Interrupt_Fuction.o
 
-.text             0x00054a        0x3ee
- .text            0x00054a        0x160 build/default/production/G5_Function.o
-                  0x00054a                  _Write_G5_Data
-                  0x0005f0                  _Read_ALL_G5_Data
- .text            0x0006aa        0x13e build/default/production/Function.o
-                  0x0006aa                  _CRC_Make
-                  0x000716                  _CRC_Check
- .text            0x0007e8         0xce build/default/production/Initial.o
-                  0x0007e8                  _Initial_Clock
-                  0x000812                  _Initial_IO
-                  0x00082e                  _Initial_G5_UART
-                  0x00089a                  _wait
- .text            0x0008b6         0x82 build/default/production/Main.o
-                  0x0008b6                  _main
+.ivt._T1Interrupt
+                  0x00001a          0x2
+ .ivt._T1Interrupt
+                  0x00001a          0x2 build/default/production/timer1.o
 
-.dinit            0x000938         0x1a
- .dinit           0x000938         0x1a data_init
+.text             0x00059e        0x478
+ .text            0x00059e        0x148 build/default/production/G5_Function.o
+                  0x00059e                  _Write_G5_Data
+                  0x000644                  _Read_ALL_G5_Data
+ .text            0x0006e6        0x13e build/default/production/Function.o
+                  0x0006e6                  _CRC_Make
+                  0x000752                  _CRC_Check
+ .text            0x000824        0x108 build/default/production/Main.o
+                  0x000824                  _main
+ .text            0x00092c         0xce build/default/production/Initial.o
+                  0x00092c                  _Initial_Clock
+                  0x000956                  _Initial_IO
+                  0x000974                  _Initial_G5_UART
+                  0x0009de                  _wait
+ .text            0x0009fa         0x1c build/default/production/timer1.o
+                  0x0009fa                  _Timer1_initial
+
+.dinit            0x000a16         0x1a
+ .dinit           0x000a16         0x1a data_init

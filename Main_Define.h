@@ -22,7 +22,7 @@
 #define Write 				1
 #define Read 				2
 
-#define Discharge_Voltage   0x01A4 //42.0v
+
 #define Charge_Voltage      0x0253 //59.5v
 
 #define My_ID               0x01
@@ -30,8 +30,12 @@
 #define NO                  2//
 
 typedef struct tedIC_Data_Struct{
-        unsigned     DoIamStarted       :2 ; //有無被按下啟動鈕
-        unsigned     GetTheWhatYouWant  :    2;//有無拿到正確資料
+        unsigned     DoIamStarted       : 2 ; //有無被按下啟動鈕
+        unsigned     GetTheWhatYouWant  : 2;//有無拿到正確資料
+        unsigned     WriteZeroAh        : 2;
+        unsigned 	char 	Second;	
+        unsigned 	int 	ms;	
+        unsigned    int     Thirty_Second_Count;	
     
 }IC_Data_Define;
 extern IC_Data_Define IC_Data;
@@ -40,8 +44,8 @@ extern IC_Data_Define IC_Data;
 
 #define read_G5_times_limt 5
 
-#define LED_ON 				0
-#define LED_OFF 			1
+#define Turn_ON 				0
+#define Turn_OFF 			1
 
 #define SW_Push 			0
 #define SW_NoPush 			1
@@ -60,12 +64,14 @@ extern IC_Data_Define IC_Data;
 #define Flick_Freq 			Flick_Slow 
 
 
+#define BatteryError                 LATEbits.LATE3  //g5充電4次也救不起來的錯誤
 #define POWER                   LATEbits.LATE4  //充電器的開與關
 #define LED         			LATEbits.LATE5  //狀態led，每次讀資料對反轉狀態
 #define SW       				PORTEbits.RE6   //啟動鈕
 #define BUZZ     				LATEbits.LATE7  //開機叫一聲
 
 
+#define TRISE_Battery           TRISEbits.TRISE3 
 #define TRISE_POWER             TRISEbits.TRISE4 
 #define TRISE_LED               TRISEbits.TRISE5 //1為輸入 0為輸出
 #define TRISE_SW      			TRISEbits.TRISE6	
@@ -81,7 +87,7 @@ extern IC_Data_Define IC_Data;
 #define LATx_SCL		 		LATGbits.LATG2
 #define LATx_SDA		 		LATGbits.LATG3
 
-#define led_Toggle()             do { LED = ~LED; } while(0)
+#define led_Toggle()            LED = ~LED;
 
 //unsigned int DoIamStarted = 0;     
 

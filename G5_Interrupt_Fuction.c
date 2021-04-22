@@ -9,51 +9,50 @@ void __attribute__((interrupt, no_auto_psv)) _T3Interrupt(void) //Åª§¹g5©Î¼g§¹ ¦
 
         unsigned char Erro_IF;
 
-        index1=&G5_MOXA.ID;
-        index3=&G5_MOXA.ID;
-//        index2=&G5_Data.Current_Point; //²Ä¤@­ÓDATA©ñªº¦ì¸m
+        index1=&G5_Get.ID;
+        index3=&G5_Get.ID;
 
         Erro_IF=0;
 
 
-        if((G5_MOXA.RTIndex>0) && (IC_Data.DoIamStarted == YES))
+        if((G5_Get.RTIndex>0) && (IC_Data.DoIamStarted == YES))
         {
-            if(G5_MOXA.W_R == Read)
+            if(G5_Sent.W_R == Read)
             {
                 if(CRC_Check())
                 {
-                    G5_MOXA.Value_L=G5_MOXA.Reg_L;
-                    G5_MOXA.Value_H=G5_MOXA.Reg_H;
+                    G5_Get.Value_L=G5_Get.Reg_L;
+                    G5_Get.Value_H=G5_Get.Reg_H;
                     index1=&G5_Data.ID;
-                    *index1=G5_MOXA.ID;
+                    *index1=G5_Get.ID;
                     index1+=2;
 //                    index1=index1+(G5_MOXA.Value);	
                     //¨ú±og5¸ê®Æ°}¦C±q­þ¦ì¸m¶}©l©ñ¸ê®Æ
 
-                    Quantity = G5_MOXA.Reg_H/2; //¸ê®Æ¤ñ¼Æ
-                    index2=&G5_MOXA.Reg_L; //²Ä¤@µ§data
+                    Quantity = G5_Get.Reg_H/2; //¸ê®Æ¤ñ¼Æ
+                    index2=&G5_Get.Reg_L; //²Ä¤@µ§data
                     for(Quantity=Quantity;Quantity>0;Quantity--)
                     {
-                        G5_MOXA.Value_H = *index2;
+                        G5_Get.Value_H = *index2;
                         *index2++;
-                        G5_MOXA.Value_L = *index2;
-                        *index1 = G5_MOXA.Value; //§âDATA©ñ¶iG5ªº¸ê®ÆÀx¦s°}¦C¸Ì
+                        G5_Get.Value_L = *index2;
+                        *index1 = G5_Get.Value; //§âDATA©ñ¶iG5ªº¸ê®ÆÀx¦s°}¦C¸Ì
                         index1++;
                         index2++;
                     }
-                    G5_MOXA.RIF=1;
-                    G5_MOXA.RTIndex=0;
+                    G5_Get.RIF=1;
+                    G5_Get.RTIndex=0;
                 }
                 else
                 {
-                    G5_MOXA.RTIndex=0;
-                    G5_MOXA.ERRIF=1;
+                    G5_Get.RTIndex=0;
+                    G5_Get.ERRIF=1;
                 }
 
             }
-            else if(G5_MOXA.W_R == Write)
+            else if(G5_Sent.W_R == Write)
             {
-                if(G5_MOXA.RTIndex==8)
+                if(G5_Get.RTIndex==8)
                 {
                     Erro_IF=0;
                     for(math_a=0;math_a<8;math_a++)
@@ -62,13 +61,13 @@ void __attribute__((interrupt, no_auto_psv)) _T3Interrupt(void) //Åª§¹g5©Î¼g§¹ ¦
                         if( math_c != My_ID )Erro_IF=1;
                         index3++;
                     }
-                    if(Erro_IF)G5_MOXA.ERRIF=1;
-                    else G5_MOXA.TIF=1;
+                    if(Erro_IF)G5_Get.ERRIF=1;
+                    else G5_Get.TIF=1;
                 }		
                 else
                 {
-                    G5_MOXA.ERRIF=1;	
-                    G5_MOXA.RTIndex=0;
+                    G5_Get.ERRIF=1;	
+                    G5_Get.RTIndex=0;
                 }			
             }
         }	
@@ -81,7 +80,7 @@ void __attribute__((interrupt, no_auto_psv)) _T3Interrupt(void) //Åª§¹g5©Î¼g§¹ ¦
             }
         }
 
-        T3CONbits.TON=0; //²Ä¤T­Ó­p®ÉÃö³¬
+        T3CONbits.TON=0; //Ãö³¬timer3
         IFS0bits.T3IF=0;  //timer3¥¼µo¥Í¤¤Â_½Ð¨D
                 	
           
@@ -92,32 +91,32 @@ void __attribute__((interrupt, no_auto_psv)) _U3RXInterrupt(void)
 		unsigned int math_a;
 		static unsigned char *index;
 		static unsigned char Fuction;
-        if((G5_MOXA.RIF==0) && (IC_Data.DoIamStarted==YES))
+        if((G5_Get.RIF==0) && (IC_Data.DoIamStarted==YES))
 		{
 			TMR3=0;		
-			if(!T3CONbits.TON)
+			if(!T3CONbits.TON) //u3¦³±µ¦¬¨ìªF¦è®É¤~·|Åýtimer3±Ò°Ê
 			{
 				T3CONbits.TON=1;
 			}
-			if(G5_MOXA.RTIndex==0)
+			if(G5_Get.RTIndex==0)
 			{
-				index=&G5_MOXA.ID;
+				index=&G5_Get.ID;
 				*index=U3RXREG;
 				index++;
-				G5_MOXA.RTIndex++;	
+				G5_Get.RTIndex++;	
 				Fuction=0;
 			}
 			else
 			{
-				if(G5_MOXA.ID==My_ID||G5_MOXA.ID==0x00)
+				if(G5_Get.ID==My_ID||G5_Get.ID==0x00)
 				{
 					TMR3=0;
 					*index=U3RXREG;
-					G5_MOXA.RTIndex++;
-					if(G5_MOXA.RTIndex==2&&*index==0x10)Fuction=*index;
-					if(G5_MOXA.RTIndex==7&&Fuction==0x10)
+					G5_Get.RTIndex++;
+					if(G5_Get.RTIndex==2&&*index==0x10)Fuction=*index;
+					if(G5_Get.RTIndex==7&&Fuction==0x10)
 					{
-							G5_MOXA.Index=*index+9;
+							G5_Get.Index=*index+9;
 					}					
 					index++;
 				}	
@@ -125,7 +124,7 @@ void __attribute__((interrupt, no_auto_psv)) _U3RXInterrupt(void)
 				{
 					T3CONbits.TON=0;
 					math_a=U3RXREG;
-					G5_MOXA.RTIndex=0;	
+					G5_Get.RTIndex=0;	
 				}
 			}		
 		}
@@ -142,12 +141,12 @@ void __attribute__((interrupt, no_auto_psv)) _U3TXInterrupt(void)
 	static unsigned char *index;
 	unsigned int math_a;
 	
-	if(G5_MOXA.RTIndex < G5_MOXA.Index)
+	if(G5_Sent.RTIndex < G5_Sent.Index)
 	{
-		if(G5_MOXA.RTIndex==1)index=&G5_MOXA.Fuc;
+		if(G5_Sent.RTIndex==1)index=&G5_Sent.Fuc;
 		U3TXREG=*index;
 		index++;
-		G5_MOXA.RTIndex++;
+		G5_Sent.RTIndex++;
 		for (math_a=0;math_a<=20;math_a++)
 		{
 			asm("Nop");
@@ -155,8 +154,8 @@ void __attribute__((interrupt, no_auto_psv)) _U3TXInterrupt(void)
 	}
 	else 
 	{
-		G5_MOXA.RTIndex=0;
-		G5_MOXA.Index=0;
+		G5_Sent.RTIndex=0;
+		G5_Sent.Index=0;
 	}	
 
 	IFS5bits.U3TXIF=0;

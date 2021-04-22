@@ -47,10 +47,52 @@ typedef struct tagG5_Data_struct {
 	};		
 	
 }G5_Data_struct_define;
-
 extern G5_Data_struct_define G5_Data; 
 
-typedef struct tagG5_MOXA_Data_struct {	
+typedef struct tagG5_Sent_Data_struct {	
+  unsigned char 	ID;						//編號
+  unsigned char 	Fuc;					//功能
+	union
+	{
+		struct
+		{
+			unsigned char 	Reg_H;	//因為傳輸時候是先傳輸高位元之後再傳輸低位元
+		  unsigned char 	Reg_L;  //可是PIC是先從低位元開始擺放，所以會有高低位元交換的問題
+		};												//故REG會是整個高低位元顛倒的情況，故之後有個重新整理的運算
+       	struct
+		{
+			unsigned char 	Chx;
+		  unsigned char 	Regest; 
+		};	
+    };	  
+	union
+	{
+        struct
+		{
+		  unsigned char 	Data_H;
+			unsigned char 	Data_L;
+			unsigned char 	CRC_L;
+			unsigned char 	CRC_H;
+		};
+	};
+												
+ 	union
+	{
+        unsigned                            IF:3;
+		struct
+		{		
+            unsigned                        W_R:2;
+			unsigned						TIF:1;	
+            unsigned                    	RIF :1;		//資料接收完成
+            unsigned                       	ERRIF:1;	//資料接收或傳送錯誤
+		};
+	};
+	unsigned char Index;						//要收資料
+  unsigned char RTIndex;					//已收資料 
+}G5_Sent_Data_struct_define;
+extern G5_Sent_Data_struct_define G5_Sent; 
+
+typedef struct tagG5_Get_Data_struct {	
   unsigned char 	ID;						//編號
   unsigned char 	Fuc;					//功能
 	union
@@ -107,7 +149,7 @@ typedef struct tagG5_MOXA_Data_struct {
 	};
 	unsigned char Index;						//要收資料
   unsigned char RTIndex;					//已收資料 
-}G5_MOXA_Data_struct_define;
-extern G5_MOXA_Data_struct_define G5_MOXA; 
+}G5_Get_Data_struct_define;
+extern G5_Get_Data_struct_define G5_Get;
 
 #endif
