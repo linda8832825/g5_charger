@@ -89,9 +89,39 @@ void Initial_G5_UART(void)
 	T3CONbits.TCKPS=1;
 	T3CONbits.TCS=0; //內部clock (FOSC/2
 	PR3=1250; //0.625去一次 _T3Interrupt
-    //會在u3接收到東西時才讓T3CONbits.TON=1; 啟動timer3
+    T3CONbits.TON=1;// 啟動timer3
 		
 }
+
+void I2C_Initial(void)
+{
+	TRISx_SCL = 1 ;
+	TRISx_SDA = 1 ;
+
+	LATx_SCL = 0;
+	LATx_SDA = 0;
+
+	
+	I2C1CON=0x0000;
+	I2C1STAT=0x0000;
+	I2C1BRG=511;//180
+	
+	
+	I2C1ADD=0x10 >>1; //不懂
+	I2C1MSK=0xFFFF;
+	
+	IEC1bits.MI2C1IE=1; //不中斷
+	IEC1bits.SI2C1IE=1;
+	IPC4bits.SI2C1IP=4;
+	IPC4bits.MI2C1IP=4;
+//	I2C1CONbits.IPMIEN=1;
+	I2C1CONbits.STREN=1;
+	I2C1CONbits.SMEN=1;
+	I2C1CONbits.I2CEN=1;
+	
+	
+}	
+
 void wait(unsigned int i){
     while(i--);
 }

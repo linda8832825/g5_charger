@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project>
-  <executable name="dist/default/production/G5_Chaggerrrr.X.production.elf">
+  <executable name="dist/default/debug/G5_Chaggerrrr.X.debug.elf">
     <memory name="data">
       <units>bytes</units>
       <length>16384</length>
-      <used>136</used>
-      <free>16248</free>
+      <used>216</used>
+      <free>16168</free>
     </memory>
     <memory name="program">
       <units>bytes</units>
       <length>131316</length>
-      <used>4011</used>
-      <free>127305</free>
+      <used>4005</used>
+      <free>127311</free>
     </memory>
   </executable>
 </project>

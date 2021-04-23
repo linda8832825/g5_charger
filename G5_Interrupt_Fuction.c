@@ -2,8 +2,7 @@
 
 void __attribute__((interrupt, no_auto_psv)) _T3Interrupt(void) //Åª§¹g5©Î¼g§¹ ¦¬¨ìªº¸ê®Æ°µ¾ã²z
 {
-        unsigned char math_a,math_c,math_d;
-        unsigned int 	math_b;
+        unsigned char math_a,math_c;
         unsigned int 	*index1;
         unsigned char   *index2, Quantity,*index3;
 
@@ -80,7 +79,7 @@ void __attribute__((interrupt, no_auto_psv)) _T3Interrupt(void) //Åª§¹g5©Î¼g§¹ ¦
             }
         }
 
-        T3CONbits.TON=0; //Ãö³¬timer3
+//        T3CONbits.TON=0; //Ãö³¬timer3
         IFS0bits.T3IF=0;  //timer3¥¼µo¥Í¤¤Â_½Ð¨D
                 	
           
@@ -94,10 +93,10 @@ void __attribute__((interrupt, no_auto_psv)) _U3RXInterrupt(void)
         if((G5_Get.RIF==0) && (IC_Data.DoIamStarted==YES))
 		{
 			TMR3=0;		
-			if(!T3CONbits.TON) //u3¦³±µ¦¬¨ìªF¦è®É¤~·|Åýtimer3±Ò°Ê
-			{
-				T3CONbits.TON=1;
-			}
+//			if(!T3CONbits.TON) //u3¦³±µ¦¬¨ìªF¦è®É¤~·|Åýtimer3±Ò°Ê
+//			{
+//				T3CONbits.TON=1;
+//			}
 			if(G5_Get.RTIndex==0)
 			{
 				index=&G5_Get.ID;

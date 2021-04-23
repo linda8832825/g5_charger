@@ -67,18 +67,20 @@ int main (void)
 	Initial_IO();
 	Initial_G5_UART();
     Timer1_initial();
+    I2C_Initial();
+
     
     BUZZ = BUZZ_ON;
     LED = Turn_ON;
     while(IC_Data.Second <1);
     BUZZ = BUZZ_OFF;
     LED = Turn_OFF;
-	
+    
+
 //	Initial_Coulomb_UART();    
 //	Initial_UART2();
-//	I2C_Initial();
+
 		
-    
     //寫入庫倫計--------------------------------------------------------
 //    Unlock_Coulomb();
 //    Write_Coulomb_Data(0x0009,0x01);//0x0009  標準電池容量 0.0~6553.5AH
@@ -90,7 +92,12 @@ int main (void)
     
 	while(1)
 	{
-        
+//                LCD_Init(DriverIC_I2C_LCD_Addr);
+//    LCD_Clear();
+//    LCD_Set_Cursor(1, 1);
+//    LCD_Write_String(" 1");
+	
+    
         if(SW==SW_Push){    //如果啟動鈕被按下
             while(SW==SW_Push){//到按鈕被放開才會繼續做
                 IC_Data.DoIamStarted = YES; //按鈕被按下過

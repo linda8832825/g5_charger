@@ -1,5 +1,5 @@
-build/default/production/Main.o:  \
-Main.c  \
+build/default/debug/timer1.o:  \
+timer1.c  \
 Main_Define.h  \
 p24FJ128GA106.h  \
  G5_define.h  \

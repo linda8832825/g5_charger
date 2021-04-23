@@ -1,4 +1,4 @@
-build/default/production/Main.o:  \
+build/default/debug/Main.o:  \
 Main.c  \
 Main_Define.h  \
 p24FJ128GA106.h  \

@@ -16,6 +16,8 @@
 //
 #include "G5_define.h"
 
+#include "I2C_LCD.h"
+
 
 #define BR_115200 			34
 
@@ -26,6 +28,7 @@
 #define Charge_Voltage      0x0253 //59.5v
 
 #define My_ID               0x01
+#define DriverIC_I2C_LCD_Addr       0x4E //LCD的ID
 #define YES                 1//有無被按下啟動鈕
 #define NO                  2//
 
