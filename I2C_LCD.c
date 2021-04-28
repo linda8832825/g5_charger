@@ -2,7 +2,7 @@
 
 unsigned char RS, i2c_add, BackLight_State = LCD_BACKLIGHT;
 I2C_Data_Define I2C_Data;
-unsigned char I2C_Buffer_index;
+unsigned char I2C_Buffer;
 
 //---------------[ I2C Routines ]-------------------
 //--------------------------------------------------
@@ -33,17 +33,17 @@ void I2C_ACK(void)
 }
 void I2C_NACK(void)
 {
-  I2C1CONbits.ACKDT = 1; // 1 -> NACK
-  I2C_Master_Wait();
-  I2C1CONbits.ACKEN = 1; // Send NACK
+    I2C1CONbits.ACKDT = 1; // 1 -> NACK
+    I2C_Master_Wait();
+    I2C1CONbits.ACKEN = 1; // Send NACK
 }
 unsigned char I2C_Master_Write(unsigned char data){
-  I2C_Buffer_index=data;//放資料到I2C_DATA陣列去
-  I2C_Data.R_W=I2C_write;//在中斷會把這個值傳出去
-  while(I2C1STATbits.TBF); //0 =發送完成，I2CxTRN為空
-  while(!IFS1bits.MI2C1IF); // 等待傳輸
-  IFS1bits.MI2C1IF = 0; //傳輸完成之後會為1，要用軟體回歸0
-  return I2C1STATbits.ACKSTAT;//回傳有沒有收到確認，有的話是0
+    I2C_Data.TIF=0;//允許傳送
+    I2C_Buffer=data;//放資料到I2C_DATA陣列去
+    I2C_Data.R_W=I2C_write;//在中斷會把這個值傳出去
+    while(I2C1STATbits.TBF && IFS1bits.MI2C1IF); //0 =發送完成，I2CxTRN為空  // 等待傳輸
+    I2C_Master_Wait();
+    return I2C1STATbits.ACKSTAT;//回傳有沒有收到確認，有的話是0
 }
 //unsigned char I2C_Read_Byte(void)
 //{

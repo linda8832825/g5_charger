@@ -28,13 +28,14 @@
 typedef struct tedI2C_Data_Struct{
         struct
 		{
-            unsigned  R_W:1; //讀或寫
+            unsigned        R_W :1; //讀或寫
+            unsigned  		TIF :1;//資料傳送完成
 		};
     
 }I2C_Data_Define;
 extern I2C_Data_Define I2C_Data;
 
-extern  unsigned char I2C_Buffer_index;
+extern  unsigned char I2C_Buffer;
 
 
 #define Charge_Voltage      0x0253 //59.5v
