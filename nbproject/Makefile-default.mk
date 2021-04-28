@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=Main.c Initial.c G5_Function.c Function.c G5_Interrupt_Fuction.c timer1.c I2C_LCD.c
+SOURCEFILES_QUOTED_IF_SPACED=Main.c Initial.c G5_Function.c Function.c G5_Interrupt_Fuction.c timer1.c I2C_LCD.c I2C_Interrupt.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/Main.o ${OBJECTDIR}/Initial.o ${OBJECTDIR}/G5_Function.o ${OBJECTDIR}/Function.o ${OBJECTDIR}/G5_Interrupt_Fuction.o ${OBJECTDIR}/timer1.o ${OBJECTDIR}/I2C_LCD.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/Main.o.d ${OBJECTDIR}/Initial.o.d ${OBJECTDIR}/G5_Function.o.d ${OBJECTDIR}/Function.o.d ${OBJECTDIR}/G5_Interrupt_Fuction.o.d ${OBJECTDIR}/timer1.o.d ${OBJECTDIR}/I2C_LCD.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/Main.o ${OBJECTDIR}/Initial.o ${OBJECTDIR}/G5_Function.o ${OBJECTDIR}/Function.o ${OBJECTDIR}/G5_Interrupt_Fuction.o ${OBJECTDIR}/timer1.o ${OBJECTDIR}/I2C_LCD.o ${OBJECTDIR}/I2C_Interrupt.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/Main.o.d ${OBJECTDIR}/Initial.o.d ${OBJECTDIR}/G5_Function.o.d ${OBJECTDIR}/Function.o.d ${OBJECTDIR}/G5_Interrupt_Fuction.o.d ${OBJECTDIR}/timer1.o.d ${OBJECTDIR}/I2C_LCD.o.d ${OBJECTDIR}/I2C_Interrupt.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/Main.o ${OBJECTDIR}/Initial.o ${OBJECTDIR}/G5_Function.o ${OBJECTDIR}/Function.o ${OBJECTDIR}/G5_Interrupt_Fuction.o ${OBJECTDIR}/timer1.o ${OBJECTDIR}/I2C_LCD.o
+OBJECTFILES=${OBJECTDIR}/Main.o ${OBJECTDIR}/Initial.o ${OBJECTDIR}/G5_Function.o ${OBJECTDIR}/Function.o ${OBJECTDIR}/G5_Interrupt_Fuction.o ${OBJECTDIR}/timer1.o ${OBJECTDIR}/I2C_LCD.o ${OBJECTDIR}/I2C_Interrupt.o
 
 # Source Files
-SOURCEFILES=Main.c Initial.c G5_Function.c Function.c G5_Interrupt_Fuction.c timer1.c I2C_LCD.c
+SOURCEFILES=Main.c Initial.c G5_Function.c Function.c G5_Interrupt_Fuction.c timer1.c I2C_LCD.c I2C_Interrupt.c
 
 
 
@@ -144,6 +144,13 @@ ${OBJECTDIR}/I2C_LCD.o: I2C_LCD.c  nbproject/Makefile-${CND_CONF}.mk
 	${MP_CC} $(MP_EXTRA_CC_PRE)  I2C_LCD.c  -o ${OBJECTDIR}/I2C_LCD.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/I2C_LCD.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1    -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off   
 	@${FIXDEPS} "${OBJECTDIR}/I2C_LCD.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
+${OBJECTDIR}/I2C_Interrupt.o: I2C_Interrupt.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/I2C_Interrupt.o.d 
+	@${RM} ${OBJECTDIR}/I2C_Interrupt.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  I2C_Interrupt.c  -o ${OBJECTDIR}/I2C_Interrupt.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/I2C_Interrupt.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1    -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off   
+	@${FIXDEPS} "${OBJECTDIR}/I2C_Interrupt.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
 else
 ${OBJECTDIR}/Main.o: Main.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
@@ -193,6 +200,13 @@ ${OBJECTDIR}/I2C_LCD.o: I2C_LCD.c  nbproject/Makefile-${CND_CONF}.mk
 	@${RM} ${OBJECTDIR}/I2C_LCD.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  I2C_LCD.c  -o ${OBJECTDIR}/I2C_LCD.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/I2C_LCD.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off   
 	@${FIXDEPS} "${OBJECTDIR}/I2C_LCD.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
+${OBJECTDIR}/I2C_Interrupt.o: I2C_Interrupt.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/I2C_Interrupt.o.d 
+	@${RM} ${OBJECTDIR}/I2C_Interrupt.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  I2C_Interrupt.c  -o ${OBJECTDIR}/I2C_Interrupt.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/I2C_Interrupt.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off   
+	@${FIXDEPS} "${OBJECTDIR}/I2C_Interrupt.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
 endif
 

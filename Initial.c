@@ -17,7 +17,7 @@ void Initial_IO(void)
 	TRISE_BUZZ 				= Output;
 	TRISE_LED           	= Output; 		
 	TRISE_SW                = Input; 
-	AD1PCFGL=0xFFFF;
+	AD1PCFGL=0xFFFF; //1=數位輸入
 	AD1PCFGH=0xFFFF;	
 	
 
@@ -84,12 +84,12 @@ void Initial_G5_UART(void)
 	
 	
 	T3CON=0;
-	IEC0bits.T3IE=1; //TIMER中斷允許位 1=允許
-	IFS0bits.T3IF=0; //TIMER中斷標誌狀態位 0=未受到中斷
+	IEC0bits.T3IE=1;            //TIMER中斷允許位 1=允許
+	IFS0bits.T3IF=0;            //TIMER中斷標誌狀態位 0=未受到中斷
 	T3CONbits.TCKPS=1;
-	T3CONbits.TCS=0; //內部clock (FOSC/2
-	PR3=1250; //0.625去一次 _T3Interrupt
-    T3CONbits.TON=1;// 啟動timer3
+	T3CONbits.TCS=0;            //內部clock (FOSC/2
+	PR3=1250;                   //0.625去一次 _T3Interrupt
+//    T3CONbits.TON=1;// 啟動timer3
 		
 }
 
@@ -104,20 +104,25 @@ void I2C_Initial(void)
 	
 	I2C1CON=0x0000;
 	I2C1STAT=0x0000;
-	I2C1BRG=511;//180
+	I2C1BRG=0x13;//波德率180 //0000 0001 1111 1111
 	
 	
-	I2C1ADD=0x10 >>1; //不懂
-	I2C1MSK=0xFFFF;
+//	I2C1ADD=0X10>>1;
+	I2C1MSK=0x0000; //要地址完全一樣才能匹配
+    
+    I2C1TRN=0x00;
 	
-	IEC1bits.MI2C1IE=1; //不中斷
-	IEC1bits.SI2C1IE=1;
-	IPC4bits.SI2C1IP=4;
-	IPC4bits.MI2C1IP=4;
+	IEC1bits.MI2C1IE=1;
+	IEC1bits.SI2C1IE=0;
+	IPC4bits.SI2C1IP=0;
+	IPC4bits.MI2C1IP=4; //中斷優先權
 //	I2C1CONbits.IPMIEN=1;
-	I2C1CONbits.STREN=1;
-	I2C1CONbits.SMEN=1;
-	I2C1CONbits.I2CEN=1;
+//	I2C1CONbits.SMEN=1; //啟用輸出符合i2c電位
+	I2C1CONbits.I2CEN=1; //i2c智能
+//    I2C1CONbits.I2CSIDL = 0;//0 =在空閒模式下繼續模塊運行
+//    I2C1CONbits.A10M=0;//0 = I2CxADD是7位slave地址
+//    I2C1CONbits.I2CSIDL=1; //1 =當設備進入空閒模式時停止模塊運行
+//    I2C1CONbits.DISSLW=1; //1 =禁止slew rate控制
 	
 	
 }	

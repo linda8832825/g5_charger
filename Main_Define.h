@@ -11,9 +11,7 @@
 //#include "./Coulomb/Coulomb_define.h"
 //
 //#include "./I2C/I2C_define.h"
-////
-//#include "./I2C/I2C_LCD.h"
-//
+
 #include "G5_define.h"
 
 #include "I2C_LCD.h"
@@ -23,6 +21,20 @@
 
 #define Write 				1
 #define Read 				2
+
+#define I2C_write				0
+#define I2C_read				1
+
+typedef struct tedI2C_Data_Struct{
+        struct
+		{
+            unsigned  R_W:1; //Ū�μg
+		};
+    
+}I2C_Data_Define;
+extern I2C_Data_Define I2C_Data;
+
+extern  unsigned char I2C_Buffer_index;
 
 
 #define Charge_Voltage      0x0253 //59.5v
@@ -108,4 +120,6 @@ void Write_G5_Data(unsigned int Regest,unsigned int Data);
 unsigned int CRC_Check(void);
 unsigned int CRC_Make(unsigned char *Buffer , unsigned char Quantity);
 void wait(unsigned int i);
+void delay(unsigned int i);
+void delayms(unsigned int i);
 #endif

@@ -43,3 +43,4 @@ void LCD_SR();
 void LCD_SL();
 void LCD_Clear();
 void Delay(unsigned int counter);
+void LCD_write(unsigned char I2C_Add, unsigned char ROW, unsigned char COL , char* Str);

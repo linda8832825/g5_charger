@@ -23,6 +23,7 @@
       <itemPath>G5_Interrupt_Fuction.c</itemPath>
       <itemPath>timer1.c</itemPath>
       <itemPath>I2C_LCD.c</itemPath>
+      <itemPath>I2C_Interrupt.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
