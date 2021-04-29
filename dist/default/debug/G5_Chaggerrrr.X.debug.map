@@ -4,11 +4,11 @@ Tool Name:
   c:\program files\microchip\xc16\v1.50\bin\bin\..\bin/elf-ld.exe
 
 Command:
-  -TC:\\Users\\linda\\AppData\\Local\\Temp\\tmp00000e1c.00 \
-  -TC:\\Users\\linda\\AppData\\Local\\Temp\\tmp00000e1c.01 \
-  -TC:\\Users\\linda\\AppData\\Local\\Temp\\tmp00000e1c.02 \
-  -TC:\\Users\\linda\\AppData\\Local\\Temp\\tmp00000e1c.03 \
-  -TC:\\Users\\linda\\AppData\\Local\\Temp\\tmp00000e1c.04 \
+  -TC:\\Users\\linda\\AppData\\Local\\Temp\\tmp00003760.00 \
+  -TC:\\Users\\linda\\AppData\\Local\\Temp\\tmp00003760.01 \
+  -TC:\\Users\\linda\\AppData\\Local\\Temp\\tmp00003760.02 \
+  -TC:\\Users\\linda\\AppData\\Local\\Temp\\tmp00003760.03 \
+  -TC:\\Users\\linda\\AppData\\Local\\Temp\\tmp00003760.04 \
   -p24FJ128GA106 \
   -o \
   dist/default/debug/G5_Chaggerrrr.X.debug.elf \
@@ -77,13 +77,13 @@ Default Scalar Model: Small
 
 section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
-.text                        0x200               0x16e           0x225  (549)
-.const                       0x36e                 0x4             0x6  (6)
-.text                        0x372               0x638           0x954  (2388)
-.dinit                       0x9aa                0x22            0x33  (51)
-.text                        0x9cc                0x1c            0x2a  (42)
+.text                        0x200               0x170           0x228  (552)
+.const                       0x370                 0x4             0x6  (6)
+.text                        0x374               0x63a           0x957  (2391)
+.dinit                       0x9ae                0x22            0x33  (51)
+.text                        0x9d0                0x1c            0x2a  (42)
 
-                 Total "program" memory used (bytes):          0xbdc  (3036) 2%
+                 Total "program" memory used (bytes):          0xbe2  (3042) 2%
 
 
 "data" Memory  [Origin = 0x800, Length = 0x4000]
@@ -150,73 +150,73 @@ External Symbols in Program Memory (by address):
                   0x0002ea                  __MathError
                   0x0002f0                  __T1Interrupt
                   0x00032c                  __MI2C1Interrupt
-                  0x000368                  __DefaultInterrupt
-                  0x000372                  _I2C_Master_Wait
-                  0x0003a4                  _I2C_Master_Start
-                  0x0003ae                  _I2C_Master_RepeatedStart
-                  0x0003b8                  _I2C_Master_Stop
-                  0x0003c2                  _I2C_ACK
-                  0x0003ce                  _I2C_NACK
-                  0x0003da                  _I2C_Master_Write
-                  0x000402                  _LCD_write
-                  0x00042e                  _LCD_Init
-                  0x000484                  _IO_Expander_Write
-                  0x00049a                  _LCD_Write_4Bit
-                  0x0004b6                  _LCD_CMD
-                  0x0004ce                  _LCD_Write_Char
-                  0x0004ea                  _LCD_Write_String
-                  0x000514                  _LCD_Set_Cursor
-                  0x000550                  _Backlight
-                  0x00055e                  _noBacklight
-                  0x00056a                  _LCD_SL
-                  0x000578                  _LCD_SR
-                  0x000586                  _LCD_Clear
-                  0x000594                  _CRC_Make
-                  0x000600                  _CRC_Check
-                  0x0006d2                  _delayms
-                  0x0006f4                  _delay
-                  0x000718                  _Write_G5_Data
-                  0x0007be                  _Read_ALL_G5_Data
-                  0x000860                  _Initial_Clock
-                  0x00088a                  _Initial_IO
-                  0x0008a8                  _Initial_G5_UART
-                  0x000912                  _I2C_Initial
-                  0x000944                  _wait
-                  0x000960                  _main
-                  0x0009cc                  _Timer1_initial
+                  0x00036a                  __DefaultInterrupt
+                  0x000374                  _I2C_Master_Wait
+                  0x0003a6                  _I2C_Master_Start
+                  0x0003b0                  _I2C_Master_RepeatedStart
+                  0x0003ba                  _I2C_Master_Stop
+                  0x0003c4                  _I2C_ACK
+                  0x0003d0                  _I2C_NACK
+                  0x0003dc                  _I2C_Master_Write
+                  0x000408                  _LCD_write
+                  0x000432                  _LCD_Init
+                  0x000488                  _IO_Expander_Write
+                  0x00049e                  _LCD_Write_4Bit
+                  0x0004ba                  _LCD_CMD
+                  0x0004d2                  _LCD_Write_Char
+                  0x0004ee                  _LCD_Write_String
+                  0x000518                  _LCD_Set_Cursor
+                  0x000554                  _Backlight
+                  0x000562                  _noBacklight
+                  0x00056e                  _LCD_SL
+                  0x00057c                  _LCD_SR
+                  0x00058a                  _LCD_Clear
+                  0x000598                  _CRC_Make
+                  0x000604                  _CRC_Check
+                  0x0006d6                  _delayms
+                  0x0006f8                  _delay
+                  0x00071c                  _Write_G5_Data
+                  0x0007c2                  _Read_ALL_G5_Data
+                  0x000864                  _Initial_Clock
+                  0x00088e                  _Initial_IO
+                  0x0008ac                  _Initial_G5_UART
+                  0x000916                  _I2C_Initial
+                  0x000948                  _wait
+                  0x000964                  _main
+                  0x0009d0                  _Timer1_initial
 
 External Symbols in Program Memory (by name):
 
-                  0x000550                  _Backlight
-                  0x000600                  _CRC_Check
-                  0x000594                  _CRC_Make
-                  0x0003c2                  _I2C_ACK
-                  0x000912                  _I2C_Initial
-                  0x0003ae                  _I2C_Master_RepeatedStart
-                  0x0003a4                  _I2C_Master_Start
-                  0x0003b8                  _I2C_Master_Stop
-                  0x000372                  _I2C_Master_Wait
-                  0x0003da                  _I2C_Master_Write
-                  0x0003ce                  _I2C_NACK
-                  0x000484                  _IO_Expander_Write
-                  0x000860                  _Initial_Clock
-                  0x0008a8                  _Initial_G5_UART
-                  0x00088a                  _Initial_IO
-                  0x0004b6                  _LCD_CMD
-                  0x000586                  _LCD_Clear
-                  0x00042e                  _LCD_Init
-                  0x00056a                  _LCD_SL
-                  0x000578                  _LCD_SR
-                  0x000514                  _LCD_Set_Cursor
-                  0x00049a                  _LCD_Write_4Bit
-                  0x0004ce                  _LCD_Write_Char
-                  0x0004ea                  _LCD_Write_String
-                  0x000402                  _LCD_write
-                  0x0007be                  _Read_ALL_G5_Data
-                  0x0009cc                  _Timer1_initial
-                  0x000718                  _Write_G5_Data
+                  0x000554                  _Backlight
+                  0x000604                  _CRC_Check
+                  0x000598                  _CRC_Make
+                  0x0003c4                  _I2C_ACK
+                  0x000916                  _I2C_Initial
+                  0x0003b0                  _I2C_Master_RepeatedStart
+                  0x0003a6                  _I2C_Master_Start
+                  0x0003ba                  _I2C_Master_Stop
+                  0x000374                  _I2C_Master_Wait
+                  0x0003dc                  _I2C_Master_Write
+                  0x0003d0                  _I2C_NACK
+                  0x000488                  _IO_Expander_Write
+                  0x000864                  _Initial_Clock
+                  0x0008ac                  _Initial_G5_UART
+                  0x00088e                  _Initial_IO
+                  0x0004ba                  _LCD_CMD
+                  0x00058a                  _LCD_Clear
+                  0x000432                  _LCD_Init
+                  0x00056e                  _LCD_SL
+                  0x00057c                  _LCD_SR
+                  0x000518                  _LCD_Set_Cursor
+                  0x00049e                  _LCD_Write_4Bit
+                  0x0004d2                  _LCD_Write_Char
+                  0x0004ee                  _LCD_Write_String
+                  0x000408                  _LCD_write
+                  0x0007c2                  _Read_ALL_G5_Data
+                  0x0009d0                  _Timer1_initial
+                  0x00071c                  _Write_G5_Data
                   0x0002ce                  __AddressError
-                  0x000368                  __DefaultInterrupt
+                  0x00036a                  __DefaultInterrupt
                   0x00032c                  __MI2C1Interrupt
                   0x0002ea                  __MathError
                   0x0002c8                  __OscillatorFail
@@ -226,11 +226,11 @@ External Symbols in Program Memory (by name):
                   0x000252                  __data_init_standard
                   0x00023c                  __psv_init
                   0x000200                  __resetPRI
-                  0x0006f4                  _delay
-                  0x0006d2                  _delayms
-                  0x000960                  _main
-                  0x00055e                  _noBacklight
-                  0x000944                  _wait
+                  0x0006f8                  _delay
+                  0x0006d6                  _delayms
+                  0x000964                  _main
+                  0x000562                  _noBacklight
+                  0x000948                  _wait
 
 Memory Configuration
 
@@ -303,7 +303,7 @@ LOAD c:/program files/microchip/xc16/v1.50/bin/bin/../../lib\libfx-elf.a
                   0x000002          0x2 SHORT 0x0 ((ABSOLUTE (__reset) >> 0x10) & 0x7f)
                   0x000003          0x2 SHORT 0x0
 
-.text             0x000200        0x16e
+.text             0x000200        0x170
  *(.init)
  .init            0x000200         0x4c c:/program files/microchip/xc16/v1.50/bin/bin/../../lib\liblega-pic30-elf.a(crt0_standard.o)
                   0x000200                  __resetPRI
@@ -322,18 +322,18 @@ LOAD c:/program files/microchip/xc16/v1.50/bin/bin/../../lib\libfx-elf.a
                   0x0002ea                  __MathError
  .isr.text        0x0002f0         0x3c build/default/debug/timer1.o
                   0x0002f0                  __T1Interrupt
- .isr.text        0x00032c         0x3c build/default/debug/I2C_Interrupt.o
+ .isr.text        0x00032c         0x3e build/default/debug/I2C_Interrupt.o
                   0x00032c                  __MI2C1Interrupt
- .isr             0x000368          0x4 default_isr
-                  0x000368                  __DefaultInterrupt
+ .isr             0x00036a          0x4 default_isr
+                  0x00036a                  __DefaultInterrupt
  *(.libc)
  *(.libm)
  *(.libdsp)
  *(.lib*)
  .libpic30_crt_start_mode
-                  0x00036c          0x2 c:/program files/microchip/xc16/v1.50/bin/bin/../../lib\liblega-pic30-elf.a(crt_start_mode_normal.Leo)
-                  0x00036c                  __crt_start_mode
-                  0x00036c                  __crt_start_mode_normal
+                  0x00036e          0x2 c:/program files/microchip/xc16/v1.50/bin/bin/../../lib\liblega-pic30-elf.a(crt_start_mode_normal.Leo)
+                  0x00036e                  __crt_start_mode
+                  0x00036e                  __crt_start_mode_normal
 
 usercode
  *(usercode)
@@ -352,15 +352,15 @@ __CONFIG1         0x0157fe          0x2
 .comment
  *(.comment)
 
-.debug_info       0x000000       0x4ae4
+.debug_info       0x000000       0x4990
  *(.debug_info)
  .debug_info      0x000000        0x4af build/default/debug/Main.o
  .debug_info      0x0004af       0x1edd build/default/debug/Initial.o
  .debug_info      0x00238c        0xad1 build/default/debug/G5_Function.o
  .debug_info      0x002e5d        0x60d build/default/debug/Function.o
  .debug_info      0x00346a        0x634 build/default/debug/timer1.o
- .debug_info      0x003a9e        0x9ce build/default/debug/I2C_LCD.o
- .debug_info      0x00446c        0x678 build/default/debug/I2C_Interrupt.o
+ .debug_info      0x003a9e        0x9df build/default/debug/I2C_LCD.o
+ .debug_info      0x00447d        0x513 build/default/debug/I2C_Interrupt.o
  *(.gnu.linkonce.wi.*)
 
 .debug_abbrev     0x000000        0x8fd
@@ -374,7 +374,7 @@ __CONFIG1         0x0157fe          0x2
  .debug_abbrev    0x000663        0x193 build/default/debug/I2C_LCD.o
  .debug_abbrev    0x0007f6        0x107 build/default/debug/I2C_Interrupt.o
 
-.debug_line       0x000000        0x5e6
+.debug_line       0x000000        0x5e0
  *(.debug_line)
  .debug_line      0x000000         0xd6 build/default/debug/Main.o
  .debug_line      0x0000d6         0xe3 build/default/debug/Initial.o
@@ -382,8 +382,8 @@ __CONFIG1         0x0157fe          0x2
  .debug_line      0x000296         0x93 build/default/debug/Function.o
  .debug_line      0x000329         0x1a build/default/debug/G5_Interrupt_Fuction.o
  .debug_line      0x000343         0xc5 build/default/debug/timer1.o
- .debug_line      0x000408        0x122 build/default/debug/I2C_LCD.o
- .debug_line      0x00052a         0xbc build/default/debug/I2C_Interrupt.o
+ .debug_line      0x000408        0x123 build/default/debug/I2C_LCD.o
+ .debug_line      0x00052b         0xb5 build/default/debug/I2C_Interrupt.o
 
 .debug_frame      0x000000        0x4a0
  *(.debug_frame)
@@ -395,7 +395,7 @@ __CONFIG1         0x0157fe          0x2
  .debug_frame     0x00024c        0x21c build/default/debug/I2C_LCD.o
  .debug_frame     0x000468         0x38 build/default/debug/I2C_Interrupt.o
 
-.debug_str        0x000000        0x1e0
+.debug_str        0x000000        0x1d4
  *(.debug_str)
  .debug_str       0x000000         0x15 build/default/debug/Main.o
  .debug_str       0x000015         0xd9 build/default/debug/Initial.o
@@ -403,7 +403,7 @@ __CONFIG1         0x0157fe          0x2
  .debug_str       0x000111         0x37 build/default/debug/Function.o
  .debug_str       0x000148         0x1c build/default/debug/timer1.o
  .debug_str       0x000164         0x46 build/default/debug/I2C_LCD.o
- .debug_str       0x0001aa         0x36 build/default/debug/I2C_Interrupt.o
+ .debug_str       0x0001aa         0x2a build/default/debug/I2C_Interrupt.o
 
 .debug_loc
  *(.debug_loc)
@@ -1439,7 +1439,7 @@ LOAD default_isr
 LOAD data_init
 
 .debug_pubtypes
-                  0x0000a8        0x680
+                  0x0000a8        0x65d
  .debug_pubtypes
                   0x0000a8         0x88 build/default/debug/Main.o
  .debug_pubtypes
@@ -1453,30 +1453,30 @@ LOAD data_init
  .debug_pubtypes
                   0x0005ca         0xaf build/default/debug/I2C_LCD.o
  .debug_pubtypes
-                  0x000679         0xaf build/default/debug/I2C_Interrupt.o
+                  0x000679         0x8c build/default/debug/I2C_Interrupt.o
 
 __c30_signature
-                  0x000728         0x3c
+                  0x000705         0x3c
  __c30_signature
-                  0x000728          0x6 build/default/debug/Main.o
+                  0x000705          0x6 build/default/debug/Main.o
  __c30_signature
-                  0x00072e          0x6 build/default/debug/Initial.o
+                  0x00070b          0x6 build/default/debug/Initial.o
  __c30_signature
-                  0x000734          0x6 build/default/debug/G5_Function.o
+                  0x000711          0x6 build/default/debug/G5_Function.o
  __c30_signature
-                  0x00073a          0x6 build/default/debug/Function.o
+                  0x000717          0x6 build/default/debug/Function.o
  __c30_signature
-                  0x000740          0x6 build/default/debug/G5_Interrupt_Fuction.o
+                  0x00071d          0x6 build/default/debug/G5_Interrupt_Fuction.o
  __c30_signature
-                  0x000746          0x6 build/default/debug/timer1.o
+                  0x000723          0x6 build/default/debug/timer1.o
  __c30_signature
-                  0x00074c          0x6 build/default/debug/I2C_LCD.o
+                  0x000729          0x6 build/default/debug/I2C_LCD.o
  __c30_signature
-                  0x000752          0x6 build/default/debug/I2C_Interrupt.o
+                  0x00072f          0x6 build/default/debug/I2C_Interrupt.o
  __c30_signature
-                  0x000758          0x6 c:/program files/microchip/xc16/v1.50/bin/bin/../../lib\liblega-pic30-elf.a(crt0_standard.o)
+                  0x000735          0x6 c:/program files/microchip/xc16/v1.50/bin/bin/../../lib\liblega-pic30-elf.a(crt0_standard.o)
  __c30_signature
-                  0x00075e          0x6 c:/program files/microchip/xc16/v1.50/bin/bin/../../lib\liblega-pic30-elf.a(data_init_standard.o)
+                  0x00073b          0x6 c:/program files/microchip/xc16/v1.50/bin/bin/../../lib\liblega-pic30-elf.a(data_init_standard.o)
 
 .nbss               0x0850          0x6
  .nbss              0x0850          0x6 build/default/debug/I2C_LCD.o
@@ -1528,51 +1528,51 @@ __c30_signature
  .ivt._MI2C1Interrupt
                   0x000036          0x2 build/default/debug/I2C_Interrupt.o
 
-.const              0x836e          0x4 load address 0x00036e  
- .const             0x836e          0x4 build/default/debug/Main.o
+.const              0x8370          0x4 load address 0x000370  
+ .const             0x8370          0x4 build/default/debug/Main.o
 
-.text             0x000372        0x638
- .text            0x000372        0x222 build/default/debug/I2C_LCD.o
-                  0x000372                  _I2C_Master_Wait
-                  0x0003a4                  _I2C_Master_Start
-                  0x0003ae                  _I2C_Master_RepeatedStart
-                  0x0003b8                  _I2C_Master_Stop
-                  0x0003c2                  _I2C_ACK
-                  0x0003ce                  _I2C_NACK
-                  0x0003da                  _I2C_Master_Write
-                  0x000402                  _LCD_write
-                  0x00042e                  _LCD_Init
-                  0x000484                  _IO_Expander_Write
-                  0x00049a                  _LCD_Write_4Bit
-                  0x0004b6                  _LCD_CMD
-                  0x0004ce                  _LCD_Write_Char
-                  0x0004ea                  _LCD_Write_String
-                  0x000514                  _LCD_Set_Cursor
-                  0x000550                  _Backlight
-                  0x00055e                  _noBacklight
-                  0x00056a                  _LCD_SL
-                  0x000578                  _LCD_SR
-                  0x000586                  _LCD_Clear
- .text            0x000594        0x184 build/default/debug/Function.o
-                  0x000594                  _CRC_Make
-                  0x000600                  _CRC_Check
-                  0x0006d2                  _delayms
-                  0x0006f4                  _delay
- .text            0x000718        0x148 build/default/debug/G5_Function.o
-                  0x000718                  _Write_G5_Data
-                  0x0007be                  _Read_ALL_G5_Data
- .text            0x000860        0x100 build/default/debug/Initial.o
-                  0x000860                  _Initial_Clock
-                  0x00088a                  _Initial_IO
-                  0x0008a8                  _Initial_G5_UART
-                  0x000912                  _I2C_Initial
-                  0x000944                  _wait
- .text            0x000960         0x4a build/default/debug/Main.o
-                  0x000960                  _main
+.text             0x000374        0x63a
+ .text            0x000374        0x224 build/default/debug/I2C_LCD.o
+                  0x000374                  _I2C_Master_Wait
+                  0x0003a6                  _I2C_Master_Start
+                  0x0003b0                  _I2C_Master_RepeatedStart
+                  0x0003ba                  _I2C_Master_Stop
+                  0x0003c4                  _I2C_ACK
+                  0x0003d0                  _I2C_NACK
+                  0x0003dc                  _I2C_Master_Write
+                  0x000408                  _LCD_write
+                  0x000432                  _LCD_Init
+                  0x000488                  _IO_Expander_Write
+                  0x00049e                  _LCD_Write_4Bit
+                  0x0004ba                  _LCD_CMD
+                  0x0004d2                  _LCD_Write_Char
+                  0x0004ee                  _LCD_Write_String
+                  0x000518                  _LCD_Set_Cursor
+                  0x000554                  _Backlight
+                  0x000562                  _noBacklight
+                  0x00056e                  _LCD_SL
+                  0x00057c                  _LCD_SR
+                  0x00058a                  _LCD_Clear
+ .text            0x000598        0x184 build/default/debug/Function.o
+                  0x000598                  _CRC_Make
+                  0x000604                  _CRC_Check
+                  0x0006d6                  _delayms
+                  0x0006f8                  _delay
+ .text            0x00071c        0x148 build/default/debug/G5_Function.o
+                  0x00071c                  _Write_G5_Data
+                  0x0007c2                  _Read_ALL_G5_Data
+ .text            0x000864        0x100 build/default/debug/Initial.o
+                  0x000864                  _Initial_Clock
+                  0x00088e                  _Initial_IO
+                  0x0008ac                  _Initial_G5_UART
+                  0x000916                  _I2C_Initial
+                  0x000948                  _wait
+ .text            0x000964         0x4a build/default/debug/Main.o
+                  0x000964                  _main
 
-.dinit            0x0009aa         0x22
- .dinit           0x0009aa         0x22 data_init
+.dinit            0x0009ae         0x22
+ .dinit           0x0009ae         0x22 data_init
 
-.text             0x0009cc         0x1c
- .text            0x0009cc         0x1c build/default/debug/timer1.o
-                  0x0009cc                  _Timer1_initial
+.text             0x0009d0         0x1c
+ .text            0x0009d0         0x1c build/default/debug/timer1.o
+                  0x0009d0                  _Timer1_initial

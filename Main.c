@@ -73,11 +73,9 @@ int main (void)
     
     BUZZ = BUZZ_ON;
     LED = Turn_ON;
-//    wait(1000000);
     delay(1);
     BUZZ = BUZZ_OFF;
     LED = Turn_OFF;
-//    wait(20000);
     delay(3);
 		
  
