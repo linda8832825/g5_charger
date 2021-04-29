@@ -11,7 +11,7 @@ void Timer1_initial(void)
 	PR1=2000; //1秒做一次 但不知道公式
 }
 void __attribute__((interrupt, no_auto_psv)) _T1Interrupt(void){
-//    led_Toggle();
+
 
     //使用時間計時		
     if(IC_Data.ms==0){

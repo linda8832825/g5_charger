@@ -23,26 +23,26 @@ typedef struct tagG5_Data_struct {
 			unsigned Voltage_statue	:4;		//		
 		};		
 	};
-	unsigned int Voltage;										//0x02  電壓	0.000~50.000V or 50.00~400.00V
-	unsigned int Current;										//0x03  電流	0.000~50.000A or 50.00~655.35A
-	unsigned int Residual_Electricity; 			//0x04  剩下電量0.0~6553.5Ah
-    unsigned int Nominal_Battery_Capacity; 	//0x05  標準電池容量 0.0~6553.5AH
-    unsigned int Battery_Power;							//0x06  百分比或剩餘電量0.00~100.00%
-    unsigned int Temperature1;							//0x07  溫度1	-55.0~125.0
+	unsigned int Voltage;							//0x02  電壓	0.000~50.000V or 50.00~400.00V
+	unsigned int Current;							//0x03  電流	0.000~50.000A or 50.00~655.35A
+	unsigned int Residual_Electricity;              //0x04  剩下電量0.0~6553.5Ah
+    unsigned int Nominal_Battery_Capacity;          //0x05  標準電池容量 0.0~6553.5AH
+    unsigned int Battery_Power;						//0x06  百分比或剩餘電量0.00~100.00%
+    unsigned int Temperature1;						//0x07  溫度1	-55.0~125.0
     
-	unsigned int Battery_ID;							//0x08  讀取Battery_ID(機台號碼 客戶可以自行設定)
-	unsigned int Car_Statue;					//0x09  讀取車子狀態
+	unsigned int Battery_ID;						//0x08  讀取Battery_ID(機台號碼 客戶可以自行設定)
+	unsigned int Car_Statue;                        //0x09  讀取車子狀態
 	unsigned int Month;								//0x000A  讀取使用月份
-	unsigned int Day;					//0x0B  讀取使用日期			
-	unsigned int Hour;					//0x0C  讀取使用小時	
-	unsigned int minute;						//0x0D  讀取使用分鐘			
-	unsigned int Now_Total_Capacity;						//0x0E  讀取電池老化後，電池所剩餘的殘餘滿額容量				
-	unsigned int Fake_Voltage;							//0x0F  讀取假電壓
+	unsigned int Day;                               //0x0B  讀取使用日期			
+	unsigned int Hour;                              //0x0C  讀取使用小時	
+	unsigned int minute;                            //0x0D  讀取使用分鐘			
+	unsigned int Now_Total_Capacity;				//0x0E  讀取電池老化後，電池所剩餘的殘餘滿額容量				
+	unsigned int Fake_Voltage;						//0x0F  讀取假電壓
 	struct
 	{
-		unsigned  			 	IF1 :1;		//資料傳送完成
-		unsigned  			 	IF2 :1;		//資料接收完成
-		unsigned  			 	IF3 :1;	  //資料接收或傳送錯誤	
+		unsigned  			 	IF1 :1;             //資料傳送完成
+		unsigned  			 	IF2 :1;             //資料接收完成
+		unsigned  			 	IF3 :1;             //資料接收或傳送錯誤	
 		unsigned int 			Read_Timer;	
 	};		
 	
@@ -56,9 +56,9 @@ typedef struct tagG5_Sent_Data_struct {
 	{
 		struct
 		{
-			unsigned char 	Reg_H;	//因為傳輸時候是先傳輸高位元之後再傳輸低位元
-		  unsigned char 	Reg_L;  //可是PIC是先從低位元開始擺放，所以會有高低位元交換的問題
-		};												//故REG會是整個高低位元顛倒的情況，故之後有個重新整理的運算
+			unsigned char 	Reg_H;          //因為傳輸時候是先傳輸高位元之後再傳輸低位元
+		  unsigned char 	Reg_L;          //可是PIC是先從低位元開始擺放，所以會有高低位元交換的問題
+		};									//故REG會是整個高低位元顛倒的情況，故之後有個重新整理的運算
        	struct
 		{
 			unsigned char 	Chx;

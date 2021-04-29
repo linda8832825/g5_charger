@@ -5,11 +5,22 @@ I2C_Data_Define I2C_Data;
 unsigned char I2C_Buffer;
 //---------------[ LCD應用]-------------------
 //--------------------------------------------------
-void LCD_write(unsigned char I2C_Add, unsigned char ROW, unsigned char COL , char* Str){
+void LCD_write_Char(unsigned char ROW, unsigned char COL , char* Str){
     while(I2C1STATbits.BCL) I2C1STATbits.BCL=0; //總線出現衝突後歸為未發生衝突
-    LCD_Init(I2C_Add);
     LCD_Set_Cursor(ROW, COL);
     LCD_Write_String(Str);
+}
+void LCD_write_Variable(unsigned char ROW, unsigned char COL , unsigned int variable){
+    char no;
+    while(I2C1STATbits.BCL) I2C1STATbits.BCL=0; //總線出現衝突後歸為未發生衝突
+    LCD_Set_Cursor(ROW, COL);
+    sprintf(&no, "%d", variable/10); //第幾顆電池
+    LCD_Write_String(&no);
+    LCD_Set_Cursor(ROW, COL+2);
+    LCD_Write_String(".");
+    LCD_Set_Cursor(ROW, COL+3);
+    sprintf(&no, "%d", variable%10); //第幾顆電池
+    LCD_Write_String(&no);
 }
 //======================================================
 //---------------[ I2C Routines ]-------------------

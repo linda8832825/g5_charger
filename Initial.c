@@ -12,7 +12,8 @@ void Initial_Clock(void)
 
 void Initial_IO(void)
 {
-    TRISE_Battery           = Output;
+    TRISE_WriteError        = Output;
+    TRISE_BatteryError      = Output;
     TRISE_POWER             = Output;
 	TRISE_BUZZ 				= Output;
 	TRISE_LED           	= Output; 		
@@ -89,7 +90,7 @@ void Initial_G5_UART(void)
 	T3CONbits.TCKPS=1;
 	T3CONbits.TCS=0;            //內部clock (FOSC/2
 	PR3=1250;                   //0.625去一次 _T3Interrupt
-//    T3CONbits.TON=1;// 啟動timer3
+    T3CONbits.TON=1;// 啟動timer3
 		
 }
 
@@ -126,7 +127,3 @@ void I2C_Initial(void)
 	
 	
 }	
-
-void wait(unsigned int i){
-    while(i--);
-}
