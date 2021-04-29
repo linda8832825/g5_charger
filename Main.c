@@ -12,27 +12,23 @@ _CONFIG2( IESO_OFF & FNOSC_FRCPLL & FCKSM_CSDCMD & OSCIOFNC_OFF   )
 
 
 
-void __attribute__((interrupt, no_auto_psv)) _OscillatorFail(void)
-{
+void __attribute__((interrupt, no_auto_psv)) _OscillatorFail(void){
 	INTCON1bits.OSCFAIL = 0;
 	while(1);     
 }
 
-void __attribute__((interrupt, no_auto_psv)) _AddressError(void)
-{
+void __attribute__((interrupt, no_auto_psv)) _AddressError(void){
 	unsigned char math_a=1;
 	INTCON1bits.ADDRERR = 	0;
 	while(math_a);     
 }
 
-void __attribute__((interrupt, no_auto_psv))_StackError(void)
-{
+void __attribute__((interrupt, no_auto_psv))_StackError(void){
 	INTCON1bits.STKERR = 0;
 	while(1);     
 }
 
-void __attribute__((interrupt, no_auto_psv)) _MathError(void)
-{
+void __attribute__((interrupt, no_auto_psv)) _MathError(void){
 	INTCON1bits.MATHERR = 0;
 	while(1);     
 }
@@ -48,16 +44,14 @@ int main (void)
     unsigned int    math_c=0; //無法寫滿安時進去的次數
     
 	Initial_Clock(); 	
-	IC_Data.ms=1000;
-	
-	//IC_Data.Wait_Coulomb_Read=0;
-	
 	
 	//一些數值的初始化設定-----------------------------------------------
+    IC_Data.ms=1000;
     IC_Data.GetTheWhatYouWant=NO;
     IC_Data.DoIamStarted=NO;
     IC_Data.WriteZeroAh=NO;
 //    IC_Data.WriteWholeAh=NO;
+//    IC_Data.fuck=NO;
 //	IC_Data.Wait_Coulomb_Read=1480;
 //	IC_Data.Charge_Voltage_Avg=0;		
 //	IC_Data.Charge_Voltage_Avg_Count=0;	
@@ -87,6 +81,7 @@ int main (void)
  
 	while(1)
 	{
+        //------------------------------啟動-----------------------------------//
         if(SW==SW_Push){    //如果啟動鈕被按下
             while(SW==SW_Push){//到按鈕被放開才會繼續做
                 IC_Data.DoIamStarted = YES; //按鈕被按下過
@@ -94,8 +89,12 @@ int main (void)
                 //要不要寫個函式高級些
             }
         }
+        //---------------------------------------------------------------------//
+        
             
-        if(IC_Data.DoIamStarted == YES && IC_Data.GetTheWhatYouWant == NO && IC_Data.WriteWholeAh == YES){
+        //-----------------------------嘗試與G5連接-------------------------------//
+//        if(IC_Data.DoIamStarted == YES && IC_Data.GetTheWhatYouWant == NO && IC_Data.WriteWholeAh == YES){
+        if((IC_Data.DoIamStarted == YES) && (IC_Data.GetTheWhatYouWant == NO) ){
             if((G5_Get.RIF != 1) && (math_a<=3) && (IC_Data.GetTheWhatYouWant == NO)){//如果還沒收到資料
                 BUZZ = BUZZ_ON;
                 delay(1);
@@ -103,6 +102,7 @@ int main (void)
                 Read_ALL_G5_Data(); //跟G5要資料
                 if(G5_Data.ID == My_ID){//有要到正確資料
                     IC_Data.GetTheWhatYouWant = YES;
+                    LCD_Clear();//清空前面螢幕寫的東西
                 }
                 else{// 沒有要到正確資料 就充電三十秒
                     math_a++;
@@ -122,133 +122,96 @@ int main (void)
                 LCD_write_Char(1, 1 , "Connection To G5 error occurred");
                 math_a = 0;
             }
-            if(IC_Data.GetTheWhatYouWant == YES){//如果要到資料就放電到電流=0
-                //---------------------顯示g5資料-------------------------------//
-                LCD_Clear();
-                LCD_write_Char(1, 1 , "Voltage:");//顯示電壓
-                LCD_write_Variable(1, 9 , G5_Data.Voltage);
-                LCD_write_Char(1, 13 , "V");
-                
-                LCD_write_Char(2, 1 , "Current:");//顯示電流
-                LCD_write_Variable(1, 9 , G5_Data.Current);
-                LCD_write_Char(1, 13 , "A");
-                
-                LCD_write_Char(3, 1 , "NowAh:");//顯示現在安時數
-                LCD_write_Variable(1, 7 , G5_Data.Residual_Electricity);
-                LCD_write_Char(1, 11 , "Ah");
-                
-                LCD_write_Char(4, 1 , "FullAh:");//顯示滿安時數 //可能要在還沒做完前不需要顯示這個嗎? 或是看看之前回來寫過多少安時數了
-                LCD_write_Variable(1, 8 , G5_Data.Now_Total_Capacity);
-                LCD_write_Char(1, 11 , "Ah");
-                //--------------------------------------------------------------//
-                
-                
-                
-                //----------------------------放電------------------------------//
-                if(IC_Data.WriteZeroAh == NO){//寫入0.1AH尚未成功
-                    ////放電/////////////////////////////加東西///////////////////////
-                    if((G5_Data.Current == 0x00) && (G5_Data.Voltage <= Discharge_Voltage)){//放電完成
-                        //放電中止///9//////////////////////加東西///////////////////////
-
-                        if(G5_Data.Residual_Electricity == 0x01){//確認是否為0.1Ah
-                            IC_Data.WriteZeroAh = YES; //寫入0.1安時數成功
-                            LCD_Clear();
-                            LCD_write_Char(1, 1 , "Write 0.1Ah To G5 complete");
-                        }
-                        else{//沒有的話再寫一次
-                            Write_G5_Data(0x07 , 0x01); //寫0.1Ah進去 01 06 00 07 00 01 crc
-                            math_b++;
-                        }
-                        if(math_b>=3){//寫入0.1安時失敗
-                            WriteError = Turn_ON;
-                            BUZZ = BUZZ_ON;
-                            delay(3);
-                            WriteError = Turn_OFF;
-                            LCD_Clear();
-                            LCD_write_Char(1, 1 , "Write Ah To G5 error occurred");
-                        }
-                    }
-                }
-                //--------------------------------------------------------------//
-                
-                
-                //-----------------------------充電------------------------------//
-                if(IC_Data.WriteZeroAh == YES){//寫好0.1安時後開始充電
-                    POWER = Turn_ON;
-                    if(G5_Data.Current <= Charge_Stop_Current){//充電完畢
-                        
-                        if(G5_Data.Now_Total_Capacity == G5_Data.Residual_Electricity){//確認是否將現在的安時數寫到滿安時數
-                            IC_Data.WriteWholeAh = YES; //寫入滿安時數成功
-                            LCD_Clear();
-                            LCD_write_Char(1, 1 , "Write Whole Ah To G5 complete");
-                        }
-                        else{//沒有的話再寫一次
-                            Write_G5_Data(0x09 , 0x01); //跟G5說將現在的安時數寫到滿安時數 01 06 00 09 00 01 crc
-                            math_c++;
-                        }
-                        if(math_c>=3){//寫入0.1安時失敗
-                            WriteError = Turn_ON;
-                            BUZZ = BUZZ_ON;
-                            delay(3);
-                            WriteError = Turn_OFF;
-                            LCD_Clear();
-                            LCD_write_Char(1, 1 , "Write Whole Ah To G5 error occurred");
-                        }
-                       
-                    }
-                    
-                }
-                //---------------------------------------------------------------//
-            }
-                
-                
         }
-            
-            
-            
+        //----------------------------------------------------------------------------//
+        
+        
+        //-----------------------------已與G5連接-----------------------------------//
+        if(IC_Data.GetTheWhatYouWant == YES){//如果要到資料就放電到電流=0
+            //---------------------顯示g5資料-----------------------------------//
+            LCD_Clear();
+            LCD_write_Char(1, 1 , "Voltage:");//顯示電壓
+            LCD_write_Variable(1, 9 , G5_Data.Voltage);    
+            LCD_write_Char(1, 13 , "V");
 
-//            do
-//            {	
-//                G5_Receiver.IF = 0;
-//                Read_ALL_G5_Data(); //跟G5要資料
-//
-////                Coulomb_Data.Read_Timer=500; ///////////////////////////////////////////////////
-//                while(G5_Receiver.IF==0); //等待G5回應資料
-//                math_b++;
-//                if(math_b>1){
-//                    math_c++; //計數充電次數
-//                    //G5板子沒有通電 要先充電
-//                    //叫電源供應器充電30秒
-//                }
-//                if(math_c >= read_G5_times_limt){ //充電次數高於設定值
-//                    // lcd顯示battery error
-//                    BUZZ = BUZZ_ON; // 蜂鳴器叫
-//                        //過一段時間停掉
-//                }
-//            }while(G5_Receiver.ERRIF==1);
+            LCD_write_Char(2, 1 , "Current:");//顯示電流
+            LCD_write_Variable(2, 9 , G5_Data.Current);
+            LCD_write_Char(2, 13 , "A");
+
+            LCD_write_Char(3, 1 , "NowAh:");//顯示現在安時數
+            LCD_write_Variable(3, 7 , G5_Data.Residual_Electricity);
+            LCD_write_Char(3, 11 , "Ah");
+
+            LCD_write_Char(4, 1 , "FullAh:");//顯示滿安時數 //可能要在還沒做完前不需要顯示這個嗎? 或是看看之前回來寫過多少安時數了
+            LCD_write_Variable(4, 8 , G5_Data.Now_Total_Capacity);
+            LCD_write_Char(4, 11 , "Ah");
+            delay(2);
             
-            
-            
-//            if(G5_Data.Voltage <= Discharge_Voltage){//如果電壓小於放電截止點 
-//                G5_reset_work(); //reset安時數
-//            }
-//            else{
-//                do{
-//                     跟電子附載機通訊讓他放電到 Discharge_Voltage
-//                
-//                }while(G5_Data.Voltage <=  Discharge_Voltage);
-//                G5_reset_work(); //reset安時數
-//            }
-            
-            
-            
-            //讓LCD顯示------------------------------------------------------
-//            LCD_Init(LCD_I2C_Addr<<1); // Initialize LCD module with I2C address = 01001110
-//            LCD_Set_Cursor(1, 1);
-//            LCD_Write_String(" 1");
-            //--------------------------------------------------------------
+            //-----------------------------------------------------------------//
 
 
+
+            //----------------------------放電---------------------------------//
+            if(IC_Data.WriteZeroAh == NO){//寫入0.1AH尚未成功
+                ////放電/////////////////////////////加東西///////////////////////
+                if((G5_Data.Current == 0x00) && (G5_Data.Voltage <= Discharge_Voltage)){//放電完成
+                    //放電中止///9//////////////////////加東西///////////////////////
+
+                    if(G5_Data.Residual_Electricity == 0x01){//確認是否為0.1Ah
+                        IC_Data.WriteZeroAh = YES; //寫入0.1安時數成功
+                        LCD_Clear();
+                        LCD_write_Char(1, 1 , "Write 0.1Ah To G5 complete");
+                    }
+                    else{//沒有的話再寫一次
+                        Write_G5_Data(0x07 , 0x01); //寫0.1Ah進去 01 06 00 07 00 01 crc
+                        math_b++;
+                    }
+                    if(math_b>=3){//寫入0.1安時失敗
+                        WriteError = Turn_ON;
+                        BUZZ = BUZZ_ON;
+                        delay(3);
+                        WriteError = Turn_OFF;
+                        LCD_Clear();
+                        LCD_write_Char(1, 1 , "Write Ah To G5 error occurred");
+                    }
+                }
+            }
+            //-----------------------------------------------------------------//
+
+
+            //-----------------------------充電--------------------------------//
+            if(IC_Data.WriteZeroAh == YES){//寫好0.1安時後開始充電
+                POWER = Turn_ON;
+                if(G5_Data.Current <= Charge_Stop_Current){//充電完畢
+
+                    if(G5_Data.Now_Total_Capacity == G5_Data.Residual_Electricity){//確認是否將現在的安時數寫到滿安時數
+//                            IC_Data.WriteWholeAh = YES; //寫入滿安時數成功
+                        LCD_Clear();
+                        LCD_write_Char(1, 1 , "Write Whole Ah To G5 complete");
+                    }
+                    else{//沒有的話再寫一次
+                        Write_G5_Data(0x09 , 0x01); //跟G5說將現在的安時數寫到滿安時數 01 06 00 09 00 01 crc
+                        math_c++;
+                    }
+                    if(math_c>=3){//寫入0.1安時失敗
+                        WriteError = Turn_ON;
+                        BUZZ = BUZZ_ON;
+                        delay(3);
+                        WriteError = Turn_OFF;
+                        LCD_Clear();
+                        LCD_write_Char(1, 1 , "Write Whole Ah To G5 error occurred");
+                    }
+
+                }
+
+            }
+            //------------------------------------------------------------------//
+        }
+        //----------------------------------------------------------------------//        
+                
+        
+            
+            
             //電子附載機那邊接收到東西-------------------------------------------
 //            if(ModBus_Receiver.RIF==1)
 //            {
@@ -263,18 +226,7 @@ int main (void)
 //            }
 //            else if(ModBus_Receiver.ERRIF)   ModBus_Receiver.ERRIF=0; //資料接收或傳送錯誤	
             //-----------------------------------------------------------------
-			
-       
-            //I2C--------------------------------------------------------------
-//            if(!I2C_Data.Busy_IF) //如果要傳送的對象沒有忙碌中
-//            {
-//                if(EEPROM.Save_IF)
-//                {
-//                    Write_EEROM_information();
-//                }
-//            }	
-            
-            //-----------------------------------------------------------------
+		
         		
       }
     return 1;

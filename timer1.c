@@ -2,7 +2,7 @@
 
 void Timer1_initial(void)
 {
-	T1CON=0; //timer1中斷智能
+	T1CON=0; 
 	IEC0bits.T1IE=1; // TIMER中斷允許位 1=允許
 	IFS0bits.T1IF=0; // TIMER中斷標誌狀態位 0=未受到中斷
 	T1CONbits.TCKPS=1;//1:8

@@ -18,26 +18,19 @@
 
 #include "stdio.h"
 
-#define BR_115200 			34
-
-#define Write 				1
-#define Read 				2
-
-#define I2C_write				0
-#define I2C_read				1
-
 typedef struct tedIC_Data_Struct{
     unsigned 	char 	Second;	
     unsigned 	int 	ms;	
     unsigned    int     Thirty_Second_Count;
-    struct{
-        unsigned     DoIamStarted       : 2; //有無被按下啟動鈕
-        unsigned     GetTheWhatYouWant  : 2; //有無拿到正確資料
-        unsigned     WriteZeroAh        : 2; //有時寫入0.1安時數成功
-        unsigned     WriteWholeAh       : 2; //有無寫入滿安時數成功
-    };
+    unsigned    DoIamStarted       : 1; //有無被按下啟動鈕
+    unsigned    GetTheWhatYouWant  : 1; //有無拿到正確資料
+    unsigned    WriteZeroAh        : 1; //有時寫入0.1安時數成功
+    unsigned    WriteWholeAh       : 1; //有無寫入滿安時數成功
+    unsigned    fuck               : 1; //
+    
 }IC_Data_Define;
 extern IC_Data_Define IC_Data;
+
 
 typedef struct tedI2C_Data_Struct{
         struct
@@ -51,15 +44,23 @@ extern I2C_Data_Define I2C_Data;
 
 extern  unsigned char I2C_Buffer;
 
+#define BR_115200                   34
 
-#define Discharge_Voltage       0x01C2 //45.0v 知道放電完的點
-#define Charge_Voltage          0x0253 //59.5v 知道充電完的點
-#define Charge_Stop_Current     0x0A //1.0A 知道充電完的點
+#define Write                       1
+#define Read                        2
 
-#define My_ID               0x01
+#define I2C_write                   0
+#define I2C_read                    1
+
+#define Discharge_Voltage           0x01C2 //45.0v 知道放電完的點
+#define Charge_Voltage              0x0253 //59.5v 知道充電完的點
+#define Charge_Stop_Current         0x0A //1.0A 知道充電完的點
+
+#define My_ID                       0x01
 #define DriverIC_I2C_LCD_Addr       0x4E //LCD的ID
-#define YES                 1//有無被按下啟動鈕
-#define NO                  2//
+
+#define YES                         1//有被按下啟動鈕
+#define NO                          0//無被按下啟動鈕
 
 
 

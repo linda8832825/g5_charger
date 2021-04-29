@@ -14,13 +14,13 @@ void LCD_write_Variable(unsigned char ROW, unsigned char COL , unsigned int vari
     char no;
     while(I2C1STATbits.BCL) I2C1STATbits.BCL=0; //總線出現衝突後歸為未發生衝突
     LCD_Set_Cursor(ROW, COL);
-    sprintf(&no, "%d", variable/10); //第幾顆電池
+    sprintf(&no, "%d", variable); //第幾顆電池
     LCD_Write_String(&no);
-    LCD_Set_Cursor(ROW, COL+2);
-    LCD_Write_String(".");
-    LCD_Set_Cursor(ROW, COL+3);
-    sprintf(&no, "%d", variable%10); //第幾顆電池
-    LCD_Write_String(&no);
+//    LCD_Set_Cursor(ROW, COL+2);
+//    LCD_Write_String(".");
+//    LCD_Set_Cursor(ROW, COL+3);
+//    sprintf(&no, "%d", variable%10); //第幾顆電池
+//    LCD_Write_String(&no);
 }
 //======================================================
 //---------------[ I2C Routines ]-------------------
