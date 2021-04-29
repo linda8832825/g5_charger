@@ -44,8 +44,8 @@ IC_Data_Define IC_Data;
 int main (void) 
 {
     unsigned int    math_a=0; //計數資料要不到多少次
-    unsigned int    math_b=0; //取現在的秒數
-    unsigned int    math_c=0; //無法寫0.1安時進去的次數
+    unsigned int    math_b=0; //無法寫0.1安時進去的次數
+    unsigned int    math_c=0; //無法寫滿安時進去的次數
     
 	Initial_Clock(); 	
 	IC_Data.ms=1000;
@@ -56,6 +56,8 @@ int main (void)
 	//一些數值的初始化設定-----------------------------------------------
     IC_Data.GetTheWhatYouWant=NO;
     IC_Data.DoIamStarted=NO;
+    IC_Data.WriteZeroAh=NO;
+//    IC_Data.WriteWholeAh=NO;
 //	IC_Data.Wait_Coulomb_Read=1480;
 //	IC_Data.Charge_Voltage_Avg=0;		
 //	IC_Data.Charge_Voltage_Avg_Count=0;	
@@ -65,9 +67,10 @@ int main (void)
 
 	         
 	Initial_IO();
-//	Initial_G5_UART();
+	Initial_G5_UART();
     Timer1_initial();
     I2C_Initial();
+    LCD_Init(DriverIC_I2C_LCD_Addr);
 //	Initial_Coulomb_UART();    
 //	Initial_UART2();
     
@@ -77,66 +80,129 @@ int main (void)
     BUZZ = BUZZ_OFF;
     LED = Turn_OFF;
     delay(3);
-		
+	LCD_write_Char(1, 1 , " iNer");
+    LCD_write_Char(2, 1 , " iNer");
+    LCD_write_Char(3, 1 , " iNer");
+    LCD_write_Char(4, 1 , " iNer");
  
 	while(1)
 	{
-        LCD_write(DriverIC_I2C_LCD_Addr, 1, 1 , " 1");
-    }
-    return 1;
-}
-        
+        if(SW==SW_Push){    //如果啟動鈕被按下
+            while(SW==SW_Push){//到按鈕被放開才會繼續做
+                IC_Data.DoIamStarted = YES; //按鈕被按下過
+                //然後在清空之前設的所有變數
+                //要不要寫個函式高級些
+            }
+        }
+            
+        if(IC_Data.DoIamStarted == YES && IC_Data.GetTheWhatYouWant == NO && IC_Data.WriteWholeAh == YES){
+            if((G5_Get.RIF != 1) && (math_a<=3) && (IC_Data.GetTheWhatYouWant == NO)){//如果還沒收到資料
+                BUZZ = BUZZ_ON;
+                delay(1);
+                BUZZ = BUZZ_OFF;
+                Read_ALL_G5_Data(); //跟G5要資料
+                if(G5_Data.ID == My_ID){//有要到正確資料
+                    IC_Data.GetTheWhatYouWant = YES;
+                }
+                else{// 沒有要到正確資料 就充電三十秒
+                    math_a++;
+                    IC_Data.Thirty_Second_Count=0;
+                    POWER = Turn_ON;
+                    while(IC_Data.Thirty_Second_Count==1);
+                    POWER = Turn_OFF;
+                }
+            }
+            else{//充電4次都沒辦法讓g5傳資料出來就宣告失敗
+                IC_Data.GetTheWhatYouWant= NO; 
+                BatteryError = Turn_ON; //battery燈亮 代表g5沒電了
+                BUZZ = BUZZ_ON;
+                delay(3);
+                WriteError = Turn_OFF;
+                LCD_Clear();
+                LCD_write_Char(1, 1 , "Connection To G5 error occurred");
+                math_a = 0;
+            }
+            if(IC_Data.GetTheWhatYouWant == YES){//如果要到資料就放電到電流=0
+                //---------------------顯示g5資料-------------------------------//
+                LCD_Clear();
+                LCD_write_Char(1, 1 , "Voltage:");//顯示電壓
+                LCD_write_Variable(1, 9 , G5_Data.Voltage);
+                LCD_write_Char(1, 13 , "V");
+                
+                LCD_write_Char(2, 1 , "Current:");//顯示電流
+                LCD_write_Variable(1, 9 , G5_Data.Current);
+                LCD_write_Char(1, 13 , "A");
+                
+                LCD_write_Char(3, 1 , "NowAh:");//顯示現在安時數
+                LCD_write_Variable(1, 7 , G5_Data.Residual_Electricity);
+                LCD_write_Char(1, 11 , "Ah");
+                
+                LCD_write_Char(4, 1 , "FullAh:");//顯示滿安時數 //可能要在還沒做完前不需要顯示這個嗎? 或是看看之前回來寫過多少安時數了
+                LCD_write_Variable(1, 8 , G5_Data.Now_Total_Capacity);
+                LCD_write_Char(1, 11 , "Ah");
+                //--------------------------------------------------------------//
+                
+                
+                
+                //----------------------------放電------------------------------//
+                if(IC_Data.WriteZeroAh == NO){//寫入0.1AH尚未成功
+                    ////放電/////////////////////////////加東西///////////////////////
+                    if((G5_Data.Current == 0x00) && (G5_Data.Voltage <= Discharge_Voltage)){//放電完成
+                        //放電中止///9//////////////////////加東西///////////////////////
 
-    
-//        if(SW==SW_Push){    //如果啟動鈕被按下
-//            while(SW==SW_Push){//到按鈕被放開才會繼續做
-//                IC_Data.DoIamStarted = YES; //按鈕被按下過
-//                //然後在清空之前設的所有變數
-//                //要不要寫個函式高級些
-//            }
-//        }
-//            
-//        if(IC_Data.DoIamStarted == YES){
-//            if((G5_Get.RIF != 1) && (math_a<=3) && (IC_Data.GetTheWhatYouWant == NO)){//如果還沒收到資料
-//                BUZZ = BUZZ_ON;
-//                math_b=IC_Data.Second;
-//                while(math_b == IC_Data.Second);
-//                BUZZ = BUZZ_OFF;
-//                Read_ALL_G5_Data(); //跟G5要資料
-//                if(G5_Data.ID == My_ID){//有要到正確資料
-//                    IC_Data.GetTheWhatYouWant = YES;
-//                }
-//                else{// 沒有要到正確資料 就充電三十秒
-//                    math_a++;
-//                    IC_Data.Thirty_Second_Count=0;
-//                    POWER = Turn_ON;
-//                    while(IC_Data.Thirty_Second_Count==1);
-//                    POWER = Turn_OFF;
-//                }
-//            }
-//            else{//充電4次都沒辦法讓g5傳資料出來就
-//                IC_Data.GetTheWhatYouWant= NO; 
-//                BatteryError = Turn_ON; //battery燈亮 代表g5沒電了
-//                math_a = 0;
-//            }
-//            if(IC_Data.GetTheWhatYouWant == YES){//如果要到資料就放電到電流=0
-//                //放電
-//                while(G5_Data.Current > 0x00);
-//                //放電中止
-//                if(G5_Data.Residual_Electricity == 0x01){//確認是否為0.1Ah
-//                    IC_Data.WriteZeroAh = YES;
-//                }
-//                else{//沒有的話再寫一次///////////////////////////////
-//                    Write_G5_Data(0x07 , 0x01); //寫0.1Ah進去 01 06 00 07 00 01 crc
-//                    math_c++;
-//                }
-//                if(math_c>=3){
-//                    //寫入0.1安時失敗
-//                }
-//            }
-//                
-//                
-//        }
+                        if(G5_Data.Residual_Electricity == 0x01){//確認是否為0.1Ah
+                            IC_Data.WriteZeroAh = YES; //寫入0.1安時數成功
+                            LCD_Clear();
+                            LCD_write_Char(1, 1 , "Write 0.1Ah To G5 complete");
+                        }
+                        else{//沒有的話再寫一次
+                            Write_G5_Data(0x07 , 0x01); //寫0.1Ah進去 01 06 00 07 00 01 crc
+                            math_b++;
+                        }
+                        if(math_b>=3){//寫入0.1安時失敗
+                            WriteError = Turn_ON;
+                            BUZZ = BUZZ_ON;
+                            delay(3);
+                            WriteError = Turn_OFF;
+                            LCD_Clear();
+                            LCD_write_Char(1, 1 , "Write Ah To G5 error occurred");
+                        }
+                    }
+                }
+                //--------------------------------------------------------------//
+                
+                
+                //-----------------------------充電------------------------------//
+                if(IC_Data.WriteZeroAh == YES){//寫好0.1安時後開始充電
+                    POWER = Turn_ON;
+                    if(G5_Data.Current <= Charge_Stop_Current){//充電完畢
+                        
+                        if(G5_Data.Now_Total_Capacity == G5_Data.Residual_Electricity){//確認是否將現在的安時數寫到滿安時數
+                            IC_Data.WriteWholeAh = YES; //寫入滿安時數成功
+                            LCD_Clear();
+                            LCD_write_Char(1, 1 , "Write Whole Ah To G5 complete");
+                        }
+                        else{//沒有的話再寫一次
+                            Write_G5_Data(0x09 , 0x01); //跟G5說將現在的安時數寫到滿安時數 01 06 00 09 00 01 crc
+                            math_c++;
+                        }
+                        if(math_c>=3){//寫入0.1安時失敗
+                            WriteError = Turn_ON;
+                            BUZZ = BUZZ_ON;
+                            delay(3);
+                            WriteError = Turn_OFF;
+                            LCD_Clear();
+                            LCD_write_Char(1, 1 , "Write Whole Ah To G5 error occurred");
+                        }
+                       
+                    }
+                    
+                }
+                //---------------------------------------------------------------//
+            }
+                
+                
+        }
             
             
             
@@ -210,4 +276,6 @@ int main (void)
             
             //-----------------------------------------------------------------
         		
-       	
+      }
+    return 1;
+}    	

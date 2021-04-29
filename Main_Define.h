@@ -16,6 +16,7 @@
 
 #include "I2C_LCD.h"
 
+#include "stdio.h"
 
 #define BR_115200 			34
 
@@ -24,6 +25,19 @@
 
 #define I2C_write				0
 #define I2C_read				1
+
+typedef struct tedIC_Data_Struct{
+    unsigned 	char 	Second;	
+    unsigned 	int 	ms;	
+    unsigned    int     Thirty_Second_Count;
+    struct{
+        unsigned     DoIamStarted       : 2; //有無被按下啟動鈕
+        unsigned     GetTheWhatYouWant  : 2; //有無拿到正確資料
+        unsigned     WriteZeroAh        : 2; //有時寫入0.1安時數成功
+        unsigned     WriteWholeAh       : 2; //有無寫入滿安時數成功
+    };
+}IC_Data_Define;
+extern IC_Data_Define IC_Data;
 
 typedef struct tedI2C_Data_Struct{
         struct
@@ -38,27 +52,20 @@ extern I2C_Data_Define I2C_Data;
 extern  unsigned char I2C_Buffer;
 
 
-#define Charge_Voltage      0x0253 //59.5v
+#define Discharge_Voltage       0x01C2 //45.0v 知道放電完的點
+#define Charge_Voltage          0x0253 //59.5v 知道充電完的點
+#define Charge_Stop_Current     0x0A //1.0A 知道充電完的點
 
 #define My_ID               0x01
 #define DriverIC_I2C_LCD_Addr       0x4E //LCD的ID
 #define YES                 1//有無被按下啟動鈕
 #define NO                  2//
 
-typedef struct tedIC_Data_Struct{
-        unsigned     DoIamStarted       : 2 ; //有無被按下啟動鈕
-        unsigned     GetTheWhatYouWant  : 2;//有無拿到正確資料
-        unsigned     WriteZeroAh        : 2;
-        unsigned 	char 	Second;	
-        unsigned 	int 	ms;	
-        unsigned    int     Thirty_Second_Count;	
-    
-}IC_Data_Define;
-extern IC_Data_Define IC_Data;
+
 
    
 
-#define read_G5_times_limt 5
+//#define read_G5_times_limt 5
 
 #define Turn_ON 				0
 #define Turn_OFF 			1
@@ -80,14 +87,16 @@ extern IC_Data_Define IC_Data;
 #define Flick_Freq 			Flick_Slow 
 
 
-#define BatteryError                 LATEbits.LATE3  //g5充電4次也救不起來的錯誤
+#define WriteError              LATEbits.LATE2  //黃 寫值進G5四次都失敗
+#define BatteryError            LATEbits.LATE3  //紅 g5充電4次也救不起來的錯誤
 #define POWER                   LATEbits.LATE4  //充電器的開與關
-#define LED         			LATEbits.LATE5  //狀態led，每次讀資料對反轉狀態
+#define LED         			LATEbits.LATE5  //藍 狀態led，每次讀G5資料對反轉狀態
 #define SW       				PORTEbits.RE6   //啟動鈕
 #define BUZZ     				LATEbits.LATE7  //開機叫一聲
 
 
-#define TRISE_Battery           TRISEbits.TRISE3 
+#define TRISE_WriteError        TRISEbits.TRISE2
+#define TRISE_BatteryError      TRISEbits.TRISE3 
 #define TRISE_POWER             TRISEbits.TRISE4 
 #define TRISE_LED               TRISEbits.TRISE5 //1為輸入 0為輸出
 #define TRISE_SW      			TRISEbits.TRISE6	
@@ -120,7 +129,6 @@ void Read_ALL_G5_Data(void);
 void Write_G5_Data(unsigned int Regest,unsigned int Data);
 unsigned int CRC_Check(void);
 unsigned int CRC_Make(unsigned char *Buffer , unsigned char Quantity);
-void wait(unsigned int i);
 void delay(unsigned int i);
 void delayms(unsigned int i);
 #endif
