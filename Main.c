@@ -53,7 +53,7 @@ int main (void)
 	
 	//一些數值的初始化設定-----------------------------------------------
     IC_Data.time.ms=1000;
-    IC_Data.time.Regual_Read_G5=20;//200秒後才能常態與g5通訊
+    IC_Data.time.Regual_Read_G5=20;//20秒後才能常態與g5通訊
     IC_Data.GetTheWhatYouWant=NO;
     IC_Data.DoIamStarted=NO;
     IC_Data.WriteZeroAh=NO;
@@ -139,7 +139,7 @@ int main (void)
                 FirstWriteLCD=NO;
                 math_f=0;
             }
-            else{//10秒更新一次LCD
+            else{//20秒更新一次LCD
                 if(math_e==0){
                     math_d=IC_Data.time.Second;
                     math_e=1;
@@ -214,28 +214,11 @@ int main (void)
             //------------------------------------------------------------------//
         }
         //----------------------------------------------------------------------//        
-                
-        if(G5_Get.RIF){
-            G5_Get.RIF=0;
-        }
             
-            
-            //電子附載機那邊接收到東西-------------------------------------------
-//            if(ModBus_Receiver.RIF==1)
-//            {
-//                if(T4CONbits.TON==0)Timer4_initial(); //如果timer結束 就讓timer開始
-//
-//                ModBus_Receiver.ERR_Count=0;	//資料接收或傳送錯誤	
-//
-//                			
-//                ModBus_Receiver.RIF=0;
-//
-//                if(U2STAbits.OERR)  while(U2STAbits.OERR) math_a=U2RXREG; //如果接收緩衝區溢出了//就把接收緩衝區清空
-//            }
-//            else if(ModBus_Receiver.ERRIF)   ModBus_Receiver.ERRIF=0; //資料接收或傳送錯誤	
-            //-----------------------------------------------------------------
-		
-        		
+        //---------------------------接收G5資料---------------------------------//
+        if(G5_Get.RIF) G5_Get.RIF=0;
+        //----------------------------------------------------------------------//    
+     		
       }
     return 1;
 }    	
