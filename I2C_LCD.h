@@ -44,3 +44,5 @@ void LCD_SL();
 void LCD_Clear();
 void LCD_write_Char(unsigned char ROW, unsigned char COL , char* Str);
 void LCD_write_Variable(unsigned char ROW, unsigned char COL , unsigned int variable);
+void First_Write_to_LCD(void);
+void Other_Time_Write_to_LCD(void);

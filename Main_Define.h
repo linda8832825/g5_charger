@@ -25,8 +25,7 @@ typedef struct tedIC_Data_Struct{
     unsigned    DoIamStarted       : 1; //有無被按下啟動鈕
     unsigned    GetTheWhatYouWant  : 1; //有無拿到正確資料
     unsigned    WriteZeroAh        : 1; //有時寫入0.1安時數成功
-    unsigned    WriteWholeAh       : 1; //有無寫入滿安時數成功
-    unsigned    fuck               : 1; //
+//    unsigned    WriteWholeAh       : 1; //有無寫入滿安時數成功   //不知道為啥不能放在這邊 所以改成在main的最外面放
     
 }IC_Data_Define;
 extern IC_Data_Define IC_Data;

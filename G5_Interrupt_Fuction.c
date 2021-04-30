@@ -16,7 +16,7 @@ void __attribute__((interrupt, no_auto_psv)) _T3Interrupt(void) //Åª§¹g5©Î¼g§¹ ¦
 
         if((G5_Get.RTIndex>0) && (IC_Data.DoIamStarted == YES))
         {
-            led_Toggle();
+//            led_Toggle();
             if(G5_Sent.W_R == Read)
             {
                 if(CRC_Check())

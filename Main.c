@@ -1,5 +1,5 @@
 //###########################################################//
-//    日期   : 2021.04.08                                    //
+//    日期   : 2021.04.30                                    //
 //    版本   : v1.0                                          //
 //  更新紀錄 :                        //
 //    作者   :                                   //
@@ -34,6 +34,8 @@ void __attribute__((interrupt, no_auto_psv)) _MathError(void){
 }
 
 IC_Data_Define IC_Data;
+unsigned int WriteWholeAh=0;
+unsigned int FirstWriteLCD=1;
 //IC_Data_IF IC_Data_Save_IF;
 
 
@@ -42,6 +44,9 @@ int main (void)
     unsigned int    math_a=0; //計數資料要不到多少次
     unsigned int    math_b=0; //無法寫0.1安時進去的次數
     unsigned int    math_c=0; //無法寫滿安時進去的次數
+    unsigned int    math_d=0; //放秒
+    unsigned int    math_e=0; //判斷要不要更新LCD
+  
     
 	Initial_Clock(); 	
 	
@@ -50,8 +55,7 @@ int main (void)
     IC_Data.GetTheWhatYouWant=NO;
     IC_Data.DoIamStarted=NO;
     IC_Data.WriteZeroAh=NO;
-//    IC_Data.WriteWholeAh=NO;
-//    IC_Data.fuck=NO;
+    
 //	IC_Data.Wait_Coulomb_Read=1480;
 //	IC_Data.Charge_Voltage_Avg=0;		
 //	IC_Data.Charge_Voltage_Avg_Count=0;	
@@ -129,23 +133,22 @@ int main (void)
         //-----------------------------已與G5連接-----------------------------------//
         if(IC_Data.GetTheWhatYouWant == YES){//如果要到資料就放電到電流=0
             //---------------------顯示g5資料-----------------------------------//
-            LCD_Clear();
-            LCD_write_Char(1, 1 , "Voltage:");//顯示電壓
-            LCD_write_Variable(1, 9 , G5_Data.Voltage);    
-            LCD_write_Char(1, 13 , "V");
-
-            LCD_write_Char(2, 1 , "Current:");//顯示電流
-            LCD_write_Variable(2, 9 , G5_Data.Current);
-            LCD_write_Char(2, 13 , "A");
-
-            LCD_write_Char(3, 1 , "NowAh:");//顯示現在安時數
-            LCD_write_Variable(3, 7 , G5_Data.Residual_Electricity);
-            LCD_write_Char(3, 11 , "Ah");
-
-            LCD_write_Char(4, 1 , "FullAh:");//顯示滿安時數 //可能要在還沒做完前不需要顯示這個嗎? 或是看看之前回來寫過多少安時數了
-            LCD_write_Variable(4, 8 , G5_Data.Now_Total_Capacity);
-            LCD_write_Char(4, 11 , "Ah");
-            delay(2);
+            if(FirstWriteLCD == YES) { //第一次要來顯示全部資料
+                First_Write_to_LCD();
+                FirstWriteLCD=NO;
+            }
+            else{//10秒更新一次LCD
+                if(math_e==0){
+                    math_d=IC_Data.Second;
+                    math_e=1;
+                }
+                if(((IC_Data.Second - math_d)>10) && (math_e==1)){
+                    led_Toggle();
+                    Other_Time_Write_to_LCD();
+                    math_e=0;
+                }
+            }
+            
             
             //-----------------------------------------------------------------//
 
@@ -185,7 +188,7 @@ int main (void)
                 if(G5_Data.Current <= Charge_Stop_Current){//充電完畢
 
                     if(G5_Data.Now_Total_Capacity == G5_Data.Residual_Electricity){//確認是否將現在的安時數寫到滿安時數
-//                            IC_Data.WriteWholeAh = YES; //寫入滿安時數成功
+                        WriteWholeAh = YES; //寫入滿安時數成功
                         LCD_Clear();
                         LCD_write_Char(1, 1 , "Write Whole Ah To G5 complete");
                     }
