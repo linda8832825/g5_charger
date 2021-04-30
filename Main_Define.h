@@ -12,6 +12,8 @@
 //
 //#include "./I2C/I2C_define.h"
 
+#include "Ele_load_Define.h"
+
 #include "G5_define.h"
 
 #include "I2C_LCD.h"
@@ -46,6 +48,7 @@ extern I2C_Data_Define I2C_Data;
 
 extern  unsigned char I2C_Buffer;
 
+#define BR_128000                   30 //30 or 31
 #define BR_115200                   34
 
 #define Write                       1
@@ -60,6 +63,11 @@ extern  unsigned char I2C_Buffer;
 
 #define My_ID                       0x01
 #define DriverIC_I2C_LCD_Addr       0x4E //LCD的ID
+#define Ele_load_Addr               0xAA //電子附載機的頭碼
+#define Ele_load_Keyword            0x46 //電子附載機的關鍵字
+#define Ele_load_StopFuc            0x02 //電子附載機的啟停命令
+#define Ele_load_End                0xAC //電子附載機的尾碼
+
 
 #define YES                         1//有被按下啟動鈕
 #define NO                          0//無被按下啟動鈕
@@ -134,4 +142,5 @@ unsigned int CRC_Check(void);
 unsigned int CRC_Make(unsigned char *Buffer , unsigned char Quantity);
 void delay(unsigned int i);
 void delayms(unsigned int i);
+void Initial_Ele_load_UART(void);
 #endif

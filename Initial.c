@@ -34,7 +34,38 @@ void Initial_IO(void)
 	TRISE_U1TX = Output;	
 	
 }
+void Initial_Ele_load_UART(void)
+{
+	
+	U2MODE=0x0008;//只使用UxTX跟UxRX腳位 UxRX腳位空閒電位為0	
+	U2STA=0x2440;//UxTX腳位空閒電位為1
+	U2STAbits.URXISEL=1;	
+	U2BRG = BR_128000;
+	
+	RPINR19bits.U2RXR = 10;//把RPINR19的U2RXR的功能 指向RP10 //rx在RP10
+ 	RPOR8bits.RP17R = 28;	//把RPOR8bits.RP17R的腳位 指向功能28 //TX在RP17
 
+	IFS1bits.U2RXIF = 0;		// Clear Interrupt flag11
+	IFS1bits.U2TXIF = 0;		
+	IEC1bits.U2RXIE = 1;		// Enable UART Interrupt
+	IEC1bits.U2TXIE = 1;		// Enable UART Interrupt
+		
+	IPC7bits.U2RXIP=5;
+	IPC7bits.U2TXIP=5;
+	U2STAbits.UTXEN=1; //允許TX
+	U2MODEbits.UARTEN=1;	
+	
+	
+	
+	T2CON=0;
+	IEC0bits.T2IE=1;            //TIMER中斷允許位 1=允許
+	IFS0bits.T2IF=0;            //TIMER中斷標誌狀態位 0=未受到中斷
+	T2CONbits.TCKPS=1;
+	T2CONbits.TCS=0;            //內部clock (FOSC/2
+	PR2=1250;                   //不知道多少
+//    T2CONbits.TON=1;// 啟動timer2
+		
+}
 void Initial_G5_UART(void)
 {
 	
@@ -43,47 +74,20 @@ void Initial_G5_UART(void)
 	U3STAbits.URXISEL=1;	
 	U3BRG = BR_115200;
 	
-/*
-	把下面的選項指向PRx
-	RPINR18.U1RXR<5:0>
-	RPINR19.U2RXR<5:0>
-	RPINR17.U3RXR<5:0>
-	RPINR27.U4RXR<5:0>
-	
-	
-	把RPORxbits.RPxR指向下面的哪一選項
-	3 U1TX UART1 Transmit
-	5 U2TX UART2 Transmit
-	28 U3TX UART3 Transmit
-	30 U4TX UART4 Transmit	
-*/
-	
-		//CON5	
-//	RPINR17bits.U3RXR = 2;//把RPINR17的U3RXR的功能 指向RP7
-//	RPOR2bits.RP4R = 28;	//把RPOR3bits.RP7R的腳位 指向功能28 	
-	
 		//CON4原本
 	RPINR17bits.U3RXR = 7;//把RPINR17的U3RXR的功能 指向RP7
 	RPOR3bits.RP6R = 28;	//把RPOR3bits.RP7R的腳位 指向功能28 
-	
-		//CON3
-//	RPINR17bits.U3RXR = 10;
-//	RPOR8bits.RP17R = 28;
-
-
 			
 	IFS5bits.U3RXIF = 0;		// Clear Interrupt flag11
 	IFS5bits.U3TXIF = 0;		
 	IEC5bits.U3RXIE = 1;		// Enable UART Interrupt
 	IEC5bits.U3TXIE = 1;		// Enable UART Interrupt
 		
-	IPC20bits.U3RXIP=5;
-	IPC20bits.U3TXIP=5;
+	IPC20bits.U3RXIP=7;
+	IPC20bits.U3TXIP=7;
 	U3STAbits.UTXEN=1;
 	U3MODEbits.UARTEN=1;	
-	
-	
-	
+
 	T3CON=0;
 	IEC0bits.T3IE=1;            //TIMER中斷允許位 1=允許
 	IFS0bits.T3IF=0;            //TIMER中斷標誌狀態位 0=未受到中斷
@@ -91,7 +95,6 @@ void Initial_G5_UART(void)
 	T3CONbits.TCS=0;            //內部clock (FOSC/2
 	PR3=1250;                   //0.625去一次 _T3Interrupt
     T3CONbits.TON=1;// 啟動timer3
-		
 }
 
 void I2C_Initial(void)

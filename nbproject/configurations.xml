@@ -8,6 +8,7 @@
       <itemPath>G5_define.h</itemPath>
       <itemPath>p24FJ128GA106.h</itemPath>
       <itemPath>I2C_LCD.h</itemPath>
+      <itemPath>Ele_load_Define.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -24,6 +25,7 @@
       <itemPath>timer1.c</itemPath>
       <itemPath>I2C_LCD.c</itemPath>
       <itemPath>I2C_Interrupt.c</itemPath>
+      <itemPath>Ele_load_Interrupt.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -45,7 +47,7 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="PIC24F-GA-GB_DFP" vendor="Microchip" version="1.3.109"/>
+        <pack name="PIC24F-GA-GB_DFP" vendor="Microchip" version="1.4.141"/>
       </packs>
       <ScriptingSettings>
       </ScriptingSettings>

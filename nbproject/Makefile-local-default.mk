@@ -35,4 +35,4 @@ MP_AS_DIR="C:\Program Files (x86)\Microchip\MPLAB C30\bin"
 MP_LD_DIR="C:\Program Files (x86)\Microchip\MPLAB C30\bin"
 MP_AR_DIR="C:\Program Files (x86)\Microchip\MPLAB C30\bin"
 # MP_BC_DIR is not defined
-DFP_DIR=C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC24F-GA-GB_DFP/1.3.109
+DFP_DIR=C:/Users/linda/.mchp_packs/Microchip/PIC24F-GA-GB_DFP/1.4.141

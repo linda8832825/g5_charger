@@ -1,14 +1,6 @@
 #ifndef G5_define_H
 #define G5_define_H
 
-#define Fuc_Erro				0x01
-#define Reg_Add_Erro		    0x02
-#define Value_Erro			    0x03
-#define NoConnect_Erro	        0x07
-#define CRC_Erro				0x08
-#define Lightning_Erro	        0x09
-
-
 typedef struct tagG5_Data_struct {	
 	
 	unsigned int ID;

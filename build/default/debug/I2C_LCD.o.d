@@ -1,4 +1,4 @@
-build/default/production/I2C_LCD.o:  \
+build/default/debug/I2C_LCD.o:  \
 I2C_LCD.c  \
 Main_Define.h  \
 p24FJ128GA106.h  \

@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=Main.c Initial.c G5_Function.c Function.c G5_Interrupt_Fuction.c timer1.c I2C_LCD.c I2C_Interrupt.c
+SOURCEFILES_QUOTED_IF_SPACED=Main.c Initial.c G5_Function.c Function.c G5_Interrupt_Fuction.c timer1.c I2C_LCD.c I2C_Interrupt.c Ele_load_Interrupt.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/Main.o ${OBJECTDIR}/Initial.o ${OBJECTDIR}/G5_Function.o ${OBJECTDIR}/Function.o ${OBJECTDIR}/G5_Interrupt_Fuction.o ${OBJECTDIR}/timer1.o ${OBJECTDIR}/I2C_LCD.o ${OBJECTDIR}/I2C_Interrupt.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/Main.o.d ${OBJECTDIR}/Initial.o.d ${OBJECTDIR}/G5_Function.o.d ${OBJECTDIR}/Function.o.d ${OBJECTDIR}/G5_Interrupt_Fuction.o.d ${OBJECTDIR}/timer1.o.d ${OBJECTDIR}/I2C_LCD.o.d ${OBJECTDIR}/I2C_Interrupt.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/Main.o ${OBJECTDIR}/Initial.o ${OBJECTDIR}/G5_Function.o ${OBJECTDIR}/Function.o ${OBJECTDIR}/G5_Interrupt_Fuction.o ${OBJECTDIR}/timer1.o ${OBJECTDIR}/I2C_LCD.o ${OBJECTDIR}/I2C_Interrupt.o ${OBJECTDIR}/Ele_load_Interrupt.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/Main.o.d ${OBJECTDIR}/Initial.o.d ${OBJECTDIR}/G5_Function.o.d ${OBJECTDIR}/Function.o.d ${OBJECTDIR}/G5_Interrupt_Fuction.o.d ${OBJECTDIR}/timer1.o.d ${OBJECTDIR}/I2C_LCD.o.d ${OBJECTDIR}/I2C_Interrupt.o.d ${OBJECTDIR}/Ele_load_Interrupt.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/Main.o ${OBJECTDIR}/Initial.o ${OBJECTDIR}/G5_Function.o ${OBJECTDIR}/Function.o ${OBJECTDIR}/G5_Interrupt_Fuction.o ${OBJECTDIR}/timer1.o ${OBJECTDIR}/I2C_LCD.o ${OBJECTDIR}/I2C_Interrupt.o
+OBJECTFILES=${OBJECTDIR}/Main.o ${OBJECTDIR}/Initial.o ${OBJECTDIR}/G5_Function.o ${OBJECTDIR}/Function.o ${OBJECTDIR}/G5_Interrupt_Fuction.o ${OBJECTDIR}/timer1.o ${OBJECTDIR}/I2C_LCD.o ${OBJECTDIR}/I2C_Interrupt.o ${OBJECTDIR}/Ele_load_Interrupt.o
 
 # Source Files
-SOURCEFILES=Main.c Initial.c G5_Function.c Function.c G5_Interrupt_Fuction.c timer1.c I2C_LCD.c I2C_Interrupt.c
+SOURCEFILES=Main.c Initial.c G5_Function.c Function.c G5_Interrupt_Fuction.c timer1.c I2C_LCD.c I2C_Interrupt.c Ele_load_Interrupt.c
 
 
 
@@ -163,6 +163,13 @@ ${OBJECTDIR}/I2C_Interrupt.o: I2C_Interrupt.c  nbproject/Makefile-${CND_CONF}.mk
 	@${RM} ${OBJECTDIR}/I2C_Interrupt.o 
 	@${FIXDEPS} "${OBJECTDIR}/I2C_Interrupt.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -omf=elf -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -Wall -MMD -MF "${OBJECTDIR}/I2C_Interrupt.o.d" -o ${OBJECTDIR}/I2C_Interrupt.o I2C_Interrupt.c    -legacy-libc
 	
+${OBJECTDIR}/Ele_load_Interrupt.o: Ele_load_Interrupt.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/Ele_load_Interrupt.o.d 
+	@${RM} ${OBJECTDIR}/Ele_load_Interrupt.o.ok ${OBJECTDIR}/Ele_load_Interrupt.o.err 
+	@${RM} ${OBJECTDIR}/Ele_load_Interrupt.o 
+	@${FIXDEPS} "${OBJECTDIR}/Ele_load_Interrupt.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -omf=elf -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -Wall -MMD -MF "${OBJECTDIR}/Ele_load_Interrupt.o.d" -o ${OBJECTDIR}/Ele_load_Interrupt.o Ele_load_Interrupt.c    -legacy-libc
+	
 else
 ${OBJECTDIR}/Main.o: Main.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
@@ -219,6 +226,13 @@ ${OBJECTDIR}/I2C_Interrupt.o: I2C_Interrupt.c  nbproject/Makefile-${CND_CONF}.mk
 	@${RM} ${OBJECTDIR}/I2C_Interrupt.o.ok ${OBJECTDIR}/I2C_Interrupt.o.err 
 	@${RM} ${OBJECTDIR}/I2C_Interrupt.o 
 	@${FIXDEPS} "${OBJECTDIR}/I2C_Interrupt.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE)  -g -omf=elf -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -Wall -MMD -MF "${OBJECTDIR}/I2C_Interrupt.o.d" -o ${OBJECTDIR}/I2C_Interrupt.o I2C_Interrupt.c    -legacy-libc
+	
+${OBJECTDIR}/Ele_load_Interrupt.o: Ele_load_Interrupt.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/Ele_load_Interrupt.o.d 
+	@${RM} ${OBJECTDIR}/Ele_load_Interrupt.o.ok ${OBJECTDIR}/Ele_load_Interrupt.o.err 
+	@${RM} ${OBJECTDIR}/Ele_load_Interrupt.o 
+	@${FIXDEPS} "${OBJECTDIR}/Ele_load_Interrupt.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE)  -g -omf=elf -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -Wall -MMD -MF "${OBJECTDIR}/Ele_load_Interrupt.o.d" -o ${OBJECTDIR}/Ele_load_Interrupt.o Ele_load_Interrupt.c    -legacy-libc
 	
 endif
 
