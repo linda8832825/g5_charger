@@ -13,19 +13,28 @@ void Timer1_initial(void)
 void __attribute__((interrupt, no_auto_psv)) _T1Interrupt(void){
 
 
+    
     //使用時間計時		
-    if(IC_Data.ms==0){
-        IC_Data.ms=1000;		
-
-        if(IC_Data.Second==30){
-            IC_Data.Thirty_Second_Count=1;
-            IC_Data.Second=0;
+    if(IC_Data.time.ms==0){
+        IC_Data.time.ms=1000;
+        if(IC_Data.time.Second==30){
+            IC_Data.time.Thirty_Second_Count=1;
+            IC_Data.time.Second=0;
         }
-        else 	IC_Data.Second++;
+        else{
+            IC_Data.time.Second++;
+            if(IC_Data.time.Regual_Read_G5<=0){
+                Read_ALL_G5_Data();
+            }
+            else{
+                IC_Data.time.Regual_Read_G5--;
+            }
+            
+        }
     }
     else
     {
-        IC_Data.ms--;
+        IC_Data.time.ms--;
     }
 
     IFS0bits.T1IF=0; //每進來一次要把中斷狀態歸為未受到中斷

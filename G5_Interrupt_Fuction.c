@@ -94,10 +94,10 @@ void __attribute__((interrupt, no_auto_psv)) _U3RXInterrupt(void)
         if((G5_Get.RIF==0) && (IC_Data.DoIamStarted==YES))
 		{
 			TMR3=0;		
-//			if(!T3CONbits.TON) //u3有接收到東西時才會讓timer3啟動
-//			{
-//				T3CONbits.TON=1;
-//			}
+			if(!T3CONbits.TON) //u3有接收到東西時才會讓timer3啟動
+			{
+				T3CONbits.TON=1;
+			}
 			if(G5_Get.RTIndex==0)
 			{
 				index=&G5_Get.ID;

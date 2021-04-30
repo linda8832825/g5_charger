@@ -83,14 +83,14 @@ unsigned int CRC_Check(void) //howmuch¬O¦³¦h¤Ö­Ó!!  5®æ¼Æ¦r´N¶ñ5    ¤£¬O±q0¶}©l¼
 void delayms(unsigned int i){
     int math_a,math_b;
     math_b=i;
-    math_a=IC_Data.ms;
-    while((math_a - IC_Data.ms) < math_b);
+    math_a=IC_Data.time.ms;
+    while((math_a - IC_Data.time.ms) < math_b);
     math_b=0;
 }
 
 void delay (unsigned int i){
     int math_a,math_b;
     math_b=i;
-    math_a=IC_Data.Second;
-    while((IC_Data.Second - math_a) < math_b);
+    math_a=IC_Data.time.Second;
+    while((IC_Data.time.Second - math_a) < math_b);
 }

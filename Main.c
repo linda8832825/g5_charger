@@ -46,12 +46,14 @@ int main (void)
     unsigned int    math_c=0; //無法寫滿安時進去的次數
     unsigned int    math_d=0; //放秒
     unsigned int    math_e=0; //判斷要不要更新LCD
+    unsigned int    math_f=0; //100秒整個LCD頁面更新
   
     
 	Initial_Clock(); 	
 	
 	//一些數值的初始化設定-----------------------------------------------
-    IC_Data.ms=1000;
+    IC_Data.time.ms=1000;
+    IC_Data.time.Regual_Read_G5=20;//200秒後才能常態與g5通訊
     IC_Data.GetTheWhatYouWant=NO;
     IC_Data.DoIamStarted=NO;
     IC_Data.WriteZeroAh=NO;
@@ -97,8 +99,7 @@ int main (void)
         
             
         //-----------------------------嘗試與G5連接-------------------------------//
-//        if(IC_Data.DoIamStarted == YES && IC_Data.GetTheWhatYouWant == NO && IC_Data.WriteWholeAh == YES){
-        if((IC_Data.DoIamStarted == YES) && (IC_Data.GetTheWhatYouWant == NO) ){
+        if(IC_Data.DoIamStarted == YES && IC_Data.GetTheWhatYouWant == NO && WriteWholeAh == NO){
             if((G5_Get.RIF != 1) && (math_a<=3) && (IC_Data.GetTheWhatYouWant == NO)){//如果還沒收到資料
                 BUZZ = BUZZ_ON;
                 delay(1);
@@ -106,18 +107,18 @@ int main (void)
                 Read_ALL_G5_Data(); //跟G5要資料
                 if(G5_Data.ID == My_ID){//有要到正確資料
                     IC_Data.GetTheWhatYouWant = YES;
-                    LCD_Clear();//清空前面螢幕寫的東西
                 }
                 else{// 沒有要到正確資料 就充電三十秒
                     math_a++;
-                    IC_Data.Thirty_Second_Count=0;
+                    IC_Data.time.Thirty_Second_Count=0;
                     POWER = Turn_ON;
-                    while(IC_Data.Thirty_Second_Count==1);
+                    while(IC_Data.time.Thirty_Second_Count==1);
                     POWER = Turn_OFF;
                 }
             }
             else{//充電4次都沒辦法讓g5傳資料出來就宣告失敗
                 IC_Data.GetTheWhatYouWant= NO; 
+                IC_Data.DoIamStarted == NO;
                 BatteryError = Turn_ON; //battery燈亮 代表g5沒電了
                 BUZZ = BUZZ_ON;
                 delay(3);
@@ -133,19 +134,21 @@ int main (void)
         //-----------------------------已與G5連接-----------------------------------//
         if(IC_Data.GetTheWhatYouWant == YES){//如果要到資料就放電到電流=0
             //---------------------顯示g5資料-----------------------------------//
-            if(FirstWriteLCD == YES) { //第一次要來顯示全部資料
+            if((FirstWriteLCD == YES) || (math_f>=5)) { //100秒要更新整個LCD
                 First_Write_to_LCD();
                 FirstWriteLCD=NO;
+                math_f=0;
             }
             else{//10秒更新一次LCD
                 if(math_e==0){
-                    math_d=IC_Data.Second;
+                    math_d=IC_Data.time.Second;
                     math_e=1;
                 }
-                if(((IC_Data.Second - math_d)>10) && (math_e==1)){
+                if(((IC_Data.time.Second - math_d)>20) && (math_e==1)){
                     led_Toggle();
                     Other_Time_Write_to_LCD();
                     math_e=0;
+                    math_f++;
                 }
             }
             
@@ -212,7 +215,9 @@ int main (void)
         }
         //----------------------------------------------------------------------//        
                 
-        
+        if(G5_Get.RIF){
+            G5_Get.RIF=0;
+        }
             
             
             //電子附載機那邊接收到東西-------------------------------------------
