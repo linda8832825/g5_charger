@@ -3,17 +3,32 @@
 
 
 typedef struct tagEle_load_Data {	
-    unsigned char 	ID;						//編號 //0xAA
-    unsigned char 	Fuc;					//關鍵字 //46
-    unsigned char 	CurrentMin;				//電流最小值 
-    unsigned char 	CurrentMax;				//電流最大值 
-    unsigned char 	Current;				//電流 //轉10進制後-17
-    unsigned char 	Voltage;				//電壓 //轉10進制後-512
-    unsigned char 	StopVoltage;			//斷電電壓 
-    unsigned char 	Capacity;				//容量 
-    unsigned char 	Temperature;			//溫度
-    unsigned char 	StopFuc;                //啟停命令
-    unsigned char 	End;                    //尾碼
+    unsigned char 	ID;						//編號 //0x01
+    unsigned char 	Fuc;					//功能 //0x01 0x04 0x05
+    unsigned char 	BuzzMusic;				//蜂鳴器音樂 //0=無聲 1、2、3=個別的音樂 當電壓放到截止點就會開始唱歌 //0x00 0x01
+    unsigned char 	BaudRate;				//BaudRate  //0x25 0x80
+    unsigned char   ID_decide;				//可決定id //0x00 0x01
+    unsigned char 	Voltage;				//電壓 // Voltage/100=實際電壓
+    union
+	{
+		unsigned int x1;						//前面8個是型號與現在狀態 後面八個是容量的高位元
+		struct
+		{	
+			unsigned type               :3;		//型號 001
+			unsigned twoZero            :2;		//兩個0
+			unsigned OverTemperature	:1;		//1=是過溫保護暫停狀態，0=是正常狀態
+			unsigned End            	:1;		//1=是表示已經結束，0=是尚未開始或者尚未結束
+            unsigned DisCharge          :1;     //1=是放電狀態；0=是停止狀態
+            unsigned Capacity_H         :8;     //容量高位元
+		};		
+	};
+    unsigned char 	Capacity_L;				//容量低位元
+    unsigned char 	Temperature;			//溫度 // Temperature/10=實際溫度
+    unsigned char 	StopVoltage;            //截止電壓 // StopVoltage/100=實際截止電壓
+    unsigned char 	DisCharge;              //放電電流 // DisCharge/10=實際放電電流
+    unsigned char   Watt;                   //功率 
+    
+    unsigned Write_Ele_load:2;              //有無寫入電子附載機成功
   									
  	union
 	{
@@ -29,8 +44,109 @@ typedef struct tagEle_load_Data {
   unsigned char Index;						//要收資料
   unsigned char RTIndex;					//已收資料
 }Ele_load_Data_define;
-
 extern Ele_load_Data_define Ele_load_Data; 
 
+typedef struct tagEle_load_Sent_Data_struct {	
+  unsigned char 	ID;						//編號
+  unsigned char 	Fuc;					//功能 //0x01 0x04 0x05 0x06
+	union
+	{
+		struct
+		{
+			unsigned char 	Reg_H;          //開始位置
+		  unsigned char 	Reg_L;          
+		};									
+       	struct
+		{
+			unsigned char 	Chx;            
+		  unsigned char 	Regest; 
+		};	
+    };	  
+	union
+	{
+        struct
+		{
+		  unsigned char 	Data_H;         //個數
+			unsigned char 	Data_L;
+			unsigned char 	CRC_L;
+			unsigned char 	CRC_H;
+		};
+	};
+												
+ 	union
+	{
+        unsigned                            IF:3;
+		struct
+		{		
+            unsigned                        W_R:2;
+			unsigned						TIF:1;	
+            unsigned                    	RIF :1;		//資料接收完成
+            unsigned                       	ERRIF:1;	//資料接收或傳送錯誤
+		};
+	};
+	unsigned char Index;						//要收資料
+  unsigned char RTIndex;					//已收資料 
+}Ele_load_Sent_Data_struct_define;
+extern Ele_load_Sent_Data_struct_define Ele_load_Sent;
+
+typedef struct tagEle_load_Get_Data_struct {	
+  unsigned char 	ID;						//編號
+  unsigned char 	Fuc;					//功能 //0x01 0x04 0x05 0x06
+	union
+	{
+		struct
+		{
+			unsigned char 	Reg_H;	//因為傳輸時候是先傳輸高位元之後再傳輸低位元
+		  unsigned char 	Reg_L;  //可是PIC是先從低位元開始擺放，所以會有高低位元交換的問題
+		};												//故REG會是整個高低位元顛倒的情況，故之後有個重新整理的運算
+       	struct
+		{
+			unsigned char 	Chx;
+		  unsigned char 	Regest; 
+		};	
+    };	  
+	union
+	{
+        struct
+		{
+		  unsigned char 	Data_H;
+			unsigned char 	Data_L;
+			unsigned char 	CRC_L;
+			unsigned char 	CRC_H;
+		};
+		struct
+		{
+			unsigned char 	Quantity_H;
+		  unsigned char 	Quantity_L;  
+		  unsigned char 	Total_Byte;		  
+		};
+        unsigned int DATA[30];	
+		unsigned int Quantity;	
+	};
+    union
+    {		 
+		unsigned int Value;
+		struct
+		{
+		  unsigned char 	Value_L;  
+			unsigned char 	Value_H;	  
+		};		
+	};
+												
+ 	union
+	{
+        unsigned                            IF:3;
+		struct
+		{		
+            unsigned                        W_R:2;
+			unsigned						TIF:1;	
+            unsigned                    	RIF :1;		//資料接收完成
+            unsigned                       	ERRIF:1;	//資料接收或傳送錯誤
+		};
+	};
+	unsigned char Index;						//要收資料
+  unsigned char RTIndex;					//已收資料 
+}Ele_load_Get_Data_struct_define;
+extern Ele_load_Get_Data_struct_define Ele_load_Get;
 
 #endif

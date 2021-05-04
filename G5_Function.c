@@ -29,8 +29,6 @@ void Write_G5_Data(unsigned int Regest,unsigned int Data) //用寫入安時數
 		G5_Sent.Index=6;
 		G5_Sent.RTIndex=0;	
 		
-		
-		G5_Sent.RTIndex=0;
 		G5_Get.RIF=0;		
 		G5_Sent.TIF=0;	
         G5_Sent.W_R = Write;

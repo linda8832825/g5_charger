@@ -26,6 +26,7 @@
       <itemPath>I2C_LCD.c</itemPath>
       <itemPath>I2C_Interrupt.c</itemPath>
       <itemPath>Ele_load_Interrupt.c</itemPath>
+      <itemPath>Ele_load_Function.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -97,9 +98,6 @@
         <property key="preprocessor-macros" value=""/>
         <property key="scalar-model" value="default"/>
       </C30>
-      <C30-AR>
-        <property key="additional-options-chop-files" value="false"/>
-      </C30-AR>
       <C30-AS>
         <property key="assembler-symbols" value=""/>
         <property key="expand-macros" value="false"/>
@@ -118,9 +116,6 @@
         <property key="relax" value="false"/>
         <property key="warning-level" value="emit-warnings"/>
       </C30-AS>
-      <C30-CO>
-        <property key="coverage-enable" value=""/>
-      </C30-CO>
       <C30-LD>
         <property key="boot-eeprom" value="no_eeprom"/>
         <property key="boot-flash" value="no_flash"/>

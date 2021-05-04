@@ -40,30 +40,30 @@ void Initial_Ele_load_UART(void)
 	U2MODE=0x0008;//只使用UxTX跟UxRX腳位 UxRX腳位空閒電位為0	
 	U2STA=0x2440;//UxTX腳位空閒電位為1
 	U2STAbits.URXISEL=1;	
-	U2BRG = BR_128000;
+	U2BRG = BR_9600;
 	
 	RPINR19bits.U2RXR = 10;//把RPINR19的U2RXR的功能 指向RP10 //rx在RP10
- 	RPOR8bits.RP17R = 28;	//把RPOR8bits.RP17R的腳位 指向功能28 //TX在RP17
+ 	RPOR8bits.RP17R = 5;	//把RPOR8bits.RP17R的腳位 指向功能28 //TX在RP17
 
 	IFS1bits.U2RXIF = 0;		// Clear Interrupt flag11
 	IFS1bits.U2TXIF = 0;		
 	IEC1bits.U2RXIE = 1;		// Enable UART Interrupt
 	IEC1bits.U2TXIE = 1;		// Enable UART Interrupt
 		
-	IPC7bits.U2RXIP=5;
-	IPC7bits.U2TXIP=5;
+	IPC7bits.U2RXIP=5; //接收優先權
+	IPC7bits.U2TXIP=5; //送出優先權
 	U2STAbits.UTXEN=1; //允許TX
 	U2MODEbits.UARTEN=1;	
-	
-	
+    
+
 	
 	T2CON=0;
 	IEC0bits.T2IE=1;            //TIMER中斷允許位 1=允許
 	IFS0bits.T2IF=0;            //TIMER中斷標誌狀態位 0=未受到中斷
 	T2CONbits.TCKPS=1;
 	T2CONbits.TCS=0;            //內部clock (FOSC/2
-	PR2=1250;                   //不知道多少
-//    T2CONbits.TON=1;// 啟動timer2
+	PR2=1250;                   //反正就跟g5一樣
+    T2CONbits.TON=1;// 啟動timer2
 		
 }
 void Initial_G5_UART(void)

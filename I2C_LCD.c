@@ -114,25 +114,25 @@ unsigned char I2C_Master_Write(unsigned char data){
 //-----------------------------------------------
 void LCD_Init(unsigned char I2C_Add)
 {
-  i2c_add = I2C_Add;
-  IO_Expander_Write(0x00);
-  delayms(60);
-  LCD_CMD(0x03);
-  delayms(10);
-  LCD_CMD(0x03);
-  delayms(10);
-  LCD_CMD(0x03);
-  delayms(10);
-  LCD_CMD(LCD_RETURN_HOME);
-  delayms(10);
-  LCD_CMD(0x20 | (LCD_TYPE << 2));
-  delayms(100);
-  LCD_CMD(LCD_TURN_ON);
-  delayms(100);
-  LCD_CMD(LCD_CLEAR);
-  delayms(100);
-  LCD_CMD(LCD_ENTRY_MODE_SET | LCD_RETURN_HOME);
-    delayms(100);
+    i2c_add = I2C_Add;
+    IO_Expander_Write(0x00);
+    delayms(30);
+    LCD_CMD(0x03);
+    delayms(5);
+    LCD_CMD(0x03);
+    delayms(5);
+    LCD_CMD(0x03);
+    delayms(5);
+    LCD_CMD(LCD_RETURN_HOME);
+    delayms(5);
+    LCD_CMD(0x20 | (LCD_TYPE << 2));
+    delayms(50);
+    LCD_CMD(LCD_TURN_ON);
+    delayms(50);
+    LCD_CMD(LCD_CLEAR);
+    delayms(50);
+    LCD_CMD(LCD_ENTRY_MODE_SET | LCD_RETURN_HOME);
+    delayms(50);
 }
 void IO_Expander_Write(unsigned char Data)
 {
@@ -147,7 +147,7 @@ void LCD_Write_4Bit(unsigned char Nibble)
   Nibble |= RS;
   IO_Expander_Write(Nibble | 0x04);
   IO_Expander_Write(Nibble & 0xFB);
-  delayms(5);
+  delayms(1);
 }
 void LCD_CMD(unsigned char CMD)
 {
@@ -198,15 +198,15 @@ void noBacklight()
 void LCD_SL()
 {
   LCD_CMD(0x18);
-  delayms(5);
+  delayms(1);
 }
 void LCD_SR()
 {
   LCD_CMD(0x1C);
-  delayms(5);
+  delayms(1);
 }
 void LCD_Clear()
 {
   LCD_CMD(0x01);
-  delayms(5);
+  delayms(1);
 }

@@ -57,6 +57,7 @@ int main (void)
     IC_Data.GetTheWhatYouWant=NO;
     IC_Data.DoIamStarted=NO;
     IC_Data.WriteZeroAh=NO;
+    Ele_load_Data.Write_Ele_load=NO;
     
 //	IC_Data.Wait_Coulomb_Read=1480;
 //	IC_Data.Charge_Voltage_Avg=0;		
@@ -68,9 +69,9 @@ int main (void)
 	         
 	Initial_IO();
 	Initial_G5_UART();
+    Initial_Ele_load_UART();
     Timer1_initial();
     I2C_Initial();
-    Initial_Ele_load_UART();
     LCD_Init(DriverIC_I2C_LCD_Addr);
 //	Initial_Coulomb_UART();    
 //	Initial_UART2();
@@ -160,9 +161,11 @@ int main (void)
 
             //----------------------------放電---------------------------------//
             if(IC_Data.WriteZeroAh == NO){//寫入0.1AH尚未成功
-                ////放電/////////////////////////////加東西///////////////////////
+                
+                ReadEleLoadState();
+//                WriteEleLoadState(0x00, 0xFF); //放電
                 if((G5_Data.Current == 0x00) && (G5_Data.Voltage <= Discharge_Voltage)){//放電完成
-                    //放電中止///9//////////////////////加東西///////////////////////
+                    WriteEleLoadState(0x00, 0x00); //放電中止
 
                     if(G5_Data.Residual_Electricity == 0x01){//確認是否為0.1Ah
                         IC_Data.WriteZeroAh = YES; //寫入0.1安時數成功
