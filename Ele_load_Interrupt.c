@@ -66,9 +66,15 @@ void __attribute__((interrupt, no_auto_psv)) _T2Interrupt(void) //讀完電子附載機
                         Ele_load_Get.ERRIF=1;
                     }
                     else{
-                        if(Ele_load_Sent.Data_H == 0xFF) Ele_load_Data.Write_DisCharge_Complete=0x01; //寫入開始放電成功
-                        if(Ele_load_Sent.Data_H == 0x00) Ele_load_Data.Write_DisCharge_Complete=0x11; //寫入停止放電成功
-                        Ele_load_Data.GoTo_Write_Ele_load=NO; //不需要再次寫入電子附載機
+                        
+                        if(Ele_load_Sent.Data_H == 0xFF) {
+                            Ele_load_Data.Write_DisCharge_Complete=0x01; //寫入開始放電成功
+                            Ele_load_Data.GoTo_Write_Ele_load=NO; //不需要再次寫入電子附載機
+                        }
+                        else {
+                            Ele_load_Data.Write_DisCharge_Complete=0x11; //寫入停止放電成功
+                            Ele_load_Data.GoTo_Write_Ele_load=NO; //不需要再次寫入電子附載機
+                        }
                         Ele_load_Get.TIF=1;
                     }
                 }
@@ -131,7 +137,6 @@ void __attribute__((interrupt, no_auto_psv)) _U2RXInterrupt(void)
 		else
 		{
 			math_a=U2RXREG;
-//            Ele_load_Get.SORT=YES;
 		}
 		IFS1bits.U2RXIF=0;
 }	

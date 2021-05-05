@@ -142,7 +142,7 @@ void Initial_Ele_load_UART(void);
 void ReadEleLoadState(void);
 void ReadAllEleLoadData(void);
 void WriteEleLoadState(unsigned char math_c, unsigned char math_d);
-void WriteEleLoadSetting(unsigned char math_c, unsigned char math_d);
+void WriteEleLoadSetting(unsigned char math_c, unsigned char math_d, unsigned char math_e);
 unsigned int CRC_Check_Ele_load(void);
 
 #endif

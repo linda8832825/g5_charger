@@ -136,7 +136,7 @@ void WriteEleLoadState(unsigned char math_c, unsigned char math_d){ //寫入電子附
 }
 
 
-void WriteEleLoadSetting(unsigned char math_c, unsigned char math_d){ //寫入電子附載機的設定
+void WriteEleLoadSetting(unsigned char math_c, unsigned char math_d, unsigned char math_e){ //寫入電子附載機的設定
     unsigned int math_a;
     unsigned char math_b;
     
@@ -146,8 +146,8 @@ void WriteEleLoadSetting(unsigned char math_c, unsigned char math_d){ //寫入電子
 		Ele_load_Sent.Reg_H = 0x00;
 		Ele_load_Sent.Reg_L = math_c;//蜂鳴器音樂=0x00 BaudRate=0x01 ID=0x02 容量=0x03&0x04 截止電壓=0x07 放電電流=0x08
         
-        Ele_load_Sent.Data_H = 0x00;
-        Ele_load_Sent.Data_L = math_d;//寫入值
+        Ele_load_Sent.Data_H = math_d;
+        Ele_load_Sent.Data_L = math_e;//寫入值
         
         Ele_load_Sent.W_R = Write;
 		

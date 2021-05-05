@@ -28,7 +28,7 @@ typedef struct tagEle_load_Data {
     unsigned int    Watt;                   //功率 
     
     unsigned GoTo_Write_Ele_load:1;              //是不是要去寫入電子附載機
-    unsigned Write_DisCharge_Complete:2;         //00=寫入放電失敗 01=寫入放電成功 10=寫入停止放電失敗 11=寫入停止放電成功
+    unsigned Write_DisCharge_Complete:8;         //00=寫入放電失敗 01=寫入放電成功 10=寫入停止放電失敗 11=寫入停止放電成功
   									
  	union
 	{
