@@ -63,7 +63,7 @@ extern  unsigned char I2C_Buffer;
 
 #define My_ID                       0x01
 #define DriverIC_I2C_LCD_Addr       0x4E //LCD的ID
-#define Ele_load_Addr               0x01 //電子附載機的ID
+#define Ele_load_ID                 0x01 //電子附載機的ID
 
 
 #define YES                         1//有被按下啟動鈕

@@ -36,6 +36,8 @@ void __attribute__((interrupt, no_auto_psv)) _MathError(void){
 IC_Data_Define IC_Data;
 unsigned int WriteWholeAh=0;
 unsigned int FirstWriteLCD=1;
+unsigned int GetEleLoadData=0;
+unsigned int LcdWriteComplete=0;
 //IC_Data_IF IC_Data_Save_IF;
 
 
@@ -109,13 +111,13 @@ int main (void)
                 Read_ALL_G5_Data(); //跟G5要資料
                 if(G5_Data.ID == My_ID){//有要到正確資料
                     IC_Data.GetTheWhatYouWant = YES;
+                    math_a=0;
                 }
                 else{// 沒有要到正確資料 就充電三十秒
                     math_a++;
                     IC_Data.time.Thirty_Second_Count=0;
                     POWER = Turn_ON;
-                    while(IC_Data.time.Thirty_Second_Count==1);
-                    POWER = Turn_OFF;
+                    if(IC_Data.time.Thirty_Second_Count==1) POWER = Turn_OFF;
                 }
             }
             else{//充電4次都沒辦法讓g5傳資料出來就宣告失敗
@@ -135,37 +137,45 @@ int main (void)
         
         //-----------------------------已與G5連接-----------------------------------//
         if(IC_Data.GetTheWhatYouWant == YES){//如果要到資料就放電到電流=0
+            LcdWriteComplete=NO;
             //---------------------顯示g5資料-----------------------------------//
-            if((FirstWriteLCD == YES) || (math_f>=5)) { //100秒要更新整個LCD
-                First_Write_to_LCD();
-                FirstWriteLCD=NO;
-                math_f=0;
-            }
-            else{//20秒更新一次LCD
-                if(math_e==0){
-                    math_d=IC_Data.time.Second;
-                    math_e=1;
+            if(LcdWriteComplete==NO){
+                if((FirstWriteLCD == YES) || (math_f>=5)) { //100秒要更新整個LCD
+                    First_Write_to_LCD();
+                    FirstWriteLCD=NO;
+                    math_f=0;
                 }
-                if(((IC_Data.time.Second - math_d)>20) && (math_e==1)){
-                    led_Toggle();
-                    Other_Time_Write_to_LCD();
-                    math_e=0;
-                    math_f++;
+                else{//20秒更新一次LCD
+                    if(math_e==0){
+                        math_d=IC_Data.time.Second;
+                        math_e=1;
+                    }
+                    if(((IC_Data.time.Second - math_d)>20) && (math_e==1)){
+                        led_Toggle();
+                        Other_Time_Write_to_LCD();
+                        math_e=0;
+                        math_f++;
+                    }
                 }
+                LcdWriteComplete=YES;
             }
-            
-            
             //-----------------------------------------------------------------//
 
 
 
             //----------------------------放電---------------------------------//
-            if(IC_Data.WriteZeroAh == NO){//寫入0.1AH尚未成功
+            if((IC_Data.WriteZeroAh == NO) && (LcdWriteComplete==YES)){//寫入0.1AH尚未成功
+//                BUZZ = BUZZ_ON;
+                delay(1);
+//                BUZZ = BUZZ_OFF;
+                ReadEleLoadState(); //跟電子附載機要資料
+                if(Ele_load_Data.ID == Ele_load_ID){//有要到正確資料
+                    GetEleLoadData = YES;
+                }
                 
-                ReadEleLoadState();
 //                WriteEleLoadState(0x00, 0xFF); //放電
                 if((G5_Data.Current == 0x00) && (G5_Data.Voltage <= Discharge_Voltage)){//放電完成
-                    WriteEleLoadState(0x00, 0x00); //放電中止
+//                    WriteEleLoadState(0x00, 0x00); //放電中止
 
                     if(G5_Data.Residual_Electricity == 0x01){//確認是否為0.1Ah
                         IC_Data.WriteZeroAh = YES; //寫入0.1安時數成功
@@ -224,7 +234,7 @@ int main (void)
         //----------------------------------------------------------------------//  
         
         //---------------------------接收電子附載機資料---------------------------------//
-        if(Ele_load_Data.RIF) Ele_load_Data.RIF=0;
+//        if(Ele_load_Get.RIF) Ele_load_Get.RIF=0;
      	//----------------------------------------------------------------------//	
       }
     return 1;

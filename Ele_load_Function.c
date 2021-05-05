@@ -5,7 +5,6 @@ Ele_load_Sent_Data_struct_define Ele_load_Sent;
 void ReadEleLoadState(){ //讀取電子附載機的狀態
     unsigned int math_a;
     unsigned char math_b;
-    static unsigned char math_c;
     
 		Ele_load_Sent.ID=0x01;
 		Ele_load_Sent.Fuc=0x01;	
@@ -41,10 +40,8 @@ void ReadEleLoadState(){ //讀取電子附載機的狀態
             IEC1bits.U2TXIE=1;
         }
 		
-        math_c=Ele_load_Sent.ID;
-		U2TXREG = math_c;		
+		U2TXREG = Ele_load_Sent.ID;		
 		Ele_load_Sent.RTIndex++;
-	
 }
 
 void ReadAllEleLoadData(){ //讀取所有電子附載機的資料
@@ -55,19 +52,18 @@ void ReadAllEleLoadData(){ //讀取所有電子附載機的資料
 		Ele_load_Sent.Fuc=0x04;	
 		
 		Ele_load_Sent.Reg_H = 0x00;
-		Ele_load_Sent.Reg_L = 0x01;
+		Ele_load_Sent.Reg_L = 0x00;
         
         Ele_load_Sent.Data_H = 0x00;
         Ele_load_Sent.Data_L = 0x0A;
 		
 		Ele_load_Sent.Index=6;
 		Ele_load_Sent.RTIndex=0;
-
-		
+        
         Ele_load_Get.RIF=0;		
 		Ele_load_Sent.TIF=0;	
-        Ele_load_Sent.W_R = Read;
-				
+		Ele_load_Sent.W_R = Read;
+		
 		math_a=CRC_Make(&Ele_load_Sent, Ele_load_Sent.Index);
 		
 		math_b = math_a&0xFF;
@@ -86,9 +82,8 @@ void ReadAllEleLoadData(){ //讀取所有電子附載機的資料
             IEC1bits.U2TXIE=1;
         }
 		
-		U2TXREG=Ele_load_Sent.ID;		
-		Ele_load_Sent.RTIndex++;
-	
+		U2TXREG = Ele_load_Sent.ID;		
+		Ele_load_Sent.RTIndex++;	
 }
 
 void WriteEleLoadState(unsigned char math_c, unsigned char math_d){ //寫入電子附載機的狀態

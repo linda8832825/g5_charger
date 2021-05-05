@@ -62,7 +62,7 @@ void Initial_Ele_load_UART(void)
 	IFS0bits.T2IF=0;            //TIMER中斷標誌狀態位 0=未受到中斷
 	T2CONbits.TCKPS=1;
 	T2CONbits.TCS=0;            //內部clock (FOSC/2
-	PR2=1250;                   //反正就跟g5一樣
+	PR2=15000;                   //反正就跟g5一樣
     T2CONbits.TON=1;// 啟動timer2
 		
 }

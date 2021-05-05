@@ -107,7 +107,7 @@ void __attribute__((interrupt, no_auto_psv)) _U2RXInterrupt(void)
 			}
 			else
 			{
-				if(Ele_load_Get.ID==Ele_load_Addr||G5_Get.ID==0x00)
+				if(Ele_load_Get.ID==Ele_load_ID||G5_Get.ID==0x00)
 				{
 					TMR2=0;
 					*index=U2RXREG;
