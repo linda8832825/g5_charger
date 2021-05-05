@@ -79,6 +79,58 @@ unsigned int CRC_Check(void) //howmuch¬O¦³¦h¤Ö­Ó!!  5®æ¼Æ¦r´N¶ñ5    ¤£¬O±q0¶}©l¼
 	}	
 	
 }
+unsigned int CRC_Check_Ele_load(void) //howmuch¬O¦³¦h¤Ö­Ó!!  5®æ¼Æ¦r´N¶ñ5    ¤£¬O±q0¶}©l¼Æ
+{
+	unsigned int CRC_CODE=0xFFFF,math_a,math_b;
+	unsigned char CRC_Length=0,i,*CRC_Address;
+	
+
+
+	CRC_Address=&Ele_load_Get.ID;
+	CRC_Length=Ele_load_Get.RTIndex-2;	
+	
+	while(CRC_Length--)
+	{
+		CRC_CODE^=*CRC_Address++;//¥ýXOR§¹«á¦A§â¦a§}+1
+		for(i=0;i<8;i++)
+		{
+			if(CRC_CODE&0x01)//¦pªG³Ì«á¤@­Ó¦ì¤¸¬O1§âCRC_CODE¥k²¾1¦ì¤§«á»P0xA001°µXOR
+			{
+				CRC_CODE=(CRC_CODE>>1)^0xA001;
+			}
+			else
+			{
+				CRC_CODE=(CRC_CODE>>1);
+			}	
+		}
+	}		
+		
+
+	CRC_Address=&Ele_load_Get.ID;
+	CRC_Address+=Ele_load_Get.RTIndex-2;	
+
+	
+	math_a=*CRC_Address;
+	math_a=math_a<<8;
+	CRC_Address++;
+	math_a=math_a|(*CRC_Address);
+	
+	//¦]¬°·íªì¼g¿ù¤F¨ä¹êCRCÀ³¸Ó¬O¥ýL ¦bH ¥i¬O¼g¤Ï¤F ©Ò¥H ÅÜ¦¨¥ýH¦bL ©ÎªÌ¥ýL¦bH ³£¥i¥H
+	math_b=*CRC_Address;
+	math_b=math_b<<8;
+	CRC_Address--;
+	math_b=math_b|(*CRC_Address);
+	
+	if (CRC_CODE == math_a || CRC_CODE == math_b)//·íCRC½T»{¤§«á ±N¸ê®Æ­«·s¾ã²z
+	{
+		return 1;	
+	}
+	else 
+	{
+		return 0;
+	}	
+	
+}
 	
 void delayms(unsigned int i){
     int math_a,math_b;
@@ -92,5 +144,6 @@ void delay (unsigned int i){
     int math_a,math_b;
     math_b=i;
     math_a=IC_Data.time.Second;
+    if(math_a==0x1E) math_a=0x00; //¦pªG­è¦n¨ú¨ì²Ä30¬í´N Âk¨ì0
     while((IC_Data.time.Second - math_a) < math_b);
 }

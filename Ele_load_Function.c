@@ -14,13 +14,14 @@ void ReadEleLoadState(){ //讀取電子附載機的狀態
         
         Ele_load_Sent.Data_H = 0x00;
         Ele_load_Sent.Data_L = 0x01;
+        
+        Ele_load_Sent.W_R = Read;
 		
 		Ele_load_Sent.Index=6;
 		Ele_load_Sent.RTIndex=0;
         
         Ele_load_Get.RIF=0;		
 		Ele_load_Sent.TIF=0;	
-		Ele_load_Sent.W_R = Read;
 		
 		math_a=CRC_Make(&Ele_load_Sent, Ele_load_Sent.Index);
 		
@@ -56,13 +57,15 @@ void ReadAllEleLoadData(){ //讀取所有電子附載機的資料
         
         Ele_load_Sent.Data_H = 0x00;
         Ele_load_Sent.Data_L = 0x0A;
+        
+        Ele_load_Sent.W_R = Read;
 		
 		Ele_load_Sent.Index=6;
 		Ele_load_Sent.RTIndex=0;
         
         Ele_load_Get.RIF=0;		
 		Ele_load_Sent.TIF=0;	
-		Ele_load_Sent.W_R = Read;
+		
 		
 		math_a=CRC_Make(&Ele_load_Sent, Ele_load_Sent.Index);
 		
@@ -89,7 +92,7 @@ void ReadAllEleLoadData(){ //讀取所有電子附載機的資料
 void WriteEleLoadState(unsigned char math_c, unsigned char math_d){ //寫入電子附載機的狀態
     unsigned int math_a;
     unsigned char math_b;
-    
+            
 		Ele_load_Sent.ID=0x01;
 		Ele_load_Sent.Fuc=0x05;	
 		
@@ -98,14 +101,16 @@ void WriteEleLoadState(unsigned char math_c, unsigned char math_d){ //寫入電子附
         
         Ele_load_Sent.Data_H = math_d;//放電/已經結束=0xFF  停止放電/尚未開始或者尚未結束=0x00
         Ele_load_Sent.Data_L = 0x00;
+        
+        Ele_load_Sent.W_R = Write;
 		
 		Ele_load_Sent.Index=6;
 		Ele_load_Sent.RTIndex=0;
-
+        
 		
         Ele_load_Get.RIF=0;		
 		Ele_load_Sent.TIF=0;	
-        Ele_load_Sent.W_R = Write;
+        
 				
 		math_a=CRC_Make(&Ele_load_Sent, Ele_load_Sent.Index);
 		
@@ -127,7 +132,7 @@ void WriteEleLoadState(unsigned char math_c, unsigned char math_d){ //寫入電子附
 		
 		U2TXREG=Ele_load_Sent.ID;		
 		Ele_load_Sent.RTIndex++;
-	
+        	
 }
 
 
@@ -143,6 +148,8 @@ void WriteEleLoadSetting(unsigned char math_c, unsigned char math_d){ //寫入電子
         
         Ele_load_Sent.Data_H = 0x00;
         Ele_load_Sent.Data_L = math_d;//寫入值
+        
+        Ele_load_Sent.W_R = Write;
 		
 		Ele_load_Sent.Index=6;
 		Ele_load_Sent.RTIndex=0;
@@ -150,7 +157,7 @@ void WriteEleLoadSetting(unsigned char math_c, unsigned char math_d){ //寫入電子
 		
         Ele_load_Get.RIF=0;		
 		Ele_load_Sent.TIF=0;	
-        Ele_load_Sent.W_R = Write;
+        
 				
 		math_a=CRC_Make(&Ele_load_Sent, Ele_load_Sent.Index);
 		
@@ -172,5 +179,5 @@ void WriteEleLoadSetting(unsigned char math_c, unsigned char math_d){ //寫入電子
 		
 		U2TXREG=Ele_load_Sent.ID;		
 		Ele_load_Sent.RTIndex++;
-	
+        
 }

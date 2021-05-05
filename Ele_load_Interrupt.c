@@ -15,19 +15,19 @@ void __attribute__((interrupt, no_auto_psv)) _T2Interrupt(void) //讀完電子附載機
 
         Erro_IF=0;
 
-
-        if((Ele_load_Get.RTIndex>0)  && (IC_Data.DoIamStarted == YES))
+        if(Ele_load_Get.RTIndex>0)
+//        if((Ele_load_Get.RTIndex>0) && (Ele_load_Get.SORT==YES))
         {
             if(Ele_load_Sent.W_R == Read)
             {
-                if(CRC_Check())
+                if(CRC_Check_Ele_load())
                 {
                     //是用04讀取的
                     Ele_load_Get.Value_L=Ele_load_Get.Reg_L;
                     Ele_load_Get.Value_H=Ele_load_Get.Reg_H;
                     index1=&Ele_load_Data.ID;
                     *index1=Ele_load_Get.ID;
-                    index1+=2;
+                    index1++;
                     //取得電子附載機資料陣列從哪位置開始放資料
 
                     Quantity = Ele_load_Get.Reg_H/2; //資料比數
@@ -37,7 +37,7 @@ void __attribute__((interrupt, no_auto_psv)) _T2Interrupt(void) //讀完電子附載機
                         Ele_load_Get.Value_H = *index2;
                         *index2++;
                         Ele_load_Get.Value_L = *index2;
-                        *index1 = Ele_load_Get.Value; //把DATA放進G5的資料儲存陣列裡
+                        *index1 = Ele_load_Get.Value; //把DATA放進電子附載機的資料儲存陣列裡
                         index1++;
                         index2++;
                     }
@@ -51,25 +51,31 @@ void __attribute__((interrupt, no_auto_psv)) _T2Interrupt(void) //讀完電子附載機
                 }
 
             }
-            else if(G5_Sent.W_R == Write)
+            else if(Ele_load_Sent.W_R == Write)
             {
-                if(G5_Get.RTIndex==8)
+                if(Ele_load_Get.RTIndex==0x08)
                 {
-                    if((Ele_load_Sent.ID == Ele_load_Get.ID) && (Ele_load_Sent.Fuc == Ele_load_Get.Fuc)
-                    && (Ele_load_Sent.Reg_H == Ele_load_Get.Reg_H)
-                    && (Ele_load_Sent.Reg_L == Ele_load_Get.Reg_L)
-                    && (Ele_load_Sent.Data_H == Ele_load_Get.Data_H)
-                    && (Ele_load_Sent.Data_L == Ele_load_Get.Data_L)){//如果收到的跟送出去的一樣
-                        G5_Get.TIF=1;
-                        Ele_load_Data.Write_Ele_load=YES;
+                    Erro_IF=0;
+                    math_c = *index3; //收到的ID
+                    if( math_c != Ele_load_ID )Erro_IF=1;
+                    index3++;
+                    
+                    if(Erro_IF){
+                        if(Ele_load_Sent.Data_H == 0xFF) Ele_load_Data.Write_DisCharge_Complete=0x00; //寫入開始放電失敗
+                        if(Ele_load_Sent.Data_H == 0x00) Ele_load_Data.Write_DisCharge_Complete=0x10; //寫入停止放電失敗
+                        Ele_load_Get.ERRIF=1;
                     }
-                    else G5_Get.ERRIF=1;
+                    else{
+                        if(Ele_load_Sent.Data_H == 0xFF) Ele_load_Data.Write_DisCharge_Complete=0x01; //寫入開始放電成功
+                        if(Ele_load_Sent.Data_H == 0x00) Ele_load_Data.Write_DisCharge_Complete=0x11; //寫入停止放電成功
+                        Ele_load_Data.GoTo_Write_Ele_load=NO; //不需要再次寫入電子附載機
+                        Ele_load_Get.TIF=1;
+                    }
                 }
-                else
-                {
-                    Ele_load_Data.Write_Ele_load=NO;
-                    G5_Get.ERRIF=1;	
-                    G5_Get.RTIndex=0;
+                else{
+                    Ele_load_Data.GoTo_Write_Ele_load=YES;
+                    Ele_load_Get.ERRIF=1;
+                    Ele_load_Get.RTIndex=0;
                 }			
             }
         }	
@@ -90,7 +96,7 @@ void __attribute__((interrupt, no_auto_psv)) _U2RXInterrupt(void)
 		unsigned int math_a;
 		static unsigned char *index;
 		static unsigned char Fuction;
-        if((Ele_load_Get.RIF==0) && (IC_Data.DoIamStarted == YES))
+        if(Ele_load_Get.RIF==0)
 		{
 			TMR2=0;		
 			if(!T2CONbits.TON) //u2有接收到東西時才會讓timer3啟動
@@ -107,16 +113,11 @@ void __attribute__((interrupt, no_auto_psv)) _U2RXInterrupt(void)
 			}
 			else
 			{
-				if(Ele_load_Get.ID==Ele_load_ID||G5_Get.ID==0x00)
+				if(Ele_load_Get.ID==Ele_load_ID)
 				{
 					TMR2=0;
 					*index=U2RXREG;
-					Ele_load_Get.RTIndex++;
-					if(Ele_load_Get.RTIndex==2&&*index==0x10)Fuction=*index;
-					if(Ele_load_Get.RTIndex==7&&Fuction==0x10)
-					{
-							Ele_load_Get.Index=*index+9;
-					}					
+					Ele_load_Get.RTIndex++;			
 					index++;
 				}	
 				else
@@ -130,6 +131,7 @@ void __attribute__((interrupt, no_auto_psv)) _U2RXInterrupt(void)
 		else
 		{
 			math_a=U2RXREG;
+//            Ele_load_Get.SORT=YES;
 		}
 		IFS1bits.U2RXIF=0;
 }	

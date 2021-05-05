@@ -23,8 +23,9 @@ void __attribute__((interrupt, no_auto_psv)) _T1Interrupt(void){
         }
         else{
             IC_Data.time.Second++;
-            if(IC_Data.time.Regual_Read_G5<=0){
-                Read_ALL_G5_Data();
+            if((IC_Data.time.Regual_Read_G5<=0) && (IC_Data.DoIamStarted == YES)){
+                Read_ALL_G5_Data();     //跟G5要資料
+                if(Ele_load_Data.GoTo_Write_Ele_load ==NO) ReadAllEleLoadData();   //跟電子附載機要資料
             }
             else{
                 IC_Data.time.Regual_Read_G5--;

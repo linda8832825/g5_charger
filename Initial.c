@@ -37,7 +37,7 @@ void Initial_IO(void)
 void Initial_Ele_load_UART(void)
 {
 	
-	U2MODE=0x0008;//只使用UxTX跟UxRX腳位 UxRX腳位空閒電位為0	
+	U2MODE=0x000A;//高速模式 //偶校驗
 	U2STA=0x2440;//UxTX腳位空閒電位為1
 	U2STAbits.URXISEL=1;	
 	U2BRG = BR_9600;

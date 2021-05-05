@@ -48,7 +48,7 @@ extern I2C_Data_Define I2C_Data;
 
 extern  unsigned char I2C_Buffer;
 
-#define BR_9600 			415
+#define BR_9600                     415
 #define BR_115200                   34
 
 #define Write                       1
@@ -143,5 +143,6 @@ void ReadEleLoadState(void);
 void ReadAllEleLoadData(void);
 void WriteEleLoadState(unsigned char math_c, unsigned char math_d);
 void WriteEleLoadSetting(unsigned char math_c, unsigned char math_d);
+unsigned int CRC_Check_Ele_load(void);
 
 #endif

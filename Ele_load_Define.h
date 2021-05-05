@@ -3,12 +3,11 @@
 
 
 typedef struct tagEle_load_Data {	
-    unsigned char 	ID;						//編號 //0x01
-    unsigned char 	Fuc;					//功能 //0x01 0x04 0x05
-    unsigned char 	BuzzMusic;				//蜂鳴器音樂 //0=無聲 1、2、3=個別的音樂 當電壓放到截止點就會開始唱歌 //0x00 0x01
-    unsigned char 	BaudRate;				//BaudRate  //0x25 0x80
-    unsigned char   ID_decide;				//可決定id //0x00 0x01
-    unsigned char 	Voltage;				//電壓 // Voltage/100=實際電壓
+    unsigned int 	ID;						//編號 //0x01
+    unsigned int 	BuzzMusic;				//蜂鳴器音樂 //0=無聲 1、2、3=個別的音樂 當電壓放到截止點就會開始唱歌 //0x00 0x01
+    unsigned int 	BaudRate;				//BaudRate  //0x25 0x80
+    unsigned int   ID_decide;				//可決定id //0x00 0x01
+    unsigned int 	Voltage;				//電壓 // Voltage/100=實際電壓
     union
 	{
 		unsigned int x1;						//前面8個是型號與現在狀態 後面八個是容量的高位元
@@ -22,13 +21,14 @@ typedef struct tagEle_load_Data {
             unsigned Capacity_H         :8;     //容量高位元
 		};		
 	};
-    unsigned char 	Capacity_L;				//容量低位元
-    unsigned char 	Temperature;			//溫度 // Temperature/10=實際溫度
-    unsigned char 	StopVoltage;            //截止電壓 // StopVoltage/100=實際截止電壓
-    unsigned char 	DisCharge;              //放電電流 // DisCharge/10=實際放電電流
-    unsigned char   Watt;                   //功率 
+    unsigned int 	Capacity_L;				//容量低位元
+    unsigned int 	Temperature;			//溫度 // Temperature/10=實際溫度
+    unsigned int 	StopVoltage;            //截止電壓 // StopVoltage/100=實際截止電壓
+    unsigned int 	DisCharge;              //放電電流 // DisCharge/10=實際放電電流
+    unsigned int    Watt;                   //功率 
     
-    unsigned Write_Ele_load:2;              //有無寫入電子附載機成功
+    unsigned GoTo_Write_Ele_load:1;              //是不是要去寫入電子附載機
+    unsigned Write_DisCharge_Complete:2;         //00=寫入放電失敗 01=寫入放電成功 10=寫入停止放電失敗 11=寫入停止放電成功
   									
  	union
 	{
@@ -141,6 +141,7 @@ typedef struct tagEle_load_Get_Data_struct {
             unsigned                        W_R:2;
 			unsigned						TIF:1;	
             unsigned                    	RIF :1;		//資料接收完成
+            unsigned                        SORT:1;     //1=資料接收完可以排列了
             unsigned                       	ERRIF:1;	//資料接收或傳送錯誤
 		};
 	};
