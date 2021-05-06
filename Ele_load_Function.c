@@ -2,6 +2,15 @@
 
 Ele_load_Sent_Data_struct_define Ele_load_Sent;
 
+void Set_Ele_load(){ //設定電子附載機
+    do{ WriteEleLoadSetting(0x00, 0x00, BuzzMusicType); } while(Ele_load_Data.WriteIF=0); //寫蜂鳴器響的音樂
+    do{ WriteEleLoadSetting(0x04, 0x00, 0x00);} while(Ele_load_Data.WriteIF=0);//寫0安時
+    do{ WriteEleLoadSetting(0x05, 0x00, 0x00);} while(Ele_load_Data.WriteIF=0);//寫0安時
+    do{ WriteEleLoadSetting(0x07, StopVoltage>>8, StopVoltage&0xFF);} while(Ele_load_Data.WriteIF=0);//放40V截止
+    do{ WriteEleLoadSetting(0x08, DisChargeCurrent>>8, DisChargeCurrent&0xFF);} while(Ele_load_Data.WriteIF=0); //放電電流
+    Ele_load_Data.Init=YES;
+}
+
 void ReadEleLoadState(){ //讀取電子附載機的狀態
     unsigned int math_a;
     unsigned char math_b;
@@ -110,6 +119,7 @@ void WriteEleLoadState(unsigned char math_c, unsigned char math_d){ //寫入電子附
 		
         Ele_load_Get.RIF=0;		
 		Ele_load_Sent.TIF=0;	
+        Ele_load_Data.WriteIF=0;
         
 				
 		math_a=CRC_Make(&Ele_load_Sent, Ele_load_Sent.Index);
@@ -157,6 +167,7 @@ void WriteEleLoadSetting(unsigned char math_c, unsigned char math_d, unsigned ch
 		
         Ele_load_Get.RIF=0;		
 		Ele_load_Sent.TIF=0;	
+        Ele_load_Data.WriteIF=0;
         
 				
 		math_a=CRC_Make(&Ele_load_Sent, Ele_load_Sent.Index);

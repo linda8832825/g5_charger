@@ -1,3 +1,5 @@
+#ifndef I2C_LCD_H
+#define I2C_LCD_H
 /* File: I2C_LCD.h */
 
 #define LCD_BACKLIGHT         0x08
@@ -46,3 +48,5 @@ void LCD_write_Char(unsigned char ROW, unsigned char COL , char* Str);
 void LCD_write_Variable(unsigned char ROW, unsigned char COL , unsigned int variable);
 void First_Write_to_LCD(void);
 void Other_Time_Write_to_LCD(void);
+
+#endif

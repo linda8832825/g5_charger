@@ -4,9 +4,9 @@
 
 typedef struct tagEle_load_Data {	
     unsigned int 	ID;						//編號 //0x01
-    unsigned int 	BuzzMusic;				//蜂鳴器音樂 //0=無聲 1、2、3=個別的音樂 當電壓放到截止點就會開始唱歌 //0x00 0x01
+    unsigned int 	Buzzing;        		//放電結束 //0x00=蜂鳴器沒有在叫 0x01=蜂鳴器在叫 //0x00 0x01 //前面是有沒有叫 後面是叫的音樂
     unsigned int 	BaudRate;				//BaudRate  //0x25 0x80
-    unsigned int   ID_decide;				//可決定id //0x00 0x01
+    unsigned int    ID_decide;				//可決定id //0x00 0x01
     unsigned int 	Voltage;				//電壓 // Voltage/100=實際電壓
     union
 	{
@@ -24,17 +24,18 @@ typedef struct tagEle_load_Data {
     unsigned int 	Capacity_L;				//容量低位元
     unsigned int 	Temperature;			//溫度 // Temperature/10=實際溫度
     unsigned int 	StopVoltage;            //截止電壓 // StopVoltage/100=實際截止電壓
-    unsigned int 	DisCharge;              //放電電流 // DisCharge/10=實際放電電流
+    unsigned int 	DisChargeCurrent;       //放電電流 // DisChargeCurrent /10=實際放電電流
     unsigned int    Watt;                   //功率 
     
-    unsigned GoTo_Write_Ele_load:1;              //是不是要去寫入電子附載機
-    unsigned Write_DisCharge_Complete:8;         //00=寫入放電失敗 01=寫入放電成功 10=寫入停止放電失敗 11=寫入停止放電成功
+    unsigned    GoTo_Write_Ele_load:1;              //是不是要去寫入電子附載機
+    unsigned    Init:1;                             //設定電子附載機的值是不是好了
   									
  	union
 	{
 		unsigned						IF:1;
 		struct
 		{
+            unsigned                WriteIF:1;  //寫入電子附載機的完成 //0=未完成 1=完成
 			unsigned  			 	TIF :1;		//資料傳送完成
 			unsigned  			 	RIF :1;		//資料接收完成
 			unsigned  			 	ERRIF:1;	//資料接收或傳送錯誤				

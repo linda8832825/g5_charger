@@ -1,5 +1,5 @@
 //###########################################################//
-//    日期   : 2021.04.30                                    //
+//    日期   : 2021.05.06                                    //
 //    版本   : v1.0                                          //
 //  更新紀錄 :                        //
 //    作者   :                                   //
@@ -34,10 +34,9 @@ void __attribute__((interrupt, no_auto_psv)) _MathError(void){
 }
 
 IC_Data_Define IC_Data;
-unsigned int WriteWholeAh=0;
-unsigned int FirstWriteLCD=1;
-unsigned int GetEleLoadData=0;
-unsigned int LcdWriteComplete=0;
+unsigned int WriteWholeAh=0; //是否寫入滿安時數
+unsigned int FirstWriteLCD=1; //是否第一次寫入LCD
+unsigned int LcdWriteComplete=0; //LCD寫入完畢
 //IC_Data_IF IC_Data_Save_IF;
 
 
@@ -46,7 +45,7 @@ int main (void)
     unsigned int    math_a=0; //計數資料要不到多少次
     unsigned int    math_b=0; //無法寫0.1安時進去的次數
     unsigned int    math_c=0; //無法寫滿安時進去的次數
-    unsigned int    math_d=0; //放秒
+    unsigned int    math_d=0; //用在數秒數
     unsigned int    math_e=0; //判斷要不要更新LCD
     unsigned int    math_f=0; //100秒整個LCD頁面更新
   
@@ -60,7 +59,9 @@ int main (void)
     IC_Data.DoIamStarted=NO;
     IC_Data.WriteZeroAh=NO;
     Ele_load_Data.GoTo_Write_Ele_load=NO;
-    Ele_load_Data.Write_DisCharge_Complete=0x00;
+    Ele_load_Data.WriteIF=0; //寫入電子附載機失敗
+    Ele_load_Data.Init=NO; 
+    
     
 //	IC_Data.Wait_Coulomb_Read=1480;
 //	IC_Data.Charge_Voltage_Avg=0;		
@@ -167,15 +168,15 @@ int main (void)
 
             //----------------------------放電---------------------------------//
             if((IC_Data.WriteZeroAh == NO) && (LcdWriteComplete==YES)){//寫入0.1AH尚未成功
-//                //這裡就是要加行東西ㄟ  
                 
-                if(Ele_load_Data.ID == Ele_load_ID) GetEleLoadData = YES;//有要到正確資料
-                else GetEleLoadData = NO;
-                
-                if(GetEleLoadData == YES){ //如果讀到電子附載機的資料是正確的
+                if(Ele_load_Data.ID == Ele_load_ID){ //如果讀到電子附載機的資料是正確的
+                    
+                    //-----------------------------------設定電子附載機-----------------------------------------//
+                    if(Ele_load_Data.Init==NO) Set_Ele_load();
+                    //------------------------------------------------------------------------------------------//
                     
                     //----------------------------------放電-----------------------------------------------------//
-                    if(Ele_load_Data.Write_DisCharge_Complete==0x00){//如果還未寫放電指令給電子負載機
+                    if((Ele_load_Data.DisCharge==0x0) || (Ele_load_Data.WriteIF==0)){//如果電子附載機是沒有在放電的狀態 或 寫入失敗
                         Ele_load_Data.GoTo_Write_Ele_load=YES; //允許寫入電子附載機 讓timer1裡的讀電子附載機的讀電子附載機的動作停下來
                         WriteEleLoadSetting(0x08, 0x00, 0x64);//放電電流設10A
                         WriteEleLoadState(0x00, 0xFF); //放電
@@ -188,11 +189,24 @@ int main (void)
                     //---------------------------------停止放電------------------------------------------------//
                     if((G5_Data.Current == 0x00) && (G5_Data.Voltage <= Discharge_Voltage)){//放電完成
                         
-                        if(Ele_load_Data.Write_DisCharge_Complete == 0x01){ //如果已經寫入放電給電子負載機
+                        if((Ele_load_Data.DisCharge==0x1) || (Ele_load_Data.WriteIF==0)){ //如果電子附載機是在放電的狀態 或 寫入失敗
                             Ele_load_Data.GoTo_Write_Ele_load=YES; //允許寫入電子附載機 讓timer1裡的讀電子附載機的讀電子附載機的動作停下來
                             WriteEleLoadState(0x00, 0x00); //放電中止
                         }
                         else Ele_load_Data.GoTo_Write_Ele_load=NO; //不需要再次寫入電子附載機 恢復timer1裡的讀取電子附載機
+                        
+                        if((Ele_load_Data.Buzzing!=0) || (Ele_load_Data.WriteIF==0)){//蜂鳴器叫了 或 寫入失敗
+                            Ele_load_Data.GoTo_Write_Ele_load=YES; //允許寫入電子附載機 讓timer1裡的讀電子附載機的讀電子附載機的動作停下來
+                            WriteEleLoadState(0x01, 0xFF); //停止
+                        }
+                        else Ele_load_Data.GoTo_Write_Ele_load=NO; //不需要再次寫入電子附載機 恢復timer1裡的讀取電子附載機
+                        
+                        if((Ele_load_Data.End==0x00) || (Ele_load_Data.WriteIF==0)){//如果電子附載機是還未結束的狀態 或 寫入失敗
+                            Ele_load_Data.GoTo_Write_Ele_load=YES; //允許寫入電子附載機 讓timer1裡的讀電子附載機的讀電子附載機的動作停下來
+                            WriteEleLoadState(0x01, 0xFF); //停止
+                        }
+                        else Ele_load_Data.GoTo_Write_Ele_load=NO; //不需要再次寫入電子附載機 恢復timer1裡的讀取電子附載機
+                        
 
                         if(G5_Data.Residual_Electricity == 0x01){//確認是否為0.1Ah
                             IC_Data.WriteZeroAh = YES; //寫入0.1安時數成功

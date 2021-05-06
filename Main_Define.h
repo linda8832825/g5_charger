@@ -65,6 +65,10 @@ extern  unsigned char I2C_Buffer;
 #define DriverIC_I2C_LCD_Addr       0x4E //LCD的ID
 #define Ele_load_ID                 0x01 //電子附載機的ID
 
+#define BuzzMusicType               0x02   //蜂鳴器響的時候的音樂
+#define DisChargeCurrent            0x0064   //10A放電
+#define StopVoltage                 0x0FA0 //40V截止
+
 
 #define YES                         1//有被按下啟動鈕
 #define NO                          0//無被按下啟動鈕
@@ -144,5 +148,6 @@ void ReadAllEleLoadData(void);
 void WriteEleLoadState(unsigned char math_c, unsigned char math_d);
 void WriteEleLoadSetting(unsigned char math_c, unsigned char math_d, unsigned char math_e);
 unsigned int CRC_Check_Ele_load(void);
+void Set_Ele_load(void);
 
 #endif
