@@ -18,13 +18,15 @@ void __attribute__((interrupt, no_auto_psv)) _T1Interrupt(void){
     if(IC_Data.time.ms==0){
         IC_Data.time.ms=1000;
         if(IC_Data.time.Second==30){
-            IC_Data.time.Thirty_Second_Count=1;
+            IC_Data.time.Thirty_Second_Count=~IC_Data.time.Thirty_Second_Count;
             IC_Data.time.Second=0;
         }
         else{
             IC_Data.time.Second++;
             if((IC_Data.time.Regual_Read_G5<=0) && (IC_Data.DoIamStarted == YES)){
                 Read_ALL_G5_Data();     //跟G5要資料
+                if(G5_Data.ID == My_ID) IC_Data.GetTheWhatYouWant = YES;//有要到正確資料
+                else IC_Data.GetTheWhatYouWant = NO;
                 if(Ele_load_Data.GoTo_Write_Ele_load ==NO) ReadAllEleLoadData();   //跟電子附載機要資料
             }
             else{

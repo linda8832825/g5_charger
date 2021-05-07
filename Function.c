@@ -133,15 +133,15 @@ unsigned int CRC_Check_Ele_load(void) //howmuch¬O¦³¦h¤Ö­Ó!!  5®æ¼Æ¦r´N¶ñ5    ¤£¬
 }
 	
 void delayms(unsigned int i){
-    int math_a,math_b;
+    unsigned int math_a,math_b;
     math_b=i;
     math_a=IC_Data.time.ms;
     while((math_a - IC_Data.time.ms) < math_b);
     math_b=0;
 }
 
-void delay (unsigned int i){
-    int math_a,math_b;
+void delay (unsigned 	char i){
+    unsigned 	char math_a,math_b;
     math_b=i;
     math_a=IC_Data.time.Second;
     if(math_a==0x1E) math_a=0x00; //¦pªG­è¦n¨ú¨ì²Ä30¬í´N Âk¨ì0

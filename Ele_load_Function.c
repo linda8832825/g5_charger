@@ -3,11 +3,11 @@
 Ele_load_Sent_Data_struct_define Ele_load_Sent;
 
 void Set_Ele_load(){ //設定電子附載機
-    do{ WriteEleLoadSetting(0x00, 0x00, BuzzMusicType); } while(Ele_load_Data.WriteIF=0); //寫蜂鳴器響的音樂
-    do{ WriteEleLoadSetting(0x04, 0x00, 0x00);} while(Ele_load_Data.WriteIF=0);//寫0安時
-    do{ WriteEleLoadSetting(0x05, 0x00, 0x00);} while(Ele_load_Data.WriteIF=0);//寫0安時
-    do{ WriteEleLoadSetting(0x07, StopVoltage>>8, StopVoltage&0xFF);} while(Ele_load_Data.WriteIF=0);//放40V截止
-    do{ WriteEleLoadSetting(0x08, DisChargeCurrent>>8, DisChargeCurrent&0xFF);} while(Ele_load_Data.WriteIF=0); //放電電流
+    do{ Ele_load_Data.GoTo_Write_Ele_load=YES; WriteEleLoadSetting(0x00, 0x00, BuzzMusicType); delay(1); } while(Ele_load_Data.WriteIF==0); //寫蜂鳴器響的音樂
+    do{ Ele_load_Data.GoTo_Write_Ele_load=YES; WriteEleLoadSetting(0x04, 0x00, 0x00); delay(1);} while(Ele_load_Data.WriteIF==0);//寫0安時
+    do{ Ele_load_Data.GoTo_Write_Ele_load=YES; WriteEleLoadSetting(0x05, 0x00, 0x00); delay(1);} while(Ele_load_Data.WriteIF==0);//寫0安時
+    do{ Ele_load_Data.GoTo_Write_Ele_load=YES; WriteEleLoadSetting(0x07, StopVoltage>>8, StopVoltage&0xFF); delay(1);} while(Ele_load_Data.WriteIF==0);//放40V截止
+    do{ Ele_load_Data.GoTo_Write_Ele_load=YES; WriteEleLoadSetting(0x08, DisChargeCurrent>>8, DisChargeCurrent&0xFF); delay(1);} while(Ele_load_Data.WriteIF==0); //放電電流
     Ele_load_Data.Init=YES;
 }
 

@@ -140,7 +140,7 @@ void Read_ALL_G5_Data(void);
 void Write_G5_Data(unsigned int Regest,unsigned int Data);
 unsigned int CRC_Check(void);
 unsigned int CRC_Make(unsigned char *Buffer , unsigned char Quantity);
-void delay(unsigned int i);
+void delay(unsigned char i);
 void delayms(unsigned int i);
 void Initial_Ele_load_UART(void);
 void ReadEleLoadState(void);
