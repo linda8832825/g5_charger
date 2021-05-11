@@ -176,11 +176,15 @@ int main (void)
                     //------------------------------------------------------------------------------------------//
                     else{
                         //----------------------------------放電-----------------------------------------------------//
-                        if((Ele_load_Data.DisCharge==0x0) || (Ele_load_Data.WriteIF==0)){//如果電子附載機是沒有在放電的狀態 或 寫入失敗
-                            Ele_load_Data.GoTo_Write_Ele_load=YES; //允許寫入電子附載機 讓timer1裡的讀電子附載機的讀電子附載機的動作停下來
+                        if(Ele_load_Data.DisCharge==0x0){
                             WriteEleLoadState(0x00, 0xFF); //放電
+                            delay(1);
                         }
-                        else Ele_load_Data.GoTo_Write_Ele_load=NO; //不需要再次寫入電子附載機 恢復timer1裡的讀取電子附載機
+                        if((Ele_load_Data.DisCharge!=0) || (Ele_load_Data.Capacity_H!=0) || (Ele_load_Data.End!=0)
+                                || (Ele_load_Data.OverTemperature!=0) || (Ele_load_Data.twoZero!=0)) {
+                            Ele_load_Data.GoTo_Write_Ele_load=NO; //不需要再次寫入電子附載機 恢復timer1裡的讀取電子附載機
+                        }
+                        
 
                         //------------------------------------------------------------------------------------------//
 

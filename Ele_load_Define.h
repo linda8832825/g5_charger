@@ -9,16 +9,15 @@ typedef struct tagEle_load_Data {
     unsigned int    ID_decide;				//可決定id //0x00 0x01
     unsigned int 	Voltage;				//電壓 // Voltage/100=實際電壓
     union
-	{
-		unsigned int x1;						//前面8個是型號與現在狀態 後面八個是容量的高位元
-		struct
+	{			
+		struct   //前面8個是型號與現在狀態 後面八個是容量的高位元
 		{	
-			unsigned type               :3;		//型號 001
-			unsigned twoZero            :2;		//兩個0
-			unsigned OverTemperature	:1;		//1=是過溫保護暫停狀態，0=是正常狀態
-			unsigned End            	:1;		//1=是表示已經結束，0=是尚未開始或者尚未結束
-            unsigned DisCharge          :1;     //1=是放電狀態；0=是停止狀態
             unsigned Capacity_H         :8;     //容量高位元
+            unsigned DisCharge          :1;     //1=是放電狀態；0=是停止狀態
+            unsigned End            	:1;		//1=是表示已經結束，0=是尚未開始或者尚未結束
+            unsigned OverTemperature	:1;		//1=是過溫保護暫停狀態，0=是正常狀態
+            unsigned twoZero            :2;		//兩個0
+            unsigned type               :3;		//型號 001
 		};		
 	};
     unsigned int 	Capacity_L;				//容量低位元
