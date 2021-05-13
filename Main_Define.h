@@ -66,8 +66,8 @@ extern  unsigned char I2C_Buffer;
 #define Ele_load_ID                 0x01 //電子附載機的ID
 
 #define BuzzMusicType               0x02   //蜂鳴器響的時候的音樂
-#define DisChargeCurrent            0x0064   //10A放電
-#define StopVoltage                 0x0FA0 //40V截止
+#define DISCHARGECURRENT            0x0064   //10A放電
+#define STOPVILTAGE                 0x0FA0 //40V截止
 
 
 #define YES                         1//有被按下啟動鈕
