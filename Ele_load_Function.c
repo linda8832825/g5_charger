@@ -4,34 +4,16 @@ Ele_load_Sent_Data_struct_define Ele_load_Sent;
 
 void Set_Ele_load(){ //設定電子附載機
     Ele_load_Data.Init=1; //正在設定or設定失敗
-    do{ 
-        Ele_load_Data.GoTo_Write_Ele_load=YES; 
-        WriteEleLoadSetting(0x00, 0x00, BuzzMusicType); 
-        delay(1); 
-    } while(Ele_load_Data.WriteIF==0); //寫蜂鳴器響的音樂
-    do{ 
-        Ele_load_Data.GoTo_Write_Ele_load=YES; 
-        WriteEleLoadSetting(0x04, 0x00, 0x00); 
-        delay(1); 
-    } while(Ele_load_Data.WriteIF==0);//寫0安時
-    do{ 
-        Ele_load_Data.GoTo_Write_Ele_load=YES; 
-        WriteEleLoadSetting(0x05, 0x00, 0x00); 
-        delay(1); 
-    } while(Ele_load_Data.WriteIF==0);//寫0安時
-    do{ 
-        Ele_load_Data.GoTo_Write_Ele_load=YES; 
-        WriteEleLoadSetting(0x07, STOPVILTAGE>>8, STOPVILTAGE&0xFF); 
-        delay(1);
-    } while(Ele_load_Data.WriteIF==0);//放40V截止
-    do{ 
-        Ele_load_Data.GoTo_Write_Ele_load=YES; 
-        WriteEleLoadSetting(0x08, DISCHARGECURRENT>>8, DISCHARGECURRENT&0xFF); 
-        delay(1); 
-    } while(Ele_load_Data.WriteIF==0); //放電電流
+    do{ WriteEleLoadSetting(0x00, 0x00, BuzzMusicType); delay(1); } while(Ele_load_Data.WriteIF==0); //寫蜂鳴器響的音樂
+    do{ WriteEleLoadSetting(0x04, 0x00, 0x00); delay(1); } while(Ele_load_Data.WriteIF==0);//寫0安時
+    do{ WriteEleLoadSetting(0x05, 0x00, 0x00); delay(1); } while(Ele_load_Data.WriteIF==0);//寫0安時
+    do{ WriteEleLoadSetting(0x07, STOPVILTAGE>>8, STOPVILTAGE&0xFF); delay(1);} while(Ele_load_Data.WriteIF==0);//放40V截止
+    do{ WriteEleLoadSetting(0x08, DISCHARGECURRENT>>8, DISCHARGECURRENT&0xFF); delay(1); } while(Ele_load_Data.WriteIF==0); //放電電流
+    ReadAllEleLoadData();
+    delay(1);
     if((Ele_load_Data.Capacity_H==0x00) && (Ele_load_Data.Capacity_L==0x0000) && (Ele_load_Data.StopVoltage==STOPVILTAGE)
              && (Ele_load_Data.DisChargeCurrent==DISCHARGECURRENT)) Ele_load_Data.Init=2; //設定成功
-    else Ele_load_Data.Init=NO;
+    else Ele_load_Data.Init=1;
 }
 
 void ReadEleLoadState(){ //讀取電子附載機的狀態
@@ -170,6 +152,8 @@ void WriteEleLoadState(unsigned char math_c, unsigned char math_d){ //寫入電子附
 void WriteEleLoadSetting(unsigned char math_c, unsigned char math_d, unsigned char math_e){ //寫入電子附載機的設定
     unsigned int math_a;
     unsigned char math_b;
+    
+    Ele_load_Data.GoTo_Write_Ele_load=YES; 
     
 		Ele_load_Sent.ID=0x01;
 		Ele_load_Sent.Fuc=0x06;	
