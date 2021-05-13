@@ -3,13 +3,39 @@
 Ele_load_Sent_Data_struct_define Ele_load_Sent;
 
 void Set_Ele_load(){ //設定電子附載機
+    Ele_load_Data.Init=1; //正在設定or設定失敗
     int i=5;
-    do{ Ele_load_Data.GoTo_Write_Ele_load=YES; WriteEleLoadSetting(0x00, 0x00, BuzzMusicType); delay(1); if(Ele_load_Data.WriteIF==1) i--;} while(Ele_load_Data.WriteIF==0); //寫蜂鳴器響的音樂
-    do{ Ele_load_Data.GoTo_Write_Ele_load=YES; WriteEleLoadSetting(0x04, 0x00, 0x00); delay(1); if(Ele_load_Data.WriteIF==1) i--;} while(Ele_load_Data.WriteIF==0);//寫0安時
-    do{ Ele_load_Data.GoTo_Write_Ele_load=YES; WriteEleLoadSetting(0x05, 0x00, 0x00); delay(1); if(Ele_load_Data.WriteIF==1) i--;} while(Ele_load_Data.WriteIF==0);//寫0安時
-    do{ Ele_load_Data.GoTo_Write_Ele_load=YES; WriteEleLoadSetting(0x07, StopVoltage>>8, StopVoltage&0xFF); delay(1); if(Ele_load_Data.WriteIF==1) i--;} while(Ele_load_Data.WriteIF==0);//放40V截止
-    do{ Ele_load_Data.GoTo_Write_Ele_load=YES; WriteEleLoadSetting(0x08, DisChargeCurrent>>8, DisChargeCurrent&0xFF); delay(1); if(Ele_load_Data.WriteIF==1) i--;} while(Ele_load_Data.WriteIF==0); //放電電流
-    if(i==0) Ele_load_Data.Init=YES;
+    do{ 
+        Ele_load_Data.GoTo_Write_Ele_load=YES; 
+        WriteEleLoadSetting(0x00, 0x00, BuzzMusicType); 
+        delay(1); 
+        if(Ele_load_Data.WriteIF==1) i--;
+    } while(Ele_load_Data.WriteIF==0); //寫蜂鳴器響的音樂
+    do{ 
+        Ele_load_Data.GoTo_Write_Ele_load=YES; 
+        WriteEleLoadSetting(0x04, 0x00, 0x00); 
+        delay(1); 
+        if(Ele_load_Data.WriteIF==1) i--;
+    } while(Ele_load_Data.WriteIF==0);//寫0安時
+    do{ 
+        Ele_load_Data.GoTo_Write_Ele_load=YES; 
+        WriteEleLoadSetting(0x05, 0x00, 0x00); 
+        delay(1); 
+        if(Ele_load_Data.WriteIF==1) i--;
+    } while(Ele_load_Data.WriteIF==0);//寫0安時
+    do{ 
+        Ele_load_Data.GoTo_Write_Ele_load=YES; 
+        WriteEleLoadSetting(0x07, StopVoltage>>8, StopVoltage&0xFF); 
+        delay(1); 
+        if(Ele_load_Data.WriteIF==1) i--;
+    } while(Ele_load_Data.WriteIF==0);//放40V截止
+    do{ 
+        Ele_load_Data.GoTo_Write_Ele_load=YES; 
+        WriteEleLoadSetting(0x08, DisChargeCurrent>>8, DisChargeCurrent&0xFF); 
+        delay(1); 
+        if(Ele_load_Data.WriteIF==1) i--;
+    } while(Ele_load_Data.WriteIF==0); //放電電流
+    if(i==0)  Ele_load_Data.Init=2; //設定成功
     else Ele_load_Data.Init=NO;
 }
 
@@ -176,11 +202,11 @@ void WriteEleLoadSetting(unsigned char math_c, unsigned char math_d, unsigned ch
 		
         
         if(!U2STAbits.UTXEN){
-            U2STAbits.UTXEN=1;
+            U2STAbits.UTXEN=1; //允許發送
         }
         while(IFS1bits.U2TXIF){
-            IFS1bits.U2TXIF=0;
-            IEC1bits.U2TXIE=1;
+            IFS1bits.U2TXIF=0; //未發生中斷請求
+            IEC1bits.U2TXIE=1; //智能中斷請求
         }
 
         Ele_load_Get.RIF=0;		

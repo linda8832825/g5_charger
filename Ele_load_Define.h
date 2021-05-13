@@ -27,7 +27,7 @@ typedef struct tagEle_load_Data {
     unsigned int    Watt;                   //功率 
     
     unsigned    GoTo_Write_Ele_load:1;              //是不是要去寫入電子附載機
-    unsigned    Init:1;                             //設定電子附載機的值是不是好了
+    unsigned    Init:2;                             //設定電子附載機的值是不是好了 0=一開始還不用設定時 1=正在設定or設定失敗 2=設定成功 
   									
  	union
 	{

@@ -100,10 +100,10 @@ void __attribute__((interrupt, no_auto_psv)) _U2RXInterrupt(void)
         if(Ele_load_Get.RIF==0)
 		{
 			TMR2=0;		
-			if(!T2CONbits.TON) //u2有接收到東西時才會讓timer3啟動
-			{
-				T2CONbits.TON=1;
-			}
+//			if(!T2CONbits.TON) //u2有接收到東西時才會讓timer3啟動
+//			{
+//				T2CONbits.TON=1;
+//			}
 			if(Ele_load_Get.RTIndex==0)
 			{
 				index=&Ele_load_Get.ID;
@@ -123,7 +123,7 @@ void __attribute__((interrupt, no_auto_psv)) _U2RXInterrupt(void)
 				}	
 				else
 				{
-					T2CONbits.TON=0;
+//					T2CONbits.TON=0;
 					math_a=U2RXREG;
 					Ele_load_Get.RTIndex=0;	
 				}
