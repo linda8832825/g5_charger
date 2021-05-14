@@ -23,10 +23,19 @@ void __attribute__((interrupt, no_auto_psv)) _T1Interrupt(void){
         }
         else{
             IC_Data.time.Second++;
-            if((IC_Data.time.Regual_Read_G5<=0) && (IC_Data.DoIamStarted == YES)){
+            
+//            if((IC_Data.time.Regual_Read_G5<=0) && (IC_Data.DoIamStarted == YES)){
+//                Read_ALL_G5_Data();     //跟G5要資料
+//                if(G5_Data.ID == My_ID) IC_Data.GetTheWhatYouWant = YES;//有要到正確資料
+//                else IC_Data.GetTheWhatYouWant = NO;
+//                if((Ele_load_Data.GoTo_Write_Ele_load ==NO) && (IC_Data.time.Second %2 ==0) && (Ele_load_Data.Init!=1)){ 
+//                    ReadAllEleLoadData();   //每兩秒跟電子附載機要資料
+//                }
+//            }
+            if((IC_Data.time.Regual_Read_G5<=0) && (IC_Data.GetTheWhatYouWant == YES)){
                 Read_ALL_G5_Data();     //跟G5要資料
-                if(G5_Data.ID == My_ID) IC_Data.GetTheWhatYouWant = YES;//有要到正確資料
-                else IC_Data.GetTheWhatYouWant = NO;
+//                if(G5_Data.ID == My_ID) IC_Data.GetTheWhatYouWant = YES;//有要到正確資料
+//                else IC_Data.GetTheWhatYouWant = NO;
                 if((Ele_load_Data.GoTo_Write_Ele_load ==NO) && (IC_Data.time.Second %2 ==0) && (Ele_load_Data.Init!=1)){ 
                     ReadAllEleLoadData();   //每兩秒跟電子附載機要資料
                 }

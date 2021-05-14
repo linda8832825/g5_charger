@@ -20,19 +20,12 @@ void Initial_IO(void)
 	TRISE_SW                = Input; 
 	AD1PCFGL=0xFFFF; //1=¼Æ¦ì¿é¤J
 	AD1PCFGH=0xFFFF;	
-	
-
-//	ODCFbits.ODF2 = 1;
-//	ODCFbits.ODF3 = 1;
-
-//	ODCFbits.ODF2 = 1;
-//	ODCFbits.ODF3 = 1;
 
 	BUZZ = BUZZ_ON;
+    POWER = StopCharge;
 	
 	TRISE_U1RX = Input; 
 	TRISE_U1TX = Output;	
-	
 }
 void Initial_Ele_load_UART(void)
 {

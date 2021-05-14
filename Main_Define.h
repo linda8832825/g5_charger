@@ -73,13 +73,10 @@ extern  unsigned char I2C_Buffer;
 #define YES                         1//有被按下啟動鈕
 #define NO                          0//無被按下啟動鈕
 
+#define Charge              1//充電器開始充電
+#define StopCharge          0
 
-
-   
-
-//#define read_G5_times_limt 5
-
-#define Turn_ON 				0
+#define Turn_ON 			0
 #define Turn_OFF 			1
 
 #define SW_Push 			0
