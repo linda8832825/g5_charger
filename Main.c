@@ -177,33 +177,29 @@ int main (void)
                     else{
                         //----------------------------------放電-----------------------------------------------------//
                         if(Ele_load_Data.DisCharge==0x0){
-                            WriteEleLoadState(0x00, 0xFF); //放電
-                            delay(2);
+                            do{ WriteEleLoadState(0x00, 0xFF); delay(1); } while(Ele_load_Data.WriteIF==0);//放電
+                            ReadAllEleLoadData();
+                            delay(1);
                         }
                         else    Ele_load_Data.GoTo_Write_Ele_load=NO; //不需要再次寫入電子附載機 恢復timer1裡的讀取電子附載機
-                                               
-
                         //------------------------------------------------------------------------------------------//
 
 
                         //---------------------------------停止放電------------------------------------------------//
                         if((G5_Data.Current == 0x00) && (G5_Data.Voltage <= Discharge_Voltage)){//放電完成
 
-                            if((Ele_load_Data.DisCharge==0x1) || (Ele_load_Data.WriteIF==0)){ //如果電子附載機是在放電的狀態 或 寫入失敗
-                                Ele_load_Data.GoTo_Write_Ele_load=YES; //允許寫入電子附載機 讓timer1裡的讀電子附載機的讀電子附載機的動作停下來
-                                WriteEleLoadState(0x00, 0x00); //放電中止
+                            if(Ele_load_Data.DisCharge==0x1){ //如果電子附載機是在放電的狀態
+                                do{ WriteEleLoadState(0x00, 0x00); delay(1); } while(Ele_load_Data.WriteIF==0);//放電中止
+                                ReadAllEleLoadData();
+                                delay(1);
                             }
                             else Ele_load_Data.GoTo_Write_Ele_load=NO; //不需要再次寫入電子附載機 恢復timer1裡的讀取電子附載機
 
-                            if((Ele_load_Data.Buzzing!=0) || (Ele_load_Data.WriteIF==0)){//蜂鳴器叫了 或 寫入失敗
-                                Ele_load_Data.GoTo_Write_Ele_load=YES; //允許寫入電子附載機 讓timer1裡的讀電子附載機的讀電子附載機的動作停下來
-                                WriteEleLoadState(0x01, 0xFF); //停止
-                            }
-                            else Ele_load_Data.GoTo_Write_Ele_load=NO; //不需要再次寫入電子附載機 恢復timer1裡的讀取電子附載機
-
-                            if((Ele_load_Data.End==0x00) || (Ele_load_Data.WriteIF==0)){//如果電子附載機是還未結束的狀態 或 寫入失敗
-                                Ele_load_Data.GoTo_Write_Ele_load=YES; //允許寫入電子附載機 讓timer1裡的讀電子附載機的讀電子附載機的動作停下來
-                                WriteEleLoadState(0x01, 0xFF); //停止
+                            if(Ele_load_Data.Buzzing!=0){//蜂鳴器叫了
+                                do{ WriteEleLoadState(0x01, 0x00);  delay(1); } while(Ele_load_Data.WriteIF==0);//停止
+                                do{ WriteEleLoadSetting(0x00, 0x00, BuzzMusicType); delay(1); } while(Ele_load_Data.WriteIF==0); //寫蜂鳴器響的音樂
+                                ReadAllEleLoadData();
+                                delay(1);
                             }
                             else Ele_load_Data.GoTo_Write_Ele_load=NO; //不需要再次寫入電子附載機 恢復timer1裡的讀取電子附載機
 

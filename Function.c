@@ -144,6 +144,6 @@ void delay (unsigned 	char i){
     unsigned 	char math_a,math_b;
     math_b=i;
     math_a=IC_Data.time.Second;
-    if(math_a==0x1F-math_b) math_a=0x00; //如果剛好取到第30秒就 歸到0
+    if(math_a>=(0x1F-math_b)) math_a=0x00; //如果剛好取到第30秒就 歸到0
     while((IC_Data.time.Second - math_a) < math_b);
 }
