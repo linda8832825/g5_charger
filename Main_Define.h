@@ -146,5 +146,6 @@ void WriteEleLoadState(unsigned char math_c, unsigned char math_d);
 void WriteEleLoadSetting(unsigned char math_c, unsigned char math_d, unsigned char math_e);
 unsigned int CRC_Check_Ele_load(void);
 void Set_Ele_load(void);
+unsigned char delayThirtySecond(void);
 
 #endif

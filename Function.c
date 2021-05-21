@@ -140,10 +140,25 @@ void delayms(unsigned int i){
     math_b=0;
 }
 
-void delay (unsigned 	char i){
+void delay (unsigned char i){
     unsigned 	char math_a,math_b;
     math_b=i;
     math_a=IC_Data.time.Second;
     if(math_a>=(0x1F-math_b)) math_a=0x00; //如果剛好取到第30秒就 歸到0
     while((IC_Data.time.Second - math_a) < math_b);
+}
+unsigned char delayThirtySecond(void){
+    unsigned 	char math_a, math_b;
+
+    if(math_a==0){
+        math_b=1;
+        IC_Data.time.Second=0;//時間歸0
+        math_b=IC_Data.time.Thirty_Second_Count;
+    }
+    else{
+        if(math_b!=IC_Data.time.Thirty_Second_Count) {
+            return 1;
+        }
+        else return 0;
+    }
 }

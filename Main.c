@@ -37,6 +37,7 @@ IC_Data_Define IC_Data;
 unsigned int WriteWholeAh=0; //是否寫入滿安時數
 unsigned int FirstWriteLCD=1; //是否第一次寫入LCD
 unsigned int LcdWriteComplete=0; //LCD寫入完畢
+unsigned int DisCharging=0;//是否開始放電
 //IC_Data_IF IC_Data_Save_IF;
 
 
@@ -103,11 +104,18 @@ int main (void)
         
             
         //-----------------------------嘗試與G5連接-------------------------------//
-        if(IC_Data.DoIamStarted == YES && IC_Data.GetTheWhatYouWant == NO && WriteWholeAh == NO){ //啟動了且還沒拿到G5資料也還沒寫0安時
+        if(IC_Data.DoIamStarted == YES && IC_Data.GetTheWhatYouWant == NO ){ //啟動了且還沒拿到G5資料也還沒寫0安時
             if((G5_Get.RIF != 1) && (math_a<=3) && (IC_Data.GetTheWhatYouWant == NO)){//如果在四次內還沒收到資料
                 Read_ALL_G5_Data(); //跟G5要資料
                 delay(2);
                 if(G5_Data.ID == My_ID){//有要到正確資料
+                    POWER = StopCharge;
+                    if(G5_Data.Residual_Electricity==0x00) {
+                        Write_G5_Data(0x06,0x01); //將g5reset電壓點降低
+                        delay(3);
+                        Write_G5_Data(0x05,0x01); //將g5reset調回59.5v //此時剩餘電量會是0.1或0.2安時
+                        delay(3);
+                    }
                     IC_Data.GetTheWhatYouWant = YES;
                     math_a=0;
                 }
@@ -175,102 +183,112 @@ int main (void)
             //-----------------------------------------------------------------//
 
 
+            else{
+                //----------------------------放電---------------------------------//
+                if(IC_Data.WriteZeroAh == NO){//寫入0.1AH尚未成功
 
-            //----------------------------放電---------------------------------//
-            if((IC_Data.WriteZeroAh == NO) && (LcdWriteComplete==YES)){//寫入0.1AH尚未成功
-                
-                if(Ele_load_Data.ID == Ele_load_ID){ //如果讀到電子附載機的資料是正確的
-                    
-                    //-----------------------------------設定電子附載機-----------------------------------------//
-                    if(Ele_load_Data.Init!=2) Set_Ele_load();
-                    //------------------------------------------------------------------------------------------//
-                    else{
-                        //----------------------------------放電-----------------------------------------------------//
-                        if(Ele_load_Data.DisChargeDone==NO){
-                            if(Ele_load_Data.DisCharge==0x0){
-                                do{ WriteEleLoadState(0x00, 0xFF); delay(1); } while(Ele_load_Data.WriteIF==0);//放電
-                                ReadAllEleLoadData();
-                                delay(1);
-                            }
-                            else    Ele_load_Data.GoTo_Write_Ele_load=NO; //不需要再次寫入電子附載機 恢復timer1裡的讀取電子附載機
-                            //------------------------------------------------------------------------------------------//
-                        }
+                    if(Ele_load_Data.ID == Ele_load_ID){ //如果讀到電子附載機的資料是正確的
+
+                        //-----------------------------------設定電子附載機-----------------------------------------//
+                        if(Ele_load_Data.Init!=2) Set_Ele_load();
+                        //------------------------------------------------------------------------------------------//
                         else{
-                            //---------------------------------停止放電------------------------------------------------//
-                            if((G5_Data.Current == 0x00) && (G5_Data.Voltage <= Discharge_Voltage)){//放電完成
-                                Ele_load_Data.DisChargeDone=YES;
-
-                                if(Ele_load_Data.DisCharge==0x1){ //如果電子附載機是在放電的狀態
-                                    do{ WriteEleLoadState(0x00, 0x00); delay(1); } while(Ele_load_Data.WriteIF==0);//放電中止
+                            //----------------------------------放電-----------------------------------------------------//
+                            if((Ele_load_Data.DisChargeDone==NO) && (DisCharging!=YES)){
+                                if(Ele_load_Data.DisCharge==0x0){
+                                    do{ WriteEleLoadState(0x00, 0xFF); delay(1); } while(Ele_load_Data.WriteIF==0);//放電
                                     ReadAllEleLoadData();
                                     delay(1);
                                 }
-                                else Ele_load_Data.GoTo_Write_Ele_load=NO; //不需要再次寫入電子附載機 恢復timer1裡的讀取電子附載機
-
-                                if(Ele_load_Data.Buzzing!=0){//蜂鳴器叫了
-                                    do{ WriteEleLoadState(0x01, 0x00);  delay(1); } while(Ele_load_Data.WriteIF==0);//停止
-                                    do{ WriteEleLoadSetting(0x00, 0x00, BuzzMusicType); delay(1); } while(Ele_load_Data.WriteIF==0); //寫蜂鳴器響的音樂
-                                    ReadAllEleLoadData();
-                                    delay(1);
+                                else    {
+                                    Ele_load_Data.GoTo_Write_Ele_load=NO; //不需要再次寫入電子附載機 恢復timer1裡的讀取電子附載機
+                                    DisCharging=YES;
                                 }
-                                else Ele_load_Data.GoTo_Write_Ele_load=NO; //不需要再次寫入電子附載機 恢復timer1裡的讀取電子附載機
-
-
-                                if(G5_Data.Residual_Electricity == 0x01){//確認是否為0.1Ah
-                                    IC_Data.WriteZeroAh = YES; //寫入0.1安時數成功
-                                    LCD_Clear();
-                                    LCD_write_Char(1, 1 , "Write 0.1Ah To G5 complete");
-                                }
-                                else{//沒有的話再寫一次
-                                    Write_G5_Data(0x07 , 0x01); //寫0.1Ah進去 01 06 00 07 00 01 crc
-                                    math_b++;
-                                }
-                                if(math_b>=3){//寫入0.1安時失敗
-                                    WriteError = Turn_ON;
-                                    BUZZ = BUZZ_ON;
-                                    delay(3);
-                                    WriteError = Turn_OFF;
-                                    LCD_Clear();
-                                    LCD_write_Char(1, 1 , "Write Ah To G5 error occurred");
-                                }
+                                //------------------------------------------------------------------------------------------//
                             }
-                            //-----------------------------------------------------------------------------------------------//
-                        }
-                    }
-                    
-                }
-                LcdWriteComplete=NO;
-            }
-            //-----------------------------------------------------------------//
+                            else{
+                                //---------------------------------停止放電------------------------------------------------//
+                                if(Ele_load_Data.End==0x1) {
+                                    Ele_load_Data.DisChargeDone=YES;
+                                    delayThirtySecond(); //因為g5斷電會重新啟動 那時候讀不到資料
+                                }
+                                if((G5_Data.Current == 0x00) && (G5_Data.Voltage <= Discharge_Voltage)){//放電完成
+                                    Ele_load_Data.DisChargeDone=YES;
 
+//                                    if(Ele_load_Data.DisCharge==0x1){ //如果電子附載機是在放電的狀態
+//                                        do{ WriteEleLoadState(0x00, 0x00); delay(1); } while(Ele_load_Data.WriteIF==0);//放電中止
+//                                        ReadAllEleLoadData();
+//                                        delay(1);
+//                                    }
+//                                    else Ele_load_Data.GoTo_Write_Ele_load=NO; //不需要再次寫入電子附載機 恢復timer1裡的讀取電子附載機
+
+                                    if(Ele_load_Data.Buzzing!=0){//蜂鳴器叫了
+                                        do{ WriteEleLoadState(0x01, 0x00);  delay(1); } while(Ele_load_Data.WriteIF==0);//停止
+                                        do{ WriteEleLoadSetting(0x00, 0x00, BuzzMusicType); delay(1); } while(Ele_load_Data.WriteIF==0); //寫蜂鳴器響的音樂
+                                        ReadAllEleLoadData();
+                                        delay(1);
+                                    }
+                                    else Ele_load_Data.GoTo_Write_Ele_load=NO; //不需要再次寫入電子附載機 恢復timer1裡的讀取電子附載機
+
+
+                                    if(G5_Data.Residual_Electricity == 0x01){//確認是否為0.1Ah
+                                        IC_Data.WriteZeroAh = YES; //寫入0.1安時數成功
+                                        LCD_Clear();
+                                        LCD_write_Char(1, 1 , "Write 0.1Ah To G5 complete");
+                                    }
+                                    else{//沒有的話再寫一次
+                                        Write_G5_Data(0x07 , 0x01); //寫0.1Ah進去 01 06 00 07 00 01 crc
+                                        math_b++;
+                                    }
+                                    if(math_b>=3){//寫入0.1安時失敗
+                                        WriteError = Turn_ON;
+                                        BUZZ = BUZZ_ON;
+                                        delay(3);
+                                        WriteError = Turn_OFF;
+                                        LCD_Clear();
+                                        LCD_write_Char(1, 1 , "Write Ah To G5 error occurred");
+                                    }
+                                }
+                                //-----------------------------------------------------------------------------------------------//
+                            }
+                        }
+
+                    }
+                    LcdWriteComplete=NO;
+                }
+            //-----------------------------------------------------------------//
+            }
 
             //-----------------------------充電--------------------------------//
             if(IC_Data.WriteZeroAh == YES){//寫好0.1安時後開始充電
-                POWER = Charge;
-                if(G5_Data.Current <= Charge_Stop_Current){//充電完畢
+                if(delayThirtySecond()){
+                    POWER = Charge;
+                    if(G5_Data.Current <= Charge_Stop_Current){//充電完畢
+                        
+                        POWER = StopCharge;
+                        if(G5_Data.Now_Total_Capacity == G5_Data.Residual_Electricity){//確認是否將現在的安時數寫到滿安時數
+                            WriteWholeAh = YES; //寫入滿安時數成功
+                            LCD_Clear();
+                            LCD_write_Char(1, 1 , "Write Whole Ah To G5 complete");
+                            IC_Data.DoIamStarted=NO; //不需要再進main做事了
+                        }
+                        else{//沒有的話再寫一次
+                            Write_G5_Data(0x09 , 0x01); //跟G5說將現在的安時數寫到滿安時數 01 06 00 09 00 01 crc
+                            math_c++;
+                        }
+                        if(math_c>=3){//寫入滿安時失敗
+                            WriteError = Turn_ON;
+                            BUZZ = BUZZ_ON;
+                            delay(3);
+                            WriteError = Turn_OFF;
+                            LCD_Clear();
+                            LCD_write_Char(1, 1 , "Write Whole Ah To G5 error occurred");
+                        }
 
-                    if(G5_Data.Now_Total_Capacity == G5_Data.Residual_Electricity){//確認是否將現在的安時數寫到滿安時數
-                        WriteWholeAh = YES; //寫入滿安時數成功
-                        LCD_Clear();
-                        LCD_write_Char(1, 1 , "Write Whole Ah To G5 complete");
                     }
-                    else{//沒有的話再寫一次
-                        Write_G5_Data(0x09 , 0x01); //跟G5說將現在的安時數寫到滿安時數 01 06 00 09 00 01 crc
-                        math_c++;
-                    }
-                    if(math_c>=3){//寫入0.1安時失敗
-                        WriteError = Turn_ON;
-                        BUZZ = BUZZ_ON;
-                        delay(3);
-                        WriteError = Turn_OFF;
-                        LCD_Clear();
-                        LCD_write_Char(1, 1 , "Write Whole Ah To G5 error occurred");
-                    }
-
                 }
-
+                //------------------------------------------------------------------//
             }
-            //------------------------------------------------------------------//
         }
         //----------------------------------------------------------------------//        
             

@@ -7,7 +7,7 @@ unsigned char I2C_Buffer;
 //--------------------------------------------------
 void First_Write_to_LCD(){
     LCD_Clear();
-    delay(1);
+    delay(2);
     LCD_write_Char(1, 1 , "Voltage:");//≈„•‹πq¿£ //1-8
     LCD_write_Variable(1, 9 , G5_Data.Voltage); //9-12  
     LCD_write_Char(1, 13 , "V");//13
@@ -36,6 +36,7 @@ void First_Write_to_LCD(){
     
 }
 void Other_Time_Write_to_LCD(){
+    delay(1);
     LCD_write_Variable(1, 9 , G5_Data.Voltage);    
     LCD_write_Variable(2, 9 , G5_Data.Current);
     LCD_write_Variable(3, 7 , G5_Data.Residual_Electricity);
