@@ -57,7 +57,7 @@ extern  unsigned char I2C_Buffer;
 #define I2C_write                   0
 #define I2C_read                    1
 
-#define Discharge_Voltage           0x01C2 //45.0v 知道放電完的點
+#define Discharge_Voltage           0x01F4 //45.0v 知道放電完的點
 #define Charge_Voltage              0x0253 //59.5v 知道充電完的點
 #define Charge_Stop_Current         0x0A //1.0A 知道充電完的點
 

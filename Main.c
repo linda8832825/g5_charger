@@ -116,6 +116,10 @@ int main (void)
                         Write_G5_Data(0x05,0x01); //將g5reset調回59.5v //此時剩餘電量會是0.1或0.2安時
                         delay(3);
                     }
+                    if(G5_Data.x2!=0x0253){
+                        Write_G5_Data(0x05,0x01); //將g5reset調回59.5v //此時剩餘電量會是0.1或0.2安時
+                        delay(3);
+                    }
                     IC_Data.GetTheWhatYouWant = YES;
                     IC_Data.time.Regual_Read_G5=0; //之後可以常態的與G5通訊
                     math_a=0;
@@ -144,35 +148,6 @@ int main (void)
                             math_a = 0;
                         }
                     }
-//                    if(math_h==0){
-//                        math_h=1;
-//                        IC_Data.time.Second=0;//時間歸0
-//                        math_g=IC_Data.time.Thirty_Second_Count;
-//                        POWER = Charge;
-//                        LCD_Clear();
-//                        delay(1);
-//                        LCD_write_Char(1, 1 , "Charging");
-//                    }
-//                    if((math_g!=IC_Data.time.Thirty_Second_Count) && (math_h==1)) {
-//                        POWER = StopCharge;
-//                        math_h=0;
-//                        math_a++;
-//                        LED=~LED;
-//                        LCD_Clear();
-//                        delay(1);
-//                        if(math_a>3){//充電4次都沒辦法讓g5傳資料出來就宣告失敗
-//                            
-//                            POWER = StopCharge;
-//                            IC_Data.GetTheWhatYouWant= NO; 
-//                            IC_Data.DoIamStarted = NO;
-//                            BatteryError = Turn_ON; //battery燈亮 代表g5沒電了
-//                            WriteError = Turn_OFF;
-//                            LCD_Clear();
-//                            delay(1);
-//                            LCD_write_Char(1, 1 , "Connection To G5 error occurred");
-//                            math_a = 0;
-//                        }
-//                    }
                 }
                 
             }
@@ -233,6 +208,7 @@ int main (void)
                             else{
                                 //---------------------------------停止放電------------------------------------------------//
                                 if(Ele_load_Data.End==0x1) {
+                                    Ele_load_Data.GoTo_Write_Ele_load=YES; //允許寫入電子附載機 讓timer1裡的讀電子附載機的動作停下來
                                     Ele_load_Data.DisChargeDone=YES;
                                     delayThirtySecond(); //因為g5斷電會重新啟動 那時候讀不到資料
                                 }

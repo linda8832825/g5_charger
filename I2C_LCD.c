@@ -13,6 +13,7 @@ void First_Write_to_LCD(){
     LCD_write_Char(1, 13 , "V");//13
     LCD_write_Char(1, 14 , "       ");//14-20
 
+    delay(1);
     LCD_write_Char(2, 1 , "Current:");//顯示電流 //1-8
     LCD_write_Variable(2, 9 , G5_Data.Current); //9-12
     if(G5_Data.Current < 0x64){ //小於10A
@@ -24,23 +25,26 @@ void First_Write_to_LCD(){
         LCD_write_Char(2, 14 , "       ");//14-20
     }
 
+    delay(1);
     LCD_write_Char(3, 1 , "NowAh:");//顯示現在安時數 //1-6
     LCD_write_Variable(3, 7 , G5_Data.Residual_Electricity); //7-10
     LCD_write_Char(3, 11 , "Ah");//11-12
     LCD_write_Char(3, 13 , "        ");//13-20
 
+    delay(1);
     LCD_write_Char(4, 1 , "FullAh:");//顯示滿安時數 //可能要在還沒做完前不需要顯示這個嗎? 或是看看之前回來寫過多少安時數了 //1-7
-    LCD_write_Variable(4, 8 , G5_Data.Now_Total_Capacity); //8-11
+    LCD_write_Variable(4, 8 , G5_Data.Nominal_Battery_Capacity); //8-11
     LCD_write_Char(4, 12 , "Ah"); //12-13
     LCD_write_Char(4, 14 , "       "); //14-20
-    
+    delay(2);
 }
 void Other_Time_Write_to_LCD(){
     delay(1);
     LCD_write_Variable(1, 9 , G5_Data.Voltage);    
     LCD_write_Variable(2, 9 , G5_Data.Current);
     LCD_write_Variable(3, 7 , G5_Data.Residual_Electricity);
-    LCD_write_Variable(4, 8 , G5_Data.Now_Total_Capacity);
+    LCD_write_Variable(4, 8 , G5_Data.Nominal_Battery_Capacity);
+    delay(1);
 }
 void LCD_write_Char(unsigned char ROW, unsigned char COL , char* Str){
     while(I2C1STATbits.BCL) I2C1STATbits.BCL=0; //總線出現衝突後歸為未發生衝突

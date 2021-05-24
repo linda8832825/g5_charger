@@ -69,7 +69,7 @@ void Read_ALL_G5_Data(void)
 		G5_Sent.Reg_L = 0x01;
         
         G5_Sent.Data_H = 0x00;
-        G5_Sent.Data_L = 0x0F;
+        G5_Sent.Data_L = 0x10;
 		
 		G5_Sent.Index=6;
 		G5_Sent.RTIndex=0;

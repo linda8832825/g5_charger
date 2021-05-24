@@ -135,19 +135,26 @@ unsigned int CRC_Check_Ele_load(void) //howmuch¬O¦³¦h¤Ö­Ó!!  5®æ¼Æ¦r´N¶ñ5    ¤£¬
 }
 	
 void delayms(unsigned int i){
-    unsigned int math_a,math_b;
+    unsigned int math_a,math_b,math_c;
     math_b=i;
     math_a=IC_Data.time.ms;
-    while((math_a - IC_Data.time.ms) < math_b);
-    math_b=0;
+    if(math_a>=math_b)  while((math_a - IC_Data.time.ms) < math_b);//°÷¦©
+    else {//¤£°÷¦©
+        math_c=math_b-math_a;//­pºâª½¨ì0²@¬í«e°÷¤£°÷¦©§¹delay²@¬í¼Æ
+        while(IC_Data.time.ms > (0x03E8-math_c));
+    }
 }
 
 void delay (unsigned char i){
-    unsigned 	char math_a,math_b;
+    unsigned 	char math_a,math_b,math_c,math_d;
+    math_d=0x1E;//30¬í
     math_b=i;
     math_a=IC_Data.time.Second;
-    if(math_a>=(0x1F-math_b)) math_a=0x00; //¦pªG­è¦n¨ú¨ì²Ä30¬í´N Âk¨ì0
-    while((IC_Data.time.Second - math_a) < math_b);
+    if((math_d-math_a)>=math_b) while((IC_Data.time.Second - math_a) < math_b); //°÷¦©
+    else{ //¤£°÷¦©
+        math_c=math_b-(math_d-math_a);
+        while(IC_Data.time.Second<math_c);
+    }
 }
 unsigned char delayThirtySecond(void){
 

@@ -30,6 +30,7 @@ typedef struct tagG5_Data_struct {
 	unsigned int minute;                            //0x0D  讀取使用分鐘			
 	unsigned int Now_Total_Capacity;				//0x0E  讀取電池老化後，電池所剩餘的殘餘滿額容量				
 	unsigned int Fake_Voltage;						//0x0F  讀取假電壓
+    unsigned int x2;                        		//0x10  讀取reset電壓點
 	struct
 	{
 		unsigned  			 	IF1 :1;             //資料傳送完成
