@@ -49,8 +49,8 @@ int main (void)
     unsigned int    math_d=0; //用在數秒數
     unsigned int    math_e=0; //判斷要不要更新LCD
     unsigned int    math_f=0; //100秒整個LCD頁面更新
-    unsigned int    math_g=0; //用在與g5讀不到資料的充電的30秒紀錄
-    unsigned int    math_h=0; //用在判斷要不要把秒數歸0
+//    unsigned int    math_g=0; //用在與g5讀不到資料的充電的30秒紀錄
+//    unsigned int    math_h=0; //用在判斷要不要把秒數歸0
     
   
     
@@ -58,7 +58,7 @@ int main (void)
 	
 	//一些數值的初始化設定-----------------------------------------------
     IC_Data.time.ms=1000;
-    IC_Data.time.Regual_Read_G5=20;//20秒後才能常態與g5通訊
+    IC_Data.time.Regual_Read_G5=120;//20秒後才能常態與g5通訊
     IC_Data.GetTheWhatYouWant=NO;
     IC_Data.DoIamStarted=NO;
     IC_Data.WriteZeroAh=NO;
@@ -117,30 +117,25 @@ int main (void)
                         delay(3);
                     }
                     IC_Data.GetTheWhatYouWant = YES;
+                    IC_Data.time.Regual_Read_G5=0; //之後可以常態的與G5通訊
                     math_a=0;
                 }
                 else{// 沒有要到正確資料 就充電三十秒
-                    if(math_h==0){
-                        math_h=1;
-                        IC_Data.time.Second=0;//時間歸0
-                        math_g=IC_Data.time.Thirty_Second_Count;
+                    if(delayThirtySecond()==0){
                         POWER = Charge;
                         LCD_Clear();
                         delay(1);
                         LCD_write_Char(1, 1 , "Charging");
                     }
-                    if((math_g!=IC_Data.time.Thirty_Second_Count) && (math_h==1)) {
+                    else{
                         POWER = StopCharge;
-                        math_h=0;
                         math_a++;
-                        LED=~LED;
                         LCD_Clear();
                         delay(1);
                         if(math_a>3){//充電4次都沒辦法讓g5傳資料出來就宣告失敗
-                            
                             POWER = StopCharge;
                             IC_Data.GetTheWhatYouWant= NO; 
-                            IC_Data.DoIamStarted = NO;
+                            IC_Data.DoIamStarted = NO; //等待啟動鈕再被按下
                             BatteryError = Turn_ON; //battery燈亮 代表g5沒電了
                             WriteError = Turn_OFF;
                             LCD_Clear();
@@ -149,6 +144,35 @@ int main (void)
                             math_a = 0;
                         }
                     }
+//                    if(math_h==0){
+//                        math_h=1;
+//                        IC_Data.time.Second=0;//時間歸0
+//                        math_g=IC_Data.time.Thirty_Second_Count;
+//                        POWER = Charge;
+//                        LCD_Clear();
+//                        delay(1);
+//                        LCD_write_Char(1, 1 , "Charging");
+//                    }
+//                    if((math_g!=IC_Data.time.Thirty_Second_Count) && (math_h==1)) {
+//                        POWER = StopCharge;
+//                        math_h=0;
+//                        math_a++;
+//                        LED=~LED;
+//                        LCD_Clear();
+//                        delay(1);
+//                        if(math_a>3){//充電4次都沒辦法讓g5傳資料出來就宣告失敗
+//                            
+//                            POWER = StopCharge;
+//                            IC_Data.GetTheWhatYouWant= NO; 
+//                            IC_Data.DoIamStarted = NO;
+//                            BatteryError = Turn_ON; //battery燈亮 代表g5沒電了
+//                            WriteError = Turn_OFF;
+//                            LCD_Clear();
+//                            delay(1);
+//                            LCD_write_Char(1, 1 , "Connection To G5 error occurred");
+//                            math_a = 0;
+//                        }
+//                    }
                 }
                 
             }

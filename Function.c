@@ -1,4 +1,6 @@
 #include "Main_Define.h"
+unsigned char math_DelayThirtySecond_a=0; //用在紀錄是否第一次進到delay30秒區
+unsigned char math_DelayThirtySecond_b=0; //用在紀錄delay30秒區的IC_Data.time.Thirty_Second_Count
 
 unsigned int CRC_Make(unsigned char *Buffer , unsigned char Quantity) //howmuch是有多少個!!  5格數字就填5    不是從0開始數
 {
@@ -148,15 +150,17 @@ void delay (unsigned char i){
     while((IC_Data.time.Second - math_a) < math_b);
 }
 unsigned char delayThirtySecond(void){
-    unsigned 	char math_a, math_b;
 
-    if(math_a==0){
-        math_b=1;
+    if(math_DelayThirtySecond_a==0){
+        math_DelayThirtySecond_a=1;
         IC_Data.time.Second=0;//時間歸0
-        math_b=IC_Data.time.Thirty_Second_Count;
+        IC_Data.time.Thirty_Second_Count=0;
+        math_DelayThirtySecond_b=IC_Data.time.Thirty_Second_Count;
+        return 0;
     }
     else{
-        if(math_b!=IC_Data.time.Thirty_Second_Count) {
+        if(math_DelayThirtySecond_b!=IC_Data.time.Thirty_Second_Count) {
+            math_DelayThirtySecond_a=0;
             return 1;
         }
         else return 0;

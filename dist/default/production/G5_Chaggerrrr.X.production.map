@@ -1,4 +1,4 @@
-Microchip Technology Inc, vv3_31 (A) Ô
+Microchip Technology Inc, vv3_31 (A) 
 
 Tool Name:
   c:\program files (x86)\microchip\mplab c30\bin\bin\..\bin/pic30-elf-ld.exe
@@ -86,11 +86,11 @@ section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200               0xc62          0x1293  (4755)
 .const                       0xe62                0xe8           0x15c  (348)
-.text                        0xf4a              0x128a          0x1bcf  (7119)
-.dinit                      0x21d4                0x7c            0xba  (186)
-.text                       0x2250                0x3c            0x5a  (90)
+.text                        0xf4a              0x124c          0x1b72  (7026)
+.dinit                      0x2196                0x84            0xc6  (198)
+.text                       0x221a                0x3c            0x5a  (90)
 
-                     Total program memory used (bytes):         0x30d2  (12498) 9%
+                     Total program memory used (bytes):         0x3081  (12417) 9%
 
 
 Data Memory  [Origin = 0x800, Length = 0x4000]
@@ -100,11 +100,11 @@ section                    address      alignment gaps    total length  (dec)
 .nbss                        0x800                   0            0xf6  (246)
 .ndata                       0x8f6                   0             0x8  (8)
 .nbss                        0x8fe                   0             0xc  (12)
-.ndata                       0x90a                   0             0x2  (2)
-.data                        0x90c                   0            0x34  (52)
-.dconst                      0x940                   0             0x8  (8)
+.ndata                       0x90a                   0             0x4  (4)
+.data                        0x90e                   0            0x34  (52)
+.dconst                      0x942                   0             0x8  (8)
 
-                        Total data memory used (bytes):          0x148  (328) 2%
+                        Total data memory used (bytes):          0x14a  (330) 2%
 
 
 Dynamic Memory Usage
@@ -112,9 +112,9 @@ Dynamic Memory Usage
 region                     address                      maximum length  (dec)
 ------                     -------                      ---------------------
 heap                             0                                   0  (0)
-stack                        0x948                              0x3eb8  (16056)
+stack                        0x94a                              0x3eb6  (16054)
 
-                        Maximum dynamic memory (bytes):         0x3eb8  (16056)
+                        Maximum dynamic memory (bytes):         0x3eb6  (16054)
 
 
 External Symbols in Data Memory (by address):
@@ -134,11 +134,13 @@ External Symbols in Data Memory (by address):
                     0x0906                  _I2C_Buffer
                     0x0907                  _RS
                     0x0908                  _i2c_add
-                    0x090a                  _BackLight_State
+                    0x090a                  _math_DelayThirtySecond_a
+                    0x090b                  _math_DelayThirtySecond_b
+                    0x090c                  _BackLight_State
 
 External Symbols in Data Memory (by name):
 
-                    0x090a                  _BackLight_State
+                    0x090c                  _BackLight_State
                     0x08fc                  _DisCharging
                     0x0806                  _Ele_load_Data
                     0x0822                  _Ele_load_Get
@@ -154,6 +156,8 @@ External Symbols in Data Memory (by name):
                     0x0907                  _RS
                     0x08f6                  _WriteWholeAh
                     0x0908                  _i2c_add
+                    0x090a                  _math_DelayThirtySecond_a
+                    0x090b                  _math_DelayThirtySecond_b
 
 External Symbols in Program Memory (by address):
 
@@ -212,43 +216,43 @@ External Symbols in Program Memory (by address):
                   0x0012f8                  __StackError
                   0x0012fe                  __MathError
                   0x001304                  _main
-                  0x001632                  _Set_Ele_load
-                  0x0016c6                  _ReadEleLoadState
-                  0x001740                  _ReadAllEleLoadData
-                  0x0017ba                  _WriteEleLoadState
-                  0x00183c                  _WriteEleLoadSetting
-                  0x0018c0                  _CRC_Make
-                  0x001924                  _CRC_Check
-                  0x0019e4                  _CRC_Check_Ele_load
-                  0x001aa4                  _delayms
-                  0x001ac2                  _delay
-                  0x001af2                  _delayThirtySecond
-                  0x001b24                  __T3Interrupt
-                  0x001c32                  __U3RXInterrupt
-                  0x001cde                  __U3TXInterrupt
-                  0x001d2c                  __T2Interrupt
-                  0x001e28                  __U2RXInterrupt
-                  0x001e8e                  __U2TXInterrupt
-                  0x001edc                  _Initial_Clock
-                  0x001efc                  _Initial_IO
-                  0x001f1e                  _Initial_Ele_load_UART
-                  0x001f92                  _Initial_G5_UART
-                  0x001ffc                  _I2C_Initial
-                  0x00203c                  _Write_G5_Data
-                  0x0020b4                  _Read_ALL_G5_Data
-                  0x00212c                  _Timer1_initial
-                  0x00214c                  __T1Interrupt
-                  0x002250                  __MI2C1Interrupt
+                  0x0015f6                  _Set_Ele_load
+                  0x00168a                  _ReadEleLoadState
+                  0x001704                  _ReadAllEleLoadData
+                  0x00177e                  _WriteEleLoadState
+                  0x001800                  _WriteEleLoadSetting
+                  0x001884                  _CRC_Make
+                  0x0018e8                  _CRC_Check
+                  0x0019a8                  _CRC_Check_Ele_load
+                  0x001a68                  _delayms
+                  0x001a86                  _delay
+                  0x001ab6                  _delayThirtySecond
+                  0x001af2                  __T3Interrupt
+                  0x001c00                  __U3RXInterrupt
+                  0x001cac                  __U3TXInterrupt
+                  0x001cfa                  __T2Interrupt
+                  0x001df6                  __U2RXInterrupt
+                  0x001e5c                  __U2TXInterrupt
+                  0x001eaa                  _Initial_Clock
+                  0x001eca                  _Initial_IO
+                  0x001eec                  _Initial_Ele_load_UART
+                  0x001f60                  _Initial_G5_UART
+                  0x001fca                  _I2C_Initial
+                  0x00200a                  _Write_G5_Data
+                  0x002082                  _Read_ALL_G5_Data
+                  0x0020fa                  _Timer1_initial
+                  0x00211a                  __T1Interrupt
+                  0x00221a                  __MI2C1Interrupt
 
 External Symbols in Program Memory (by name):
 
                   0x001298                  _Backlight
-                  0x001924                  _CRC_Check
-                  0x0019e4                  _CRC_Check_Ele_load
-                  0x0018c0                  _CRC_Make
+                  0x0018e8                  _CRC_Check
+                  0x0019a8                  _CRC_Check_Ele_load
+                  0x001884                  _CRC_Make
                   0x000f4a                  _First_Write_to_LCD
                   0x001120                  _I2C_ACK
-                  0x001ffc                  _I2C_Initial
+                  0x001fca                  _I2C_Initial
                   0x00110c                  _I2C_Master_RepeatedStart
                   0x001102                  _I2C_Master_Start
                   0x001116                  _I2C_Master_Stop
@@ -256,10 +260,10 @@ External Symbols in Program Memory (by name):
                   0x001138                  _I2C_Master_Write
                   0x00112c                  _I2C_NACK
                   0x0011b4                  _IO_Expander_Write
-                  0x001edc                  _Initial_Clock
-                  0x001f1e                  _Initial_Ele_load_UART
-                  0x001f92                  _Initial_G5_UART
-                  0x001efc                  _Initial_IO
+                  0x001eaa                  _Initial_Clock
+                  0x001eec                  _Initial_Ele_load_UART
+                  0x001f60                  _Initial_G5_UART
+                  0x001eca                  _Initial_IO
                   0x0011e6                  _LCD_CMD
                   0x0012d0                  _LCD_Clear
                   0x001160                  _LCD_Init
@@ -272,29 +276,29 @@ External Symbols in Program Memory (by name):
                   0x00101a                  _LCD_write_Char
                   0x00103c                  _LCD_write_Variable
                   0x000ff0                  _Other_Time_Write_to_LCD
-                  0x001740                  _ReadAllEleLoadData
-                  0x0016c6                  _ReadEleLoadState
-                  0x0020b4                  _Read_ALL_G5_Data
-                  0x001632                  _Set_Ele_load
-                  0x00212c                  _Timer1_initial
-                  0x00183c                  _WriteEleLoadSetting
-                  0x0017ba                  _WriteEleLoadState
-                  0x00203c                  _Write_G5_Data
+                  0x001704                  _ReadAllEleLoadData
+                  0x00168a                  _ReadEleLoadState
+                  0x002082                  _Read_ALL_G5_Data
+                  0x0015f6                  _Set_Ele_load
+                  0x0020fa                  _Timer1_initial
+                  0x001800                  _WriteEleLoadSetting
+                  0x00177e                  _WriteEleLoadState
+                  0x00200a                  _Write_G5_Data
                   0x0012e4                  __AddressError
                   0x000294                  __DefaultInterrupt
                   0x000690                  __Litob
-                  0x002250                  __MI2C1Interrupt
+                  0x00221a                  __MI2C1Interrupt
                   0x0012fe                  __MathError
                   0x0012de                  __OscillatorFail
                   0x0009a6                  __Puttxt
                   0x0012f8                  __StackError
-                  0x00214c                  __T1Interrupt
-                  0x001d2c                  __T2Interrupt
-                  0x001b24                  __T3Interrupt
-                  0x001e28                  __U2RXInterrupt
-                  0x001e8e                  __U2TXInterrupt
-                  0x001c32                  __U3RXInterrupt
-                  0x001cde                  __U3TXInterrupt
+                  0x00211a                  __T1Interrupt
+                  0x001cfa                  __T2Interrupt
+                  0x001af2                  __T3Interrupt
+                  0x001df6                  __U2RXInterrupt
+                  0x001e5c                  __U2TXInterrupt
+                  0x001c00                  __U3RXInterrupt
+                  0x001cac                  __U3TXInterrupt
                   0x000b22                  __Vacopy
                   0x0002c6                  ___Printf_cdnopuxX
                   0x000438                  ___Putfld_cdnopuxX
@@ -316,9 +320,9 @@ External Symbols in Program Memory (by name):
                   0x000222                  __psv_init
                   0x000200                  __resetPRI
                   0x0002a4                  __sprintf_cdnopuxX
-                  0x001ac2                  _delay
-                  0x001af2                  _delayThirtySecond
-                  0x001aa4                  _delayms
+                  0x001a86                  _delay
+                  0x001ab6                  _delayThirtySecond
+                  0x001a68                  _delayms
                   0x001304                  _main
                   0x000b2c                  _memcpy
                   0x0012a6                  _noBacklight
@@ -455,45 +459,45 @@ __CONFIG1         0x0157fe          0x2
 .comment
  *(.comment)
 
-.debug_info       0x000000       0x9772
+.debug_info       0x000000       0x94fc
  *(.debug_info)
- .debug_info      0x000000       0x108e build/default/production/Main.o
- .debug_info      0x00108e       0x28ae build/default/production/Initial.o
- .debug_info      0x00393c        0xaa3 build/default/production/G5_Function.o
- .debug_info      0x0043df        0x979 build/default/production/Function.o
- .debug_info      0x004d58        0xfe0 build/default/production/G5_Interrupt_Fuction.o
- .debug_info      0x005d38        0xb55 build/default/production/timer1.o
- .debug_info      0x00688d        0xd03 build/default/production/I2C_LCD.o
- .debug_info      0x007590        0x504 build/default/production/I2C_Interrupt.o
- .debug_info      0x007a94        0xe5e build/default/production/Ele_load_Interrupt.o
- .debug_info      0x0088f2        0xe80 build/default/production/Ele_load_Function.o
+ .debug_info      0x000000       0x106c build/default/production/Main.o
+ .debug_info      0x00106c       0x28ae build/default/production/Initial.o
+ .debug_info      0x00391a        0xaa3 build/default/production/G5_Function.o
+ .debug_info      0x0043bd        0x9a6 build/default/production/Function.o
+ .debug_info      0x004d63        0xfe0 build/default/production/G5_Interrupt_Fuction.o
+ .debug_info      0x005d43        0x8d4 build/default/production/timer1.o
+ .debug_info      0x006617        0xd03 build/default/production/I2C_LCD.o
+ .debug_info      0x00731a        0x504 build/default/production/I2C_Interrupt.o
+ .debug_info      0x00781e        0xe5e build/default/production/Ele_load_Interrupt.o
+ .debug_info      0x00867c        0xe80 build/default/production/Ele_load_Function.o
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev     0x000000        0xe5f
+.debug_abbrev     0x000000        0xe87
  *(.debug_abbrev)
  .debug_abbrev    0x000000        0x1a1 build/default/production/Main.o
  .debug_abbrev    0x0001a1        0x132 build/default/production/Initial.o
  .debug_abbrev    0x0002d3        0x18d build/default/production/G5_Function.o
- .debug_abbrev    0x000460        0x168 build/default/production/Function.o
- .debug_abbrev    0x0005c8        0x185 build/default/production/G5_Interrupt_Fuction.o
- .debug_abbrev    0x00074d        0x130 build/default/production/timer1.o
- .debug_abbrev    0x00087d        0x198 build/default/production/I2C_LCD.o
- .debug_abbrev    0x000a15        0x101 build/default/production/I2C_Interrupt.o
- .debug_abbrev    0x000b16        0x1a5 build/default/production/Ele_load_Interrupt.o
- .debug_abbrev    0x000cbb        0x1a4 build/default/production/Ele_load_Function.o
+ .debug_abbrev    0x000460        0x190 build/default/production/Function.o
+ .debug_abbrev    0x0005f0        0x185 build/default/production/G5_Interrupt_Fuction.o
+ .debug_abbrev    0x000775        0x130 build/default/production/timer1.o
+ .debug_abbrev    0x0008a5        0x198 build/default/production/I2C_LCD.o
+ .debug_abbrev    0x000a3d        0x101 build/default/production/I2C_Interrupt.o
+ .debug_abbrev    0x000b3e        0x1a5 build/default/production/Ele_load_Interrupt.o
+ .debug_abbrev    0x000ce3        0x1a4 build/default/production/Ele_load_Function.o
 
-.debug_line       0x000000       0x2445
+.debug_line       0x000000       0x2415
  *(.debug_line)
- .debug_line      0x000000        0x612 build/default/production/Main.o
- .debug_line      0x000612        0x365 build/default/production/Initial.o
- .debug_line      0x000977        0x269 build/default/production/G5_Function.o
- .debug_line      0x000be0        0x3be build/default/production/Function.o
- .debug_line      0x000f9e        0x394 build/default/production/G5_Interrupt_Fuction.o
- .debug_line      0x001332        0x1b4 build/default/production/timer1.o
- .debug_line      0x0014e6        0x5ed build/default/production/I2C_LCD.o
- .debug_line      0x001ad3        0x133 build/default/production/I2C_Interrupt.o
- .debug_line      0x001c06        0x370 build/default/production/Ele_load_Interrupt.o
- .debug_line      0x001f76        0x4cf build/default/production/Ele_load_Function.o
+ .debug_line      0x000000        0x5e2 build/default/production/Main.o
+ .debug_line      0x0005e2        0x365 build/default/production/Initial.o
+ .debug_line      0x000947        0x269 build/default/production/G5_Function.o
+ .debug_line      0x000bb0        0x3ce build/default/production/Function.o
+ .debug_line      0x000f7e        0x394 build/default/production/G5_Interrupt_Fuction.o
+ .debug_line      0x001312        0x1a4 build/default/production/timer1.o
+ .debug_line      0x0014b6        0x5ed build/default/production/I2C_LCD.o
+ .debug_line      0x001aa3        0x133 build/default/production/I2C_Interrupt.o
+ .debug_line      0x001bd6        0x370 build/default/production/Ele_load_Interrupt.o
+ .debug_line      0x001f46        0x4cf build/default/production/Ele_load_Function.o
 
 .debug_frame      0x000000        0x4b4
  *(.debug_frame)
@@ -528,7 +532,7 @@ __CONFIG1         0x0157fe          0x2
  *(.debug_macinfo)
 
 .debug_pubnames
-                  0x000000        0x5a4
+                  0x000000        0x5de
  *(.debug_pubnames)
  .debug_pubnames
                   0x000000         0xce build/default/production/Main.o
@@ -537,19 +541,19 @@ __CONFIG1         0x0157fe          0x2
  .debug_pubnames
                   0x00014b         0x50 build/default/production/G5_Function.o
  .debug_pubnames
-                  0x00019b         0x70 build/default/production/Function.o
+                  0x00019b         0xaa build/default/production/Function.o
  .debug_pubnames
-                  0x00020b         0x49 build/default/production/G5_Interrupt_Fuction.o
+                  0x000245         0x49 build/default/production/G5_Interrupt_Fuction.o
  .debug_pubnames
-                  0x000254         0x36 build/default/production/timer1.o
+                  0x00028e         0x36 build/default/production/timer1.o
  .debug_pubnames
-                  0x00028a        0x1f9 build/default/production/I2C_LCD.o
+                  0x0002c4        0x1f9 build/default/production/I2C_LCD.o
  .debug_pubnames
-                  0x000483         0x26 build/default/production/I2C_Interrupt.o
+                  0x0004bd         0x26 build/default/production/I2C_Interrupt.o
  .debug_pubnames
-                  0x0004a9         0x6c build/default/production/Ele_load_Interrupt.o
+                  0x0004e3         0x6c build/default/production/Ele_load_Interrupt.o
  .debug_pubnames
-                  0x000515         0x8f build/default/production/Ele_load_Function.o
+                  0x00054f         0x8f build/default/production/Ele_load_Function.o
 
 .debug_ranges
  *(.debug_ranges)
@@ -589,12 +593,12 @@ __CONFIG1         0x0157fe          0x2
                   0x000014          0x4 LONG 0x294 DEFINED (__INT0Interrupt)?ABSOLUTE (__INT0Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000016          0x4 LONG 0x294 DEFINED (__IC1Interrupt)?ABSOLUTE (__IC1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000018          0x4 LONG 0x294 DEFINED (__OC1Interrupt)?ABSOLUTE (__OC1Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x00001a          0x4 LONG 0x214c DEFINED (__T1Interrupt)?ABSOLUTE (__T1Interrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x00001a          0x4 LONG 0x211a DEFINED (__T1Interrupt)?ABSOLUTE (__T1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00001c          0x4 LONG 0x294 DEFINED (__Interrupt4)?ABSOLUTE (__Interrupt4):ABSOLUTE (__DefaultInterrupt)
                   0x00001e          0x4 LONG 0x294 DEFINED (__IC2Interrupt)?ABSOLUTE (__IC2Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000020          0x4 LONG 0x294 DEFINED (__OC2Interrupt)?ABSOLUTE (__OC2Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000022          0x4 LONG 0x1d2c DEFINED (__T2Interrupt)?ABSOLUTE (__T2Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000024          0x4 LONG 0x1b24 DEFINED (__T3Interrupt)?ABSOLUTE (__T3Interrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x000022          0x4 LONG 0x1cfa DEFINED (__T2Interrupt)?ABSOLUTE (__T2Interrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x000024          0x4 LONG 0x1af2 DEFINED (__T3Interrupt)?ABSOLUTE (__T3Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000026          0x4 LONG 0x294 DEFINED (__SPI1ErrInterrupt)?ABSOLUTE (__SPI1ErrInterrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000028          0x4 LONG 0x294 DEFINED (__SPI1Interrupt)?ABSOLUTE (__SPI1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00002a          0x4 LONG 0x294 DEFINED (__U1RXInterrupt)?ABSOLUTE (__U1RXInterrupt):ABSOLUTE (__DefaultInterrupt)
@@ -603,7 +607,7 @@ __CONFIG1         0x0157fe          0x2
                   0x000030          0x4 LONG 0x294 DEFINED (__Interrupt14)?ABSOLUTE (__Interrupt14):ABSOLUTE (__DefaultInterrupt)
                   0x000032          0x4 LONG 0x294 DEFINED (__Interrupt15)?ABSOLUTE (__Interrupt15):ABSOLUTE (__DefaultInterrupt)
                   0x000034          0x4 LONG 0x294 DEFINED (__SI2C1Interrupt)?ABSOLUTE (__SI2C1Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000036          0x4 LONG 0x2250 DEFINED (__MI2C1Interrupt)?ABSOLUTE (__MI2C1Interrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x000036          0x4 LONG 0x221a DEFINED (__MI2C1Interrupt)?ABSOLUTE (__MI2C1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000038          0x4 LONG 0x294 DEFINED (__CompInterrupt)?ABSOLUTE (__CompInterrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00003a          0x4 LONG 0x294 DEFINED (__CNInterrupt)?ABSOLUTE (__CNInterrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00003c          0x4 LONG 0x294 DEFINED (__INT1Interrupt)?ABSOLUTE (__INT1Interrupt):ABSOLUTE (__DefaultInterrupt)
@@ -616,8 +620,8 @@ __CONFIG1         0x0157fe          0x2
                   0x00004a          0x4 LONG 0x294 DEFINED (__T4Interrupt)?ABSOLUTE (__T4Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00004c          0x4 LONG 0x294 DEFINED (__T5Interrupt)?ABSOLUTE (__T5Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00004e          0x4 LONG 0x294 DEFINED (__INT2Interrupt)?ABSOLUTE (__INT2Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000050          0x4 LONG 0x1e28 DEFINED (__U2RXInterrupt)?ABSOLUTE (__U2RXInterrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000052          0x4 LONG 0x1e8e DEFINED (__U2TXInterrupt)?ABSOLUTE (__U2TXInterrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x000050          0x4 LONG 0x1df6 DEFINED (__U2RXInterrupt)?ABSOLUTE (__U2RXInterrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x000052          0x4 LONG 0x1e5c DEFINED (__U2TXInterrupt)?ABSOLUTE (__U2TXInterrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000054          0x4 LONG 0x294 DEFINED (__SPI2ErrInterrupt)?ABSOLUTE (__SPI2ErrInterrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000056          0x4 LONG 0x294 DEFINED (__SPI2Interrupt)?ABSOLUTE (__SPI2Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000058          0x4 LONG 0x294 DEFINED (__Interrupt34)?ABSOLUTE (__Interrupt34):ABSOLUTE (__DefaultInterrupt)
@@ -668,8 +672,8 @@ __CONFIG1         0x0157fe          0x2
                   0x0000b2          0x4 LONG 0x294 DEFINED (__Interrupt79)?ABSOLUTE (__Interrupt79):ABSOLUTE (__DefaultInterrupt)
                   0x0000b4          0x4 LONG 0x294 DEFINED (__Interrupt80)?ABSOLUTE (__Interrupt80):ABSOLUTE (__DefaultInterrupt)
                   0x0000b6          0x4 LONG 0x294 DEFINED (__U3ErrInterrupt)?ABSOLUTE (__U3ErrInterrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x0000b8          0x4 LONG 0x1c32 DEFINED (__U3RXInterrupt)?ABSOLUTE (__U3RXInterrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x0000ba          0x4 LONG 0x1cde DEFINED (__U3TXInterrupt)?ABSOLUTE (__U3TXInterrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x0000b8          0x4 LONG 0x1c00 DEFINED (__U3RXInterrupt)?ABSOLUTE (__U3RXInterrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x0000ba          0x4 LONG 0x1cac DEFINED (__U3TXInterrupt)?ABSOLUTE (__U3TXInterrupt):ABSOLUTE (__DefaultInterrupt)
                   0x0000bc          0x4 LONG 0x294 DEFINED (__SI2C3Interrupt)?ABSOLUTE (__SI2C3Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x0000be          0x4 LONG 0x294 DEFINED (__MI2C3Interrupt)?ABSOLUTE (__MI2C3Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x0000c0          0x4 LONG 0x294 DEFINED (__Interrupt86)?ABSOLUTE (__Interrupt86):ABSOLUTE (__DefaultInterrupt)
@@ -717,12 +721,12 @@ __CONFIG1         0x0157fe          0x2
                   0x000114          0x4 LONG 0x294 DEFINED (__AltINT0Interrupt)?ABSOLUTE (__AltINT0Interrupt):DEFINED (__INT0Interrupt)?ABSOLUTE (__INT0Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000116          0x4 LONG 0x294 DEFINED (__AltIC1Interrupt)?ABSOLUTE (__AltIC1Interrupt):DEFINED (__IC1Interrupt)?ABSOLUTE (__IC1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000118          0x4 LONG 0x294 DEFINED (__AltOC1Interrupt)?ABSOLUTE (__AltOC1Interrupt):DEFINED (__OC1Interrupt)?ABSOLUTE (__OC1Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x00011a          0x4 LONG 0x214c DEFINED (__AltT1Interrupt)?ABSOLUTE (__AltT1Interrupt):DEFINED (__T1Interrupt)?ABSOLUTE (__T1Interrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x00011a          0x4 LONG 0x211a DEFINED (__AltT1Interrupt)?ABSOLUTE (__AltT1Interrupt):DEFINED (__T1Interrupt)?ABSOLUTE (__T1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00011c          0x4 LONG 0x294 DEFINED (__AltInterrupt4)?ABSOLUTE (__AltInterrupt4):DEFINED (__Interrupt4)?ABSOLUTE (__Interrupt4):ABSOLUTE (__DefaultInterrupt)
                   0x00011e          0x4 LONG 0x294 DEFINED (__AltIC2Interrupt)?ABSOLUTE (__AltIC2Interrupt):DEFINED (__IC2Interrupt)?ABSOLUTE (__IC2Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000120          0x4 LONG 0x294 DEFINED (__AltOC2Interrupt)?ABSOLUTE (__AltOC2Interrupt):DEFINED (__OC2Interrupt)?ABSOLUTE (__OC2Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000122          0x4 LONG 0x1d2c DEFINED (__AltT2Interrupt)?ABSOLUTE (__AltT2Interrupt):DEFINED (__T2Interrupt)?ABSOLUTE (__T2Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000124          0x4 LONG 0x1b24 DEFINED (__AltT3Interrupt)?ABSOLUTE (__AltT3Interrupt):DEFINED (__T3Interrupt)?ABSOLUTE (__T3Interrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x000122          0x4 LONG 0x1cfa DEFINED (__AltT2Interrupt)?ABSOLUTE (__AltT2Interrupt):DEFINED (__T2Interrupt)?ABSOLUTE (__T2Interrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x000124          0x4 LONG 0x1af2 DEFINED (__AltT3Interrupt)?ABSOLUTE (__AltT3Interrupt):DEFINED (__T3Interrupt)?ABSOLUTE (__T3Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000126          0x4 LONG 0x294 DEFINED (__AltSPI1ErrInterrupt)?ABSOLUTE (__AltSPI1ErrInterrupt):DEFINED (__SPI1ErrInterrupt)?ABSOLUTE (__SPI1ErrInterrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000128          0x4 LONG 0x294 DEFINED (__AltSPI1Interrupt)?ABSOLUTE (__AltSPI1Interrupt):DEFINED (__SPI1Interrupt)?ABSOLUTE (__SPI1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00012a          0x4 LONG 0x294 DEFINED (__AltU1RXInterrupt)?ABSOLUTE (__AltU1RXInterrupt):DEFINED (__U1RXInterrupt)?ABSOLUTE (__U1RXInterrupt):ABSOLUTE (__DefaultInterrupt)
@@ -731,7 +735,7 @@ __CONFIG1         0x0157fe          0x2
                   0x000130          0x4 LONG 0x294 DEFINED (__AltInterrupt14)?ABSOLUTE (__AltInterrupt14):DEFINED (__Interrupt14)?ABSOLUTE (__Interrupt14):ABSOLUTE (__DefaultInterrupt)
                   0x000132          0x4 LONG 0x294 DEFINED (__AltInterrupt15)?ABSOLUTE (__AltInterrupt15):DEFINED (__Interrupt15)?ABSOLUTE (__Interrupt15):ABSOLUTE (__DefaultInterrupt)
                   0x000134          0x4 LONG 0x294 DEFINED (__AltSI2C1Interrupt)?ABSOLUTE (__AltSI2C1Interrupt):DEFINED (__SI2C1Interrupt)?ABSOLUTE (__SI2C1Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000136          0x4 LONG 0x2250 DEFINED (__AltMI2C1Interrupt)?ABSOLUTE (__AltMI2C1Interrupt):DEFINED (__MI2C1Interrupt)?ABSOLUTE (__MI2C1Interrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x000136          0x4 LONG 0x221a DEFINED (__AltMI2C1Interrupt)?ABSOLUTE (__AltMI2C1Interrupt):DEFINED (__MI2C1Interrupt)?ABSOLUTE (__MI2C1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000138          0x4 LONG 0x294 DEFINED (__AltCompInterrupt)?ABSOLUTE (__AltCompInterrupt):DEFINED (__CompInterrupt)?ABSOLUTE (__CompInterrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00013a          0x4 LONG 0x294 DEFINED (__AltCNInterrupt)?ABSOLUTE (__AltCNInterrupt):DEFINED (__CNInterrupt)?ABSOLUTE (__CNInterrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00013c          0x4 LONG 0x294 DEFINED (__AltINT1Interrupt)?ABSOLUTE (__AltINT1Interrupt):DEFINED (__INT1Interrupt)?ABSOLUTE (__INT1Interrupt):ABSOLUTE (__DefaultInterrupt)
@@ -744,8 +748,8 @@ __CONFIG1         0x0157fe          0x2
                   0x00014a          0x4 LONG 0x294 DEFINED (__AltT4Interrupt)?ABSOLUTE (__AltT4Interrupt):DEFINED (__T4Interrupt)?ABSOLUTE (__T4Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00014c          0x4 LONG 0x294 DEFINED (__AltT5Interrupt)?ABSOLUTE (__AltT5Interrupt):DEFINED (__T5Interrupt)?ABSOLUTE (__T5Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00014e          0x4 LONG 0x294 DEFINED (__AltINT2Interrupt)?ABSOLUTE (__AltINT2Interrupt):DEFINED (__INT2Interrupt)?ABSOLUTE (__INT2Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000150          0x4 LONG 0x1e28 DEFINED (__AltU2RXInterrupt)?ABSOLUTE (__AltU2RXInterrupt):DEFINED (__U2RXInterrupt)?ABSOLUTE (__U2RXInterrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000152          0x4 LONG 0x1e8e DEFINED (__AltU2TXInterrupt)?ABSOLUTE (__AltU2TXInterrupt):DEFINED (__U2TXInterrupt)?ABSOLUTE (__U2TXInterrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x000150          0x4 LONG 0x1df6 DEFINED (__AltU2RXInterrupt)?ABSOLUTE (__AltU2RXInterrupt):DEFINED (__U2RXInterrupt)?ABSOLUTE (__U2RXInterrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x000152          0x4 LONG 0x1e5c DEFINED (__AltU2TXInterrupt)?ABSOLUTE (__AltU2TXInterrupt):DEFINED (__U2TXInterrupt)?ABSOLUTE (__U2TXInterrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000154          0x4 LONG 0x294 DEFINED (__AltSPI2ErrInterrupt)?ABSOLUTE (__AltSPI2ErrInterrupt):DEFINED (__SPI2ErrInterrupt)?ABSOLUTE (__SPI2ErrInterrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000156          0x4 LONG 0x294 DEFINED (__AltSPI2Interrupt)?ABSOLUTE (__AltSPI2Interrupt):DEFINED (__SPI2Interrupt)?ABSOLUTE (__SPI2Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000158          0x4 LONG 0x294 DEFINED (__AltInterrupt34)?ABSOLUTE (__AltInterrupt34):DEFINED (__Interrupt34)?ABSOLUTE (__Interrupt34):ABSOLUTE (__DefaultInterrupt)
@@ -796,8 +800,8 @@ __CONFIG1         0x0157fe          0x2
                   0x0001b2          0x4 LONG 0x294 DEFINED (__AltInterrupt79)?ABSOLUTE (__AltInterrupt79):DEFINED (__Interrupt79)?ABSOLUTE (__Interrupt79):ABSOLUTE (__DefaultInterrupt)
                   0x0001b4          0x4 LONG 0x294 DEFINED (__AltInterrupt80)?ABSOLUTE (__AltInterrupt80):DEFINED (__Interrupt80)?ABSOLUTE (__Interrupt80):ABSOLUTE (__DefaultInterrupt)
                   0x0001b6          0x4 LONG 0x294 DEFINED (__AltU3ErrInterrupt)?ABSOLUTE (__AltU3ErrInterrupt):DEFINED (__U3ErrInterrupt)?ABSOLUTE (__U3ErrInterrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x0001b8          0x4 LONG 0x1c32 DEFINED (__AltU3RXInterrupt)?ABSOLUTE (__AltU3RXInterrupt):DEFINED (__U3RXInterrupt)?ABSOLUTE (__U3RXInterrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x0001ba          0x4 LONG 0x1cde DEFINED (__AltU3TXInterrupt)?ABSOLUTE (__AltU3TXInterrupt):DEFINED (__U3TXInterrupt)?ABSOLUTE (__U3TXInterrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x0001b8          0x4 LONG 0x1c00 DEFINED (__AltU3RXInterrupt)?ABSOLUTE (__AltU3RXInterrupt):DEFINED (__U3RXInterrupt)?ABSOLUTE (__U3RXInterrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x0001ba          0x4 LONG 0x1cac DEFINED (__AltU3TXInterrupt)?ABSOLUTE (__AltU3TXInterrupt):DEFINED (__U3TXInterrupt)?ABSOLUTE (__U3TXInterrupt):ABSOLUTE (__DefaultInterrupt)
                   0x0001bc          0x4 LONG 0x294 DEFINED (__AltSI2C3Interrupt)?ABSOLUTE (__AltSI2C3Interrupt):DEFINED (__SI2C3Interrupt)?ABSOLUTE (__SI2C3Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x0001be          0x4 LONG 0x294 DEFINED (__AltMI2C3Interrupt)?ABSOLUTE (__AltMI2C3Interrupt):DEFINED (__MI2C3Interrupt)?ABSOLUTE (__MI2C3Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x0001c0          0x4 LONG 0x294 DEFINED (__AltInterrupt86)?ABSOLUTE (__AltInterrupt86):DEFINED (__Interrupt86)?ABSOLUTE (__Interrupt86):ABSOLUTE (__DefaultInterrupt)
@@ -1909,22 +1913,25 @@ __c30_signature
                     0x0907                  _RS
                     0x0908                  _i2c_add
 
-.ndata              0x090a          0x2
- .ndata             0x090a          0x2 build/default/production/I2C_LCD.o
-                    0x090a                  _BackLight_State
+.ndata              0x090a          0x4
+ .ndata             0x090a          0x2 build/default/production/Function.o
+                    0x090a                  _math_DelayThirtySecond_a
+                    0x090b                  _math_DelayThirtySecond_b
+ .ndata             0x090c          0x2 build/default/production/I2C_LCD.o
+                    0x090c                  _BackLight_State
 
-.data               0x090c         0x34
- .data              0x090c         0x22 c:/program files (x86)/microchip/mplab c30/bin/bin/../../lib\liblega-c-elf.a(xlitob.XXelo)
- .data              0x092e         0x12 c:/program files (x86)/microchip/mplab c30/bin/bin/../../lib\liblega-c-elf.a(xprintf_cdnopuxX.XXeo)
+.data               0x090e         0x34
+ .data              0x090e         0x22 c:/program files (x86)/microchip/mplab c30/bin/bin/../../lib\liblega-c-elf.a(xlitob.XXelo)
+ .data              0x0930         0x12 c:/program files (x86)/microchip/mplab c30/bin/bin/../../lib\liblega-c-elf.a(xprintf_cdnopuxX.XXeo)
 
-.dconst             0x0940          0x8
- .dconst            0x0940          0x8 c:/program files (x86)/microchip/mplab c30/bin/bin/../../lib\liblega-c-elf.a(xprintf_cdnopuxX.XXeo)
+.dconst             0x0942          0x8
+ .dconst            0x0942          0x8 c:/program files (x86)/microchip/mplab c30/bin/bin/../../lib\liblega-c-elf.a(xprintf_cdnopuxX.XXeo)
 
 .const              0x8e62         0xe8 load address 0x000e62  
  .const             0x8e62         0xaa build/default/production/Main.o
  .const             0x8f0c         0x3e build/default/production/I2C_LCD.o
 
-.text             0x000f4a       0x128a
+.text             0x000f4a       0x124c
  .text            0x000f4a        0x394 build/default/production/I2C_LCD.o
                   0x000f4a                  _First_Write_to_LCD
                   0x000ff0                  _Other_Time_Write_to_LCD
@@ -1949,49 +1956,49 @@ __c30_signature
                   0x0012b4                  _LCD_SL
                   0x0012c2                  _LCD_SR
                   0x0012d0                  _LCD_Clear
- .text            0x0012de        0x354 build/default/production/Main.o
+ .text            0x0012de        0x318 build/default/production/Main.o
                   0x0012de                  __OscillatorFail
                   0x0012e4                  __AddressError
                   0x0012f8                  __StackError
                   0x0012fe                  __MathError
                   0x001304                  _main
- .text            0x001632        0x28e build/default/production/Ele_load_Function.o
-                  0x001632                  _Set_Ele_load
-                  0x0016c6                  _ReadEleLoadState
-                  0x001740                  _ReadAllEleLoadData
-                  0x0017ba                  _WriteEleLoadState
-                  0x00183c                  _WriteEleLoadSetting
- .text            0x0018c0        0x264 build/default/production/Function.o
-                  0x0018c0                  _CRC_Make
-                  0x001924                  _CRC_Check
-                  0x0019e4                  _CRC_Check_Ele_load
-                  0x001aa4                  _delayms
-                  0x001ac2                  _delay
-                  0x001af2                  _delayThirtySecond
- .text            0x001b24        0x208 build/default/production/G5_Interrupt_Fuction.o
-                  0x001b24                  __T3Interrupt
-                  0x001c32                  __U3RXInterrupt
-                  0x001cde                  __U3TXInterrupt
- .text            0x001d2c        0x1b0 build/default/production/Ele_load_Interrupt.o
-                  0x001d2c                  __T2Interrupt
-                  0x001e28                  __U2RXInterrupt
-                  0x001e8e                  __U2TXInterrupt
- .text            0x001edc        0x160 build/default/production/Initial.o
-                  0x001edc                  _Initial_Clock
-                  0x001efc                  _Initial_IO
-                  0x001f1e                  _Initial_Ele_load_UART
-                  0x001f92                  _Initial_G5_UART
-                  0x001ffc                  _I2C_Initial
- .text            0x00203c         0xf0 build/default/production/G5_Function.o
-                  0x00203c                  _Write_G5_Data
-                  0x0020b4                  _Read_ALL_G5_Data
- .text            0x00212c         0xa8 build/default/production/timer1.o
-                  0x00212c                  _Timer1_initial
-                  0x00214c                  __T1Interrupt
+ .text            0x0015f6        0x28e build/default/production/Ele_load_Function.o
+                  0x0015f6                  _Set_Ele_load
+                  0x00168a                  _ReadEleLoadState
+                  0x001704                  _ReadAllEleLoadData
+                  0x00177e                  _WriteEleLoadState
+                  0x001800                  _WriteEleLoadSetting
+ .text            0x001884        0x26e build/default/production/Function.o
+                  0x001884                  _CRC_Make
+                  0x0018e8                  _CRC_Check
+                  0x0019a8                  _CRC_Check_Ele_load
+                  0x001a68                  _delayms
+                  0x001a86                  _delay
+                  0x001ab6                  _delayThirtySecond
+ .text            0x001af2        0x208 build/default/production/G5_Interrupt_Fuction.o
+                  0x001af2                  __T3Interrupt
+                  0x001c00                  __U3RXInterrupt
+                  0x001cac                  __U3TXInterrupt
+ .text            0x001cfa        0x1b0 build/default/production/Ele_load_Interrupt.o
+                  0x001cfa                  __T2Interrupt
+                  0x001df6                  __U2RXInterrupt
+                  0x001e5c                  __U2TXInterrupt
+ .text            0x001eaa        0x160 build/default/production/Initial.o
+                  0x001eaa                  _Initial_Clock
+                  0x001eca                  _Initial_IO
+                  0x001eec                  _Initial_Ele_load_UART
+                  0x001f60                  _Initial_G5_UART
+                  0x001fca                  _I2C_Initial
+ .text            0x00200a         0xf0 build/default/production/G5_Function.o
+                  0x00200a                  _Write_G5_Data
+                  0x002082                  _Read_ALL_G5_Data
+ .text            0x0020fa         0x9c build/default/production/timer1.o
+                  0x0020fa                  _Timer1_initial
+                  0x00211a                  __T1Interrupt
 
-.dinit            0x0021d4         0x7c
- .dinit           0x0021d4         0x7c data_init
+.dinit            0x002196         0x84
+ .dinit           0x002196         0x84 data_init
 
-.text             0x002250         0x3c
- .text            0x002250         0x3c build/default/production/I2C_Interrupt.o
-                  0x002250                  __MI2C1Interrupt
+.text             0x00221a         0x3c
+ .text            0x00221a         0x3c build/default/production/I2C_Interrupt.o
+                  0x00221a                  __MI2C1Interrupt
