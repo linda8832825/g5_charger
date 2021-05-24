@@ -6,7 +6,7 @@ unsigned char I2C_Buffer;
 //---------------[ LCD應用]-------------------
 //--------------------------------------------------
 void First_Write_to_LCD(){
-    LCD_Clear();
+    LCD_Init(DriverIC_I2C_LCD_Addr);
     delay(2);
     LCD_write_Char(1, 1 , "Voltage:");//顯示電壓 //1-8
     LCD_write_Variable(1, 9 , G5_Data.Voltage); //9-12  

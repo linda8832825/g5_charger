@@ -49,8 +49,6 @@ int main (void)
     unsigned int    math_d=0; //用在數秒數
     unsigned int    math_e=0; //判斷要不要更新LCD
     unsigned int    math_f=0; //100秒整個LCD頁面更新
-//    unsigned int    math_g=0; //用在與g5讀不到資料的充電的30秒紀錄
-//    unsigned int    math_h=0; //用在判斷要不要把秒數歸0
     
   
     
@@ -214,13 +212,6 @@ int main (void)
                                 }
                                 if((G5_Data.Current == 0x00) && (G5_Data.Voltage <= Discharge_Voltage)){//放電完成
                                     Ele_load_Data.DisChargeDone=YES;
-
-//                                    if(Ele_load_Data.DisCharge==0x1){ //如果電子附載機是在放電的狀態
-//                                        do{ WriteEleLoadState(0x00, 0x00); delay(1); } while(Ele_load_Data.WriteIF==0);//放電中止
-//                                        ReadAllEleLoadData();
-//                                        delay(1);
-//                                    }
-//                                    else Ele_load_Data.GoTo_Write_Ele_load=NO; //不需要再次寫入電子附載機 恢復timer1裡的讀取電子附載機
 
                                     if(Ele_load_Data.Buzzing!=0){//蜂鳴器叫了
                                         do{ WriteEleLoadState(0x01, 0x00);  delay(1); } while(Ele_load_Data.WriteIF==0);//停止
