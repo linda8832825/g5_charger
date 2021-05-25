@@ -1,4 +1,4 @@
-Microchip Technology Inc, vv3_31 (A) v
+Microchip Technology Inc, vv3_31 (A) ´
 
 Tool Name:
   c:\program files (x86)\microchip\mplab c30\bin\bin\..\bin/pic30-elf-ld.exe
@@ -6,7 +6,7 @@ Tool Name:
 Command:
   -p24FJ128GA106 \
   -o \
-  dist/default/production/G5_Chaggerrrr.X.production.elf \
+  dist/default/debug/G5_Chaggerrrr.X.debug.elf \
   -Lc:/program files (x86)/microchip/mplab c30/bin/bin/.. \
   -Lc:/program files (x86)/microchip/mplab c30/bin/bin/../../lib \
   -Lc:/program files (x86)/microchip/mplab c30/bin/bin/../../lib/PIC24E \
@@ -21,21 +21,25 @@ Command:
   -Lc:/program files (x86)/microchip/mplab c30/bin/bin/../../support/dsPIC33E/gld \
   -Lc:/program files (x86)/microchip/mplab c30/bin/bin/../../lib/dsPIC33F \
   -Lc:/program files (x86)/microchip/mplab c30/bin/bin/../../support/dsPIC33F/gld \
-  build/default/production/Main.o \
-  build/default/production/Initial.o \
-  build/default/production/G5_Function.o \
-  build/default/production/Function.o \
-  build/default/production/G5_Interrupt_Fuction.o \
-  build/default/production/timer1.o \
-  build/default/production/I2C_LCD.o \
-  build/default/production/I2C_Interrupt.o \
-  build/default/production/Ele_load_Interrupt.o \
-  build/default/production/Ele_load_Function.o \
+  build/default/debug/Main.o \
+  build/default/debug/Initial.o \
+  build/default/debug/G5_Function.o \
+  build/default/debug/Function.o \
+  build/default/debug/G5_Interrupt_Fuction.o \
+  build/default/debug/timer1.o \
+  build/default/debug/I2C_LCD.o \
+  build/default/debug/I2C_Interrupt.o \
+  build/default/debug/Ele_load_Interrupt.o \
+  build/default/debug/Ele_load_Function.o \
   --defsym=__MPLAB_BUILD=1 \
   --stack=16 \
-  -Map=dist/default/production/G5_Chaggerrrr.X.production.map \
+  -Map=dist/default/debug/G5_Chaggerrrr.X.debug.map \
   --report-mem \
   -Tp24FJ128GA106.gld.00 \
+  --defsym=__ICD2RAM=1 \
+  --defsym=__MPLAB_DEBUG=1 \
+  --defsym=__DEBUG=1 \
+  --defsym=__MPLAB_DEBUGGER_PK3=1 \
   -start-group \
   --library=lega-pic30-elf \
   --library=m-elf \
@@ -49,7 +53,7 @@ c:/program files (x86)/microchip/mplab c30/bin/bin/../../lib\liblega-pic30-elf.a
 c:/program files (x86)/microchip/mplab c30/bin/bin/../../lib\liblega-pic30-elf.a(data_init_standard.o)
                               c:/program files (x86)/microchip/mplab c30/bin/bin/../../lib\liblega-pic30-elf.a(crt0_standard.o) (__data_init_standard)
 c:/program files (x86)/microchip/mplab c30/bin/bin/../../lib\liblega-c-elf.a(sprintf_cdnopuxX.XXeo)
-                              build/default/production/I2C_LCD.o (__sprintf_cdnopuxX)
+                              build/default/debug/I2C_LCD.o (__sprintf_cdnopuxX)
 c:/program files (x86)/microchip/mplab c30/bin/bin/../../lib\liblega-c-elf.a(xprintf_cdnopuxX.XXeo)
                               c:/program files (x86)/microchip/mplab c30/bin/bin/../../lib\liblega-c-elf.a(sprintf_cdnopuxX.XXeo) (___Printf_cdnopuxX)
 c:/program files (x86)/microchip/mplab c30/bin/bin/../../lib\liblega-c-elf.a(xputfld_cdnopuxX.XXeo)
@@ -97,14 +101,15 @@ Data Memory  [Origin = 0x800, Length = 0x4000]
 
 section                    address      alignment gaps    total length  (dec)
 -------                    -------      --------------    -------------------
-.nbss                        0x800                   0            0xf8  (248)
-.ndata                       0x8f8                   0             0x8  (8)
-.nbss                        0x900                   0             0xc  (12)
-.ndata                       0x90c                   0             0x6  (6)
-.data                        0x912                   0            0x34  (52)
-.dconst                      0x946                   0             0x8  (8)
+.icd                         0x800                0x50            0x50  (80)
+.nbss                        0x850                   0            0xf8  (248)
+.ndata                       0x948                   0             0x8  (8)
+.nbss                        0x950                   0             0xc  (12)
+.ndata                       0x95c                   0             0x6  (6)
+.data                        0x962                   0            0x34  (52)
+.dconst                      0x996                   0             0x8  (8)
 
-                        Total data memory used (bytes):          0x14e  (334) 2%
+                        Total data memory used (bytes):          0x19e  (414) 2%
 
 
 Dynamic Memory Usage
@@ -112,54 +117,54 @@ Dynamic Memory Usage
 region                     address                      maximum length  (dec)
 ------                     -------                      ---------------------
 heap                             0                                   0  (0)
-stack                        0x94e                              0x3eb2  (16050)
+stack                        0x99e                              0x3e62  (15970)
 
-                        Maximum dynamic memory (bytes):         0x3eb2  (16050)
+                        Maximum dynamic memory (bytes):         0x3e62  (15970)
 
 
 External Symbols in Data Memory (by address):
 
-                    0x0806                  _Ele_load_Data
-                    0x0822                  _Ele_load_Get
-                    0x0868                  _G5_Sent
-                    0x0874                  _G5_Get
-                    0x08ba                  _G5_Data
-                    0x08e2                  _Ele_load_Sent
-                    0x08ee                  _IC_Data
-                    0x08f8                  _BackLight_State
-                    0x08fa                  _math_a
-                    0x08fc                  _math_b
-                    0x08fe                  _math_c
-                    0x0906                  _I2C_Data
-                    0x0908                  _I2C_Buffer
-                    0x0909                  _RS
-                    0x090a                  _i2c_add
-                    0x090c                  _WriteWholeAh
-                    0x090e                  _DisCharging
-                    0x0910                  _math_DelayThirtySecond_a
-                    0x0911                  _math_DelayThirtySecond_b
+                    0x0856                  _Ele_load_Data
+                    0x0872                  _Ele_load_Get
+                    0x08b8                  _G5_Sent
+                    0x08c4                  _G5_Get
+                    0x090a                  _G5_Data
+                    0x0932                  _Ele_load_Sent
+                    0x093e                  _IC_Data
+                    0x0948                  _BackLight_State
+                    0x094a                  _math_a
+                    0x094c                  _math_b
+                    0x094e                  _math_c
+                    0x0956                  _I2C_Data
+                    0x0958                  _I2C_Buffer
+                    0x0959                  _RS
+                    0x095a                  _i2c_add
+                    0x095c                  _WriteWholeAh
+                    0x095e                  _DisCharging
+                    0x0960                  _math_DelayThirtySecond_a
+                    0x0961                  _math_DelayThirtySecond_b
 
 External Symbols in Data Memory (by name):
 
-                    0x08f8                  _BackLight_State
-                    0x090e                  _DisCharging
-                    0x0806                  _Ele_load_Data
-                    0x0822                  _Ele_load_Get
-                    0x08e2                  _Ele_load_Sent
-                    0x08ba                  _G5_Data
-                    0x0874                  _G5_Get
-                    0x0868                  _G5_Sent
-                    0x0908                  _I2C_Buffer
-                    0x0906                  _I2C_Data
-                    0x08ee                  _IC_Data
-                    0x0909                  _RS
-                    0x090c                  _WriteWholeAh
-                    0x090a                  _i2c_add
-                    0x0910                  _math_DelayThirtySecond_a
-                    0x0911                  _math_DelayThirtySecond_b
-                    0x08fa                  _math_a
-                    0x08fc                  _math_b
-                    0x08fe                  _math_c
+                    0x0948                  _BackLight_State
+                    0x095e                  _DisCharging
+                    0x0856                  _Ele_load_Data
+                    0x0872                  _Ele_load_Get
+                    0x0932                  _Ele_load_Sent
+                    0x090a                  _G5_Data
+                    0x08c4                  _G5_Get
+                    0x08b8                  _G5_Sent
+                    0x0958                  _I2C_Buffer
+                    0x0956                  _I2C_Data
+                    0x093e                  _IC_Data
+                    0x0959                  _RS
+                    0x095c                  _WriteWholeAh
+                    0x095a                  _i2c_add
+                    0x0960                  _math_DelayThirtySecond_a
+                    0x0961                  _math_DelayThirtySecond_b
+                    0x094a                  _math_a
+                    0x094c                  _math_b
+                    0x094e                  _math_c
 
 External Symbols in Program Memory (by address):
 
@@ -349,16 +354,16 @@ CONFIG1          0x0157fe           0x000002
 
 Linker script and memory map
 
-LOAD build/default/production/Main.o
-LOAD build/default/production/Initial.o
-LOAD build/default/production/G5_Function.o
-LOAD build/default/production/Function.o
-LOAD build/default/production/G5_Interrupt_Fuction.o
-LOAD build/default/production/timer1.o
-LOAD build/default/production/I2C_LCD.o
-LOAD build/default/production/I2C_Interrupt.o
-LOAD build/default/production/Ele_load_Interrupt.o
-LOAD build/default/production/Ele_load_Function.o
+LOAD build/default/debug/Main.o
+LOAD build/default/debug/Initial.o
+LOAD build/default/debug/G5_Function.o
+LOAD build/default/debug/Function.o
+LOAD build/default/debug/G5_Interrupt_Fuction.o
+LOAD build/default/debug/timer1.o
+LOAD build/default/debug/I2C_LCD.o
+LOAD build/default/debug/I2C_Interrupt.o
+LOAD build/default/debug/Ele_load_Interrupt.o
+LOAD build/default/debug/Ele_load_Function.o
                     0x0001                  __MPLAB_BUILD = 0x1
 LOAD c:/program files (x86)/microchip/mplab c30/bin/bin/../../lib/PIC24F\libpPIC24Fxxx-elf.a
                     0x157fa                  __CONFIG3 = 0x157fa
@@ -454,80 +459,84 @@ __CONFIG3
 
 __CONFIG2         0x0157fc          0x2
  *(__CONFIG2.sec*)
- __CONFIG2.sec    0x0157fc          0x2 build/default/production/Main.o
+ __CONFIG2.sec    0x0157fc          0x2 build/default/debug/Main.o
 
 __CONFIG1         0x0157fe          0x2
  *(__CONFIG1.sec*)
- __CONFIG1.sec    0x0157fe          0x2 build/default/production/Main.o
+ __CONFIG1.sec    0x0157fe          0x2 build/default/debug/Main.o
+
+.icd                0x0800         0x50
+                    0x0850                  . = (. + DEFINED (__ICD2RAM)?0x50:0x0)
+ *fill*             0x0800         0x5000
 
 .comment
  *(.comment)
 
 .debug_info       0x000000       0x9733
  *(.debug_info)
- .debug_info      0x000000       0x100b build/default/production/Main.o
- .debug_info      0x00100b       0x28bb build/default/production/Initial.o
- .debug_info      0x0038c6        0xaa3 build/default/production/G5_Function.o
- .debug_info      0x004369        0x9d9 build/default/production/Function.o
- .debug_info      0x004d42        0xfed build/default/production/G5_Interrupt_Fuction.o
- .debug_info      0x005d2f        0x8d4 build/default/production/timer1.o
- .debug_info      0x006603        0xf4e build/default/production/I2C_LCD.o
- .debug_info      0x007551        0x504 build/default/production/I2C_Interrupt.o
- .debug_info      0x007a55        0xe5e build/default/production/Ele_load_Interrupt.o
- .debug_info      0x0088b3        0xe80 build/default/production/Ele_load_Function.o
+ .debug_info      0x000000       0x100b build/default/debug/Main.o
+ .debug_info      0x00100b       0x28bb build/default/debug/Initial.o
+ .debug_info      0x0038c6        0xaa3 build/default/debug/G5_Function.o
+ .debug_info      0x004369        0x9d9 build/default/debug/Function.o
+ .debug_info      0x004d42        0xfed build/default/debug/G5_Interrupt_Fuction.o
+ .debug_info      0x005d2f        0x8d4 build/default/debug/timer1.o
+ .debug_info      0x006603        0xf4e build/default/debug/I2C_LCD.o
+ .debug_info      0x007551        0x504 build/default/debug/I2C_Interrupt.o
+ .debug_info      0x007a55        0xe5e build/default/debug/Ele_load_Interrupt.o
+ .debug_info      0x0088b3        0xe80 build/default/debug/Ele_load_Function.o
  *(.gnu.linkonce.wi.*)
 
 .debug_abbrev     0x000000        0xe87
  *(.debug_abbrev)
- .debug_abbrev    0x000000        0x1a1 build/default/production/Main.o
- .debug_abbrev    0x0001a1        0x132 build/default/production/Initial.o
- .debug_abbrev    0x0002d3        0x18d build/default/production/G5_Function.o
- .debug_abbrev    0x000460        0x190 build/default/production/Function.o
- .debug_abbrev    0x0005f0        0x185 build/default/production/G5_Interrupt_Fuction.o
- .debug_abbrev    0x000775        0x130 build/default/production/timer1.o
- .debug_abbrev    0x0008a5        0x198 build/default/production/I2C_LCD.o
- .debug_abbrev    0x000a3d        0x101 build/default/production/I2C_Interrupt.o
- .debug_abbrev    0x000b3e        0x1a5 build/default/production/Ele_load_Interrupt.o
- .debug_abbrev    0x000ce3        0x1a4 build/default/production/Ele_load_Function.o
+ .debug_abbrev    0x000000        0x1a1 build/default/debug/Main.o
+ .debug_abbrev    0x0001a1        0x132 build/default/debug/Initial.o
+ .debug_abbrev    0x0002d3        0x18d build/default/debug/G5_Function.o
+ .debug_abbrev    0x000460        0x190 build/default/debug/Function.o
+ .debug_abbrev    0x0005f0        0x185 build/default/debug/G5_Interrupt_Fuction.o
+ .debug_abbrev    0x000775        0x130 build/default/debug/timer1.o
+ .debug_abbrev    0x0008a5        0x198 build/default/debug/I2C_LCD.o
+ .debug_abbrev    0x000a3d        0x101 build/default/debug/I2C_Interrupt.o
+ .debug_abbrev    0x000b3e        0x1a5 build/default/debug/Ele_load_Interrupt.o
+ .debug_abbrev    0x000ce3        0x1a4 build/default/debug/Ele_load_Function.o
 
 .debug_line       0x000000       0x245d
  *(.debug_line)
- .debug_line      0x000000        0x572 build/default/production/Main.o
- .debug_line      0x000572        0x365 build/default/production/Initial.o
- .debug_line      0x0008d7        0x269 build/default/production/G5_Function.o
- .debug_line      0x000b40        0x3e6 build/default/production/Function.o
- .debug_line      0x000f26        0x394 build/default/production/G5_Interrupt_Fuction.o
- .debug_line      0x0012ba        0x1a4 build/default/production/timer1.o
- .debug_line      0x00145e        0x685 build/default/production/I2C_LCD.o
- .debug_line      0x001ae3        0x133 build/default/production/I2C_Interrupt.o
- .debug_line      0x001c16        0x368 build/default/production/Ele_load_Interrupt.o
- .debug_line      0x001f7e        0x4df build/default/production/Ele_load_Function.o
+ .debug_line      0x000000        0x572 build/default/debug/Main.o
+ .debug_line      0x000572        0x365 build/default/debug/Initial.o
+ .debug_line      0x0008d7        0x269 build/default/debug/G5_Function.o
+ .debug_line      0x000b40        0x3e6 build/default/debug/Function.o
+ .debug_line      0x000f26        0x394 build/default/debug/G5_Interrupt_Fuction.o
+ .debug_line      0x0012ba        0x1a4 build/default/debug/timer1.o
+ .debug_line      0x00145e        0x685 build/default/debug/I2C_LCD.o
+ .debug_line      0x001ae3        0x133 build/default/debug/I2C_Interrupt.o
+ .debug_line      0x001c16        0x368 build/default/debug/Ele_load_Interrupt.o
+ .debug_line      0x001f7e        0x4df build/default/debug/Ele_load_Function.o
 
 .debug_frame      0x000000        0x4c4
  *(.debug_frame)
- .debug_frame     0x000000         0x67 build/default/production/Main.o
- .debug_frame     0x000067         0x67 build/default/production/Initial.o
- .debug_frame     0x0000ce         0x37 build/default/production/G5_Function.o
- .debug_frame     0x000105         0x77 build/default/production/Function.o
- .debug_frame     0x00017c         0x47 build/default/production/G5_Interrupt_Fuction.o
- .debug_frame     0x0001c3         0x37 build/default/production/timer1.o
- .debug_frame     0x0001fa        0x1f5 build/default/production/I2C_LCD.o
- .debug_frame     0x0003ef         0x27 build/default/production/I2C_Interrupt.o
- .debug_frame     0x000416         0x47 build/default/production/Ele_load_Interrupt.o
- .debug_frame     0x00045d         0x67 build/default/production/Ele_load_Function.o
+ .debug_frame     0x000000         0x67 build/default/debug/Main.o
+ .debug_frame     0x000067         0x67 build/default/debug/Initial.o
+ .debug_frame     0x0000ce         0x37 build/default/debug/G5_Function.o
+ .debug_frame     0x000105         0x77 build/default/debug/Function.o
+ .debug_frame     0x00017c         0x47 build/default/debug/G5_Interrupt_Fuction.o
+ .debug_frame     0x0001c3         0x37 build/default/debug/timer1.o
+ .debug_frame     0x0001fa        0x1f5 build/default/debug/I2C_LCD.o
+ .debug_frame     0x0003ef         0x27 build/default/debug/I2C_Interrupt.o
+ .debug_frame     0x000416         0x47 build/default/debug/Ele_load_Interrupt.o
+ .debug_frame     0x00045d         0x67 build/default/debug/Ele_load_Function.o
 
 .debug_str        0x000000        0x175
  *(.debug_str)
- .debug_str       0x000000         0x3f build/default/production/Main.o
- .debug_str       0x00003f         0x31 build/default/production/Initial.o
- .debug_str       0x000070         0x14 build/default/production/G5_Function.o
- .debug_str       0x000084         0x65 build/default/production/Function.o
- .debug_str       0x0000e9         0x1d build/default/production/G5_Interrupt_Fuction.o
- .debug_str       0x000106          0xd build/default/production/timer1.o
- .debug_str       0x000113          0xd build/default/production/I2C_LCD.o
- .debug_str       0x000120          0xd build/default/production/I2C_Interrupt.o
- .debug_str       0x00012d         0x25 build/default/production/Ele_load_Interrupt.o
- .debug_str       0x000152         0x23 build/default/production/Ele_load_Function.o
+ .debug_str       0x000000         0x3f build/default/debug/Main.o
+ .debug_str       0x00003f         0x31 build/default/debug/Initial.o
+ .debug_str       0x000070         0x14 build/default/debug/G5_Function.o
+ .debug_str       0x000084         0x65 build/default/debug/Function.o
+ .debug_str       0x0000e9         0x1d build/default/debug/G5_Interrupt_Fuction.o
+ .debug_str       0x000106          0xd build/default/debug/timer1.o
+ .debug_str       0x000113          0xd build/default/debug/I2C_LCD.o
+ .debug_str       0x000120          0xd build/default/debug/I2C_Interrupt.o
+ .debug_str       0x00012d         0x25 build/default/debug/Ele_load_Interrupt.o
+ .debug_str       0x000152         0x23 build/default/debug/Ele_load_Function.o
 
 .debug_loc
  *(.debug_loc)
@@ -539,25 +548,25 @@ __CONFIG1         0x0157fe          0x2
                   0x000000        0x5ec
  *(.debug_pubnames)
  .debug_pubnames
-                  0x000000         0xa7 build/default/production/Main.o
+                  0x000000         0xa7 build/default/debug/Main.o
  .debug_pubnames
-                  0x0000a7         0x7d build/default/production/Initial.o
+                  0x0000a7         0x7d build/default/debug/Initial.o
  .debug_pubnames
-                  0x000124         0x50 build/default/production/G5_Function.o
+                  0x000124         0x50 build/default/debug/G5_Function.o
  .debug_pubnames
-                  0x000174         0xaa build/default/production/Function.o
+                  0x000174         0xaa build/default/debug/Function.o
  .debug_pubnames
-                  0x00021e         0x49 build/default/production/G5_Interrupt_Fuction.o
+                  0x00021e         0x49 build/default/debug/G5_Interrupt_Fuction.o
  .debug_pubnames
-                  0x000267         0x36 build/default/production/timer1.o
+                  0x000267         0x36 build/default/debug/timer1.o
  .debug_pubnames
-                  0x00029d        0x22e build/default/production/I2C_LCD.o
+                  0x00029d        0x22e build/default/debug/I2C_LCD.o
  .debug_pubnames
-                  0x0004cb         0x26 build/default/production/I2C_Interrupt.o
+                  0x0004cb         0x26 build/default/debug/I2C_Interrupt.o
  .debug_pubnames
-                  0x0004f1         0x6c build/default/production/Ele_load_Interrupt.o
+                  0x0004f1         0x6c build/default/debug/Ele_load_Interrupt.o
  .debug_pubnames
-                  0x00055d         0x8f build/default/production/Ele_load_Function.o
+                  0x00055d         0x8f build/default/debug/Ele_load_Function.o
 
 .debug_ranges
  *(.debug_ranges)
@@ -565,25 +574,25 @@ __CONFIG1         0x0157fe          0x2
 .debug_aranges    0x000000        0x140
  *(.debug_aranges)
  .debug_aranges
-                  0x000000         0x20 build/default/production/Main.o
+                  0x000000         0x20 build/default/debug/Main.o
  .debug_aranges
-                  0x000020         0x20 build/default/production/Initial.o
+                  0x000020         0x20 build/default/debug/Initial.o
  .debug_aranges
-                  0x000040         0x20 build/default/production/G5_Function.o
+                  0x000040         0x20 build/default/debug/G5_Function.o
  .debug_aranges
-                  0x000060         0x20 build/default/production/Function.o
+                  0x000060         0x20 build/default/debug/Function.o
  .debug_aranges
-                  0x000080         0x20 build/default/production/G5_Interrupt_Fuction.o
+                  0x000080         0x20 build/default/debug/G5_Interrupt_Fuction.o
  .debug_aranges
-                  0x0000a0         0x20 build/default/production/timer1.o
+                  0x0000a0         0x20 build/default/debug/timer1.o
  .debug_aranges
-                  0x0000c0         0x20 build/default/production/I2C_LCD.o
+                  0x0000c0         0x20 build/default/debug/I2C_LCD.o
  .debug_aranges
-                  0x0000e0         0x20 build/default/production/I2C_Interrupt.o
+                  0x0000e0         0x20 build/default/debug/I2C_Interrupt.o
  .debug_aranges
-                  0x000100         0x20 build/default/production/Ele_load_Interrupt.o
+                  0x000100         0x20 build/default/debug/Ele_load_Interrupt.o
  .debug_aranges
-                  0x000120         0x20 build/default/production/Ele_load_Function.o
+                  0x000120         0x20 build/default/debug/Ele_load_Function.o
 
 .ivt              0x000004         0xfc
                   0x000004          0x4 LONG 0x294 DEFINED (__ReservedTrap0)?ABSOLUTE (__ReservedTrap0):ABSOLUTE (__DefaultInterrupt)
@@ -1821,12 +1830,16 @@ __CONFIG1         0x0157fe          0x2
                     0x0220                  _UART1 = 0x220
                     0x0230                  UART2 = 0x230
                     0x0230                  _UART2 = 0x230
+                    0x0001                  __ICD2RAM = 0x1
+                    0x0001                  __MPLAB_DEBUG = 0x1
+                    0x0001                  __DEBUG = 0x1
+                    0x0001                  __MPLAB_DEBUGGER_PK3 = 0x1
 START GROUP
 LOAD c:/program files (x86)/microchip/mplab c30/bin/bin/../../lib\liblega-pic30-elf.a
 LOAD c:/program files (x86)/microchip/mplab c30/bin/bin/../../lib\libm-elf.a
 LOAD c:/program files (x86)/microchip/mplab c30/bin/bin/../../lib\liblega-c-elf.a
 END GROUP
-OUTPUT(dist/default/production/G5_Chaggerrrr.X.production.elf elf32-pic30)
+OUTPUT(dist/default/debug/G5_Chaggerrrr.X.debug.elf elf32-pic30)
 LOAD jump_table
 LOAD default_isr
 LOAD data_init
@@ -1834,25 +1847,25 @@ LOAD data_init
 __c30_signature
                   0x000140         0xa2
  __c30_signature
-                  0x000140          0x6 build/default/production/Main.o
+                  0x000140          0x6 build/default/debug/Main.o
  __c30_signature
-                  0x000146          0x6 build/default/production/Initial.o
+                  0x000146          0x6 build/default/debug/Initial.o
  __c30_signature
-                  0x00014c          0x6 build/default/production/G5_Function.o
+                  0x00014c          0x6 build/default/debug/G5_Function.o
  __c30_signature
-                  0x000152          0x6 build/default/production/Function.o
+                  0x000152          0x6 build/default/debug/Function.o
  __c30_signature
-                  0x000158          0x6 build/default/production/G5_Interrupt_Fuction.o
+                  0x000158          0x6 build/default/debug/G5_Interrupt_Fuction.o
  __c30_signature
-                  0x00015e          0x6 build/default/production/timer1.o
+                  0x00015e          0x6 build/default/debug/timer1.o
  __c30_signature
-                  0x000164          0x6 build/default/production/I2C_LCD.o
+                  0x000164          0x6 build/default/debug/I2C_LCD.o
  __c30_signature
-                  0x00016a          0x6 build/default/production/I2C_Interrupt.o
+                  0x00016a          0x6 build/default/debug/I2C_Interrupt.o
  __c30_signature
-                  0x000170          0x6 build/default/production/Ele_load_Interrupt.o
+                  0x000170          0x6 build/default/debug/Ele_load_Interrupt.o
  __c30_signature
-                  0x000176          0x6 build/default/production/Ele_load_Function.o
+                  0x000176          0x6 build/default/debug/Ele_load_Function.o
  __c30_signature
                   0x00017c          0x6 c:/program files (x86)/microchip/mplab c30/bin/bin/../../lib\liblega-pic30-elf.a(crt0_standard.o)
  __c30_signature
@@ -1888,56 +1901,56 @@ __c30_signature
  __c30_signature
                   0x0001dc          0x6 c:/program files (x86)/microchip/mplab c30/bin/bin/../../lib\libm-elf.a(umuldi3.eo)
 
-.nbss               0x0800         0xf8
- .nbss              0x0800         0x68 build/default/production/Ele_load_Interrupt.o
-                    0x0806                  _Ele_load_Data
-                    0x0822                  _Ele_load_Get
- .nbss              0x0868         0x52 build/default/production/G5_Function.o
-                    0x0868                  _G5_Sent
-                    0x0874                  _G5_Get
- .nbss              0x08ba         0x28 build/default/production/Initial.o
-                    0x08ba                  _G5_Data
- .nbss              0x08e2          0xc build/default/production/Ele_load_Function.o
-                    0x08e2                  _Ele_load_Sent
- .nbss              0x08ee          0xa build/default/production/Main.o
-                    0x08ee                  _IC_Data
+.nbss               0x0850         0xf8
+ .nbss              0x0850         0x68 build/default/debug/Ele_load_Interrupt.o
+                    0x0856                  _Ele_load_Data
+                    0x0872                  _Ele_load_Get
+ .nbss              0x08b8         0x52 build/default/debug/G5_Function.o
+                    0x08b8                  _G5_Sent
+                    0x08c4                  _G5_Get
+ .nbss              0x090a         0x28 build/default/debug/Initial.o
+                    0x090a                  _G5_Data
+ .nbss              0x0932          0xc build/default/debug/Ele_load_Function.o
+                    0x0932                  _Ele_load_Sent
+ .nbss              0x093e          0xa build/default/debug/Main.o
+                    0x093e                  _IC_Data
 
-.ndata              0x08f8          0x8
- .ndata             0x08f8          0x8 build/default/production/I2C_LCD.o
-                    0x08f8                  _BackLight_State
-                    0x08fa                  _math_a
-                    0x08fc                  _math_b
-                    0x08fe                  _math_c
+.ndata              0x0948          0x8
+ .ndata             0x0948          0x8 build/default/debug/I2C_LCD.o
+                    0x0948                  _BackLight_State
+                    0x094a                  _math_a
+                    0x094c                  _math_b
+                    0x094e                  _math_c
 
-.nbss               0x0900          0xc
- .nbss              0x0900          0x6 build/default/production/G5_Interrupt_Fuction.o
- .nbss              0x0906          0x6 build/default/production/I2C_LCD.o
-                    0x0906                  _I2C_Data
-                    0x0908                  _I2C_Buffer
-                    0x0909                  _RS
-                    0x090a                  _i2c_add
+.nbss               0x0950          0xc
+ .nbss              0x0950          0x6 build/default/debug/G5_Interrupt_Fuction.o
+ .nbss              0x0956          0x6 build/default/debug/I2C_LCD.o
+                    0x0956                  _I2C_Data
+                    0x0958                  _I2C_Buffer
+                    0x0959                  _RS
+                    0x095a                  _i2c_add
 
-.ndata              0x090c          0x6
- .ndata             0x090c          0x4 build/default/production/Main.o
-                    0x090c                  _WriteWholeAh
-                    0x090e                  _DisCharging
- .ndata             0x0910          0x2 build/default/production/Function.o
-                    0x0910                  _math_DelayThirtySecond_a
-                    0x0911                  _math_DelayThirtySecond_b
+.ndata              0x095c          0x6
+ .ndata             0x095c          0x4 build/default/debug/Main.o
+                    0x095c                  _WriteWholeAh
+                    0x095e                  _DisCharging
+ .ndata             0x0960          0x2 build/default/debug/Function.o
+                    0x0960                  _math_DelayThirtySecond_a
+                    0x0961                  _math_DelayThirtySecond_b
 
-.data               0x0912         0x34
- .data              0x0912         0x22 c:/program files (x86)/microchip/mplab c30/bin/bin/../../lib\liblega-c-elf.a(xlitob.XXelo)
- .data              0x0934         0x12 c:/program files (x86)/microchip/mplab c30/bin/bin/../../lib\liblega-c-elf.a(xprintf_cdnopuxX.XXeo)
+.data               0x0962         0x34
+ .data              0x0962         0x22 c:/program files (x86)/microchip/mplab c30/bin/bin/../../lib\liblega-c-elf.a(xlitob.XXelo)
+ .data              0x0984         0x12 c:/program files (x86)/microchip/mplab c30/bin/bin/../../lib\liblega-c-elf.a(xprintf_cdnopuxX.XXeo)
 
-.dconst             0x0946          0x8
- .dconst            0x0946          0x8 c:/program files (x86)/microchip/mplab c30/bin/bin/../../lib\liblega-c-elf.a(xprintf_cdnopuxX.XXeo)
+.dconst             0x0996          0x8
+ .dconst            0x0996          0x8 c:/program files (x86)/microchip/mplab c30/bin/bin/../../lib\liblega-c-elf.a(xprintf_cdnopuxX.XXeo)
 
 .const              0x8e62         0xe8 load address 0x000e62  
- .const             0x8e62         0xaa build/default/production/Main.o
- .const             0x8f0c         0x3e build/default/production/I2C_LCD.o
+ .const             0x8e62         0xaa build/default/debug/Main.o
+ .const             0x8f0c         0x3e build/default/debug/I2C_LCD.o
 
 .text             0x000f4a       0x129a
- .text            0x000f4a        0x406 build/default/production/I2C_LCD.o
+ .text            0x000f4a        0x406 build/default/debug/I2C_LCD.o
                   0x000f4a                  _ShowG5DataOnLCD
                   0x000fa6                  _First_Write_to_LCD
                   0x00105e                  _Other_Time_Write_to_LCD
@@ -1962,43 +1975,43 @@ __c30_signature
                   0x001326                  _LCD_SL
                   0x001334                  _LCD_SR
                   0x001342                  _LCD_Clear
- .text            0x001350        0x2ba build/default/production/Main.o
+ .text            0x001350        0x2ba build/default/debug/Main.o
                   0x001350                  __OscillatorFail
                   0x001356                  __AddressError
                   0x00136a                  __StackError
                   0x001370                  __MathError
                   0x001376                  _main
- .text            0x00160a        0x2a4 build/default/production/Function.o
+ .text            0x00160a        0x2a4 build/default/debug/Function.o
                   0x00160a                  _CRC_Make
                   0x00166e                  _CRC_Check
                   0x00172e                  _CRC_Check_Ele_load
                   0x0017ee                  _delayms
                   0x001824                  _delay
                   0x001872                  _delayThirtySecond
- .text            0x0018ae        0x294 build/default/production/Ele_load_Function.o
+ .text            0x0018ae        0x294 build/default/debug/Ele_load_Function.o
                   0x0018ae                  _Set_Ele_load
                   0x001948                  _ReadEleLoadState
                   0x0019c2                  _ReadAllEleLoadData
                   0x001a3c                  _WriteEleLoadState
                   0x001abe                  _WriteEleLoadSetting
- .text            0x001b42        0x208 build/default/production/G5_Interrupt_Fuction.o
+ .text            0x001b42        0x208 build/default/debug/G5_Interrupt_Fuction.o
                   0x001b42                  __T3Interrupt
                   0x001c50                  __U3RXInterrupt
                   0x001cfc                  __U3TXInterrupt
- .text            0x001d4a        0x1ae build/default/production/Ele_load_Interrupt.o
+ .text            0x001d4a        0x1ae build/default/debug/Ele_load_Interrupt.o
                   0x001d4a                  __T2Interrupt
                   0x001e44                  __U2RXInterrupt
                   0x001eaa                  __U2TXInterrupt
- .text            0x001ef8        0x160 build/default/production/Initial.o
+ .text            0x001ef8        0x160 build/default/debug/Initial.o
                   0x001ef8                  _Initial_Clock
                   0x001f18                  _Initial_IO
                   0x001f3a                  _Initial_Ele_load_UART
                   0x001fae                  _Initial_G5_UART
                   0x002018                  _I2C_Initial
- .text            0x002058         0xf0 build/default/production/G5_Function.o
+ .text            0x002058         0xf0 build/default/debug/G5_Function.o
                   0x002058                  _Write_G5_Data
                   0x0020d0                  _Read_ALL_G5_Data
- .text            0x002148         0x9c build/default/production/timer1.o
+ .text            0x002148         0x9c build/default/debug/timer1.o
                   0x002148                  _Timer1_initial
                   0x002168                  __T1Interrupt
 
@@ -2006,5 +2019,5 @@ __c30_signature
  .dinit           0x0021e4         0x86 data_init
 
 .text             0x00226a         0x3c
- .text            0x00226a         0x3c build/default/production/I2C_Interrupt.o
+ .text            0x00226a         0x3c build/default/debug/I2C_Interrupt.o
                   0x00226a                  __MI2C1Interrupt

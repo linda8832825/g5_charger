@@ -67,7 +67,7 @@ void __attribute__((interrupt, no_auto_psv)) _T2Interrupt(void) //讀完電子附載機
                         Ele_load_Get.ERRIF=1;
                     }
                     else{
-                        Ele_load_Data.GoTo_Write_Ele_load=NO; //不需要再次寫入電子附載機
+//                        Ele_load_Data.GoTo_Write_Ele_load=NO; //不需要再次寫入電子附載機
                         Ele_load_Data.WriteIF=1;//寫入電子附載機成功
                         Ele_load_Get.RTIndex=0;
                         Ele_load_Get.TIF=1;

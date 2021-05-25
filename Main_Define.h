@@ -147,5 +147,6 @@ void WriteEleLoadSetting(unsigned char math_c, unsigned char math_d, unsigned ch
 unsigned int CRC_Check_Ele_load(void);
 void Set_Ele_load(void);
 unsigned char delayThirtySecond(void);
+void ShowG5DataOnLCD(void);
 
 #endif

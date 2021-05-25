@@ -10,9 +10,12 @@ void Set_Ele_load(){ //設定電子附載機
     do{ WriteEleLoadSetting(0x07, STOPVILTAGE>>8, STOPVILTAGE&0xFF); delay(1);} while(Ele_load_Data.WriteIF==0);//放40V截止
     do{ WriteEleLoadSetting(0x08, DISCHARGECURRENT>>8, DISCHARGECURRENT&0xFF); delay(1); } while(Ele_load_Data.WriteIF==0); //放電電流
     ReadAllEleLoadData();
-    delay(1);
+    delay(2);
     if((Ele_load_Data.Capacity_H==0x00) && (Ele_load_Data.Capacity_L==0x0000) && (Ele_load_Data.StopVoltage==STOPVILTAGE)
-             && (Ele_load_Data.DisChargeCurrent==DISCHARGECURRENT)) Ele_load_Data.Init=2; //設定成功
+             && (Ele_load_Data.DisChargeCurrent==DISCHARGECURRENT)) {
+        Ele_load_Data.Init=2; //設定成功  
+        Ele_load_Data.GoTo_Write_Ele_load=NO; //不需要再次寫入電子附載機
+    }
     else Ele_load_Data.Init=1;
 }
 

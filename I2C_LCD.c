@@ -3,8 +3,31 @@
 unsigned char RS, i2c_add, BackLight_State = LCD_BACKLIGHT;
 I2C_Data_Define I2C_Data;
 unsigned char I2C_Buffer;
+unsigned int    math_a=0; //用在數秒數
+unsigned int    math_b=0; //判斷要不要更新LCD
+unsigned int    math_c=5; //100秒整個LCD頁面更新
 //---------------[ LCD應用]-------------------
 //--------------------------------------------------
+void ShowG5DataOnLCD(void){
+    delay(1);
+    if(math_c>=4) { //120秒要更新整個LCD
+        First_Write_to_LCD();
+        math_c=0;
+    }
+    else{//30秒更新一次LCD
+        if(math_b==0){
+            math_a=IC_Data.time.Thirty_Second_Count;
+            math_b=1;
+        }
+        if((math_a!=IC_Data.time.Thirty_Second_Count) && (math_b==1)){
+            led_Toggle();
+            Other_Time_Write_to_LCD();
+            math_b=0;
+            math_c++;
+        }
+    }
+                
+}
 void First_Write_to_LCD(){
     LCD_Init(DriverIC_I2C_LCD_Addr);
     delay(2);
