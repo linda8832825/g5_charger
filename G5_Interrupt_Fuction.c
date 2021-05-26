@@ -16,7 +16,6 @@ void __attribute__((interrupt, no_auto_psv)) _T3Interrupt(void) //Åª§¹g5©Î¼g§¹ ¦
 
         if((G5_Get.RTIndex>0) && (IC_Data.DoIamStarted == YES))
         {
-//            led_Toggle();
             if(G5_Sent.W_R == Read)
             {
                 if(CRC_Check())
@@ -26,8 +25,6 @@ void __attribute__((interrupt, no_auto_psv)) _T3Interrupt(void) //Åª§¹g5©Î¼g§¹ ¦
                     index1=&G5_Data.ID;
                     *index1=G5_Get.ID;
                     index1+=2;
-//                    index1=index1+(G5_MOXA.Value);	
-                    //¨ú±og5¸ê®Æ°}¦C±q­þ¦ì¸m¶}©l©ñ¸ê®Æ
 
                     Quantity = G5_Get.Reg_H/2; //¸ê®Æ¤ñ¼Æ
                     index2=&G5_Get.Reg_L; //²Ä¤@µ§data
@@ -80,7 +77,6 @@ void __attribute__((interrupt, no_auto_psv)) _T3Interrupt(void) //Åª§¹g5©Î¼g§¹ ¦
             }
         }
 
-//        T3CONbits.TON=0; //Ãö³¬timer3
         IFS0bits.T3IF=0;  //timer3¥¼µo¥Í¤¤Â_½Ð¨D
                 	
           

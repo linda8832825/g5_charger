@@ -191,8 +191,11 @@ int main (void)
                             if(Ele_load_Data.End==0x1) {
                                 Ele_load_Data.GoTo_Write_Ele_load=YES; //允許寫入電子附載機 讓timer1裡的讀電子附載機的動作停下來
                                 Ele_load_Data.DisChargeDone=YES;
-                                delayThirtySecond(); //因為g5斷電會重新啟動 那時候讀不到資料
+                                POWER=Charge;
+                                delay(10);
+                                POWER=StopCharge;
                             }
+                            
                             if((G5_Data.Current == 0x00) && (G5_Data.Voltage <= Discharge_Voltage)){//放電完成
                                 Ele_load_Data.DisChargeDone=YES;
 

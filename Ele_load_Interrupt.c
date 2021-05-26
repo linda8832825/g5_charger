@@ -6,7 +6,7 @@ void __attribute__((interrupt, no_auto_psv)) _T2Interrupt(void) //讀完電子附載機
 {
         unsigned char math_a,math_c;
         unsigned int 	*index1;
-        unsigned char   *index2, Quantity,*index3, *index4;
+        unsigned char   *index2, Quantity,*index3;
 
         unsigned char Erro_IF;
 
@@ -55,26 +55,27 @@ void __attribute__((interrupt, no_auto_psv)) _T2Interrupt(void) //讀完電子附載機
             {
                 if(Ele_load_Get.RTIndex==0x08)
                 {
-//                    index3=&Ele_load_Sent
-//                    index4=&Ele_load_Sent.ID;
                     Erro_IF=0;
                     math_c = *index3; //收到的ID
-                    if( math_c != Ele_load_ID )Erro_IF=1;
+                    if( math_c != Ele_load_ID ) Erro_IF=1;
                     index3++;
                     
                     if(Erro_IF){
+                        Ele_load_Data.WriteIF=0;//寫入電子附載機失敗
                         Ele_load_Get.TIF=0;
                         Ele_load_Get.ERRIF=1;
                     }
                     else{
 //                        Ele_load_Data.GoTo_Write_Ele_load=NO; //不需要再次寫入電子附載機
                         Ele_load_Data.WriteIF=1;//寫入電子附載機成功
+                        Ele_load_Get.ERRIF=0;
                         Ele_load_Get.RTIndex=0;
                         Ele_load_Get.TIF=1;
                     }
                 }
                 else{
-                    Ele_load_Data.GoTo_Write_Ele_load=YES;
+                    Ele_load_Data.WriteIF=0;//寫入電子附載機失敗
+                    Ele_load_Data.GoTo_Write_Ele_load=YES; //正在執行寫入命令
                     Ele_load_Get.ERRIF=1;
                     Ele_load_Get.RTIndex=0;
                 }			
@@ -144,9 +145,7 @@ void __attribute__((interrupt, no_auto_psv)) _U2TXInterrupt(void)
 	
 	if(Ele_load_Sent.RTIndex < Ele_load_Sent.Index)
 	{
-		if(Ele_load_Sent.RTIndex==1){
-            index=&Ele_load_Sent.Fuc;
-        }
+		if(Ele_load_Sent.RTIndex==1) index=&Ele_load_Sent.Fuc;
 		U2TXREG=*index;
 		index++;
 		Ele_load_Sent.RTIndex++;
