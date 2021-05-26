@@ -6,12 +6,6 @@ G5_Get_Data_struct_define G5_Get;
 
 void Write_G5_Data(unsigned int Regest,unsigned int Data) //用寫入安時數
 {
-    //放到g5電壓為42(之後測)
-    //寫residual_electricity(0x07)為0x01
-    //
-    //再來等到電壓>=253h
-    //寫(0x09)為0x01
-    
 	unsigned int math_a;
 	unsigned char math_b;
 	

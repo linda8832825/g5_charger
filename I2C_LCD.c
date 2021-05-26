@@ -38,15 +38,25 @@ void First_Write_to_LCD(){
 
     delay(1);
     LCD_write_Char(2, 1 , "Current:");//顯示電流 //1-8
-    LCD_write_Variable(2, 9 , G5_Data.Current); //9-12
-    if(G5_Data.Current < 0x64){ //小於10A
-        LCD_write_Char(2, 12 , "A"); //12
-        LCD_write_Char(2, 13 , "        ");//13-20
+    if(G5_Data.Current_Point==1){//電流為負
+        LCD_write_Char(2, 9 , "-");//顯示電流方向 //9
     }
-    else{
-        LCD_write_Char(2, 13 , "A"); //13
-        LCD_write_Char(2, 14 , "       ");//14-20
+    else{//電流為正
+        LCD_write_Char(2, 9 , "+");//顯示電流方向 //9
     }
+    LCD_write_Variable(2, 10 , G5_Data.Current); //10-13
+    LCD_write_Char(2, 14 , "A"); //14
+    LCD_write_Char(2, 15 , "       ");//15-20
+        
+//    LCD_write_Variable(2, 9 , G5_Data.Current); //9-12
+//    if(G5_Data.Current < 0x64){ //小於10A
+//        LCD_write_Char(2, 12 , "A"); //12
+//        LCD_write_Char(2, 13 , "        ");//13-20
+//    }
+//    else{
+//        LCD_write_Char(2, 13 , "A"); //13
+//        LCD_write_Char(2, 14 , "       ");//14-20
+//    }
 
     delay(1);
     LCD_write_Char(3, 1 , "NowAh:");//顯示現在安時數 //1-6
@@ -64,7 +74,14 @@ void First_Write_to_LCD(){
 void Other_Time_Write_to_LCD(){
     delay(1);
     LCD_write_Variable(1, 9 , G5_Data.Voltage);    
-    LCD_write_Variable(2, 9 , G5_Data.Current);
+    if(G5_Data.Current_Point==1){//電流為負
+        LCD_write_Char(2, 9 , "-");//顯示電流方向 //9
+    }
+    else{//電流為正
+        LCD_write_Char(2, 9 , "+");//顯示電流方向 //9
+    }
+    LCD_write_Variable(2, 10 , "    "); //先清空原本的位置
+    LCD_write_Variable(2, 10 , G5_Data.Current);
     LCD_write_Variable(3, 7 , G5_Data.Residual_Electricity);
     LCD_write_Variable(4, 8 , G5_Data.Nominal_Battery_Capacity);
     delay(1);
