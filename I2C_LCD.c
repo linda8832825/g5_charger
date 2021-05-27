@@ -38,7 +38,7 @@ void First_Write_to_LCD(){
 
     delay(1);
     LCD_write_Char(2, 1 , "Current:");//顯示電流 //1-8
-    if(G5_Data.Current_Point==1){//電流為負
+    if(G5_Data.Current_statue==1){//電流為負
         LCD_write_Char(2, 9 , "-");//顯示電流方向 //9
     }
     else{//電流為正
@@ -74,7 +74,7 @@ void First_Write_to_LCD(){
 void Other_Time_Write_to_LCD(){
     delay(1);
     LCD_write_Variable(1, 9 , G5_Data.Voltage);    
-    if(G5_Data.Current_Point==1){//電流為負
+    if(G5_Data.Current_statue==1){//電流為負
         LCD_write_Char(2, 9 , "-");//顯示電流方向 //9
     }
     else{//電流為正
