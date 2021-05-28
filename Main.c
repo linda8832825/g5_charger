@@ -108,10 +108,11 @@ int main (void)
                 delay(1);
                 if(G5_Data.ID == My_ID){//有要到正確資料
                     POWER = StopCharge;
-                    Write_G5_Data(0x06,0x0190); delay(3);//將g5reset電壓點降成40v    //此時目前安時數會為52.5ah
-                    Write_G5_Data(0x06,0x0253); delay(3);//將g5reset電壓點改回59.5v  //此時目前安時數會為52.5ah
-//                    do{Write_G5_Data(0x06,0x0190); delay(3); Read_ALL_G5_Data(); delay(1);}while(G5_Data.x2!=0x0190);//將g5reset電壓點降成40v    //此時目前安時數會為52.5ah
-//                    do{Write_G5_Data(0x06,0x0253); delay(3); Read_ALL_G5_Data(); delay(1);}while(G5_Data.x2!=0x0253);//將g5reset電壓點改回59.5v  //此時目前安時數會為52.5ah
+//                    Write_G5_Data(0x06,0x0190); delay(3);//將g5reset電壓點降成40v    //此時目前安時數會為52.5ah
+//                    Write_G5_Data(0x06,0x0253); delay(3);//將g5reset電壓點改回59.5v  //此時目前安時數會為52.5ah
+                    do{Write_G5_Data(0x05,0x01F4); delay(3); Read_ALL_G5_Data(); G5_Get.RIF=0; delay(2);}while(G5_Data.Nominal_Battery_Capacity!=0x01F4); //將滿安時數改成50ah
+                    do{Write_G5_Data(0x06,0x0190); delay(3); Read_ALL_G5_Data(); G5_Get.RIF=0; delay(2);}while(G5_Data.x2!=0x0190);//將g5reset電壓點降成40v    //此時目前安時數會為52.5ah
+                    do{Write_G5_Data(0x06,0x0253); delay(3); Read_ALL_G5_Data(); G5_Get.RIF=0; delay(2);}while(G5_Data.x2!=0x0253);//將g5reset電壓點改回59.5v  //此時目前安時數會為52.5ah
                     IC_Data.GetTheWhatYouWant = YES;
                     IC_Data.time.Regual_Read_G5=0; //之後可以常態的與G5通訊
                     math_a=0;
@@ -150,7 +151,7 @@ int main (void)
         //-----------------------------已與G5連接-----------------------------------//
         if(IC_Data.GetTheWhatYouWant == YES){//如果要到資料就放電到電流=0
             //---------------------顯示g5資料-----------------------------------//
-            ShowG5DataOnLCD();
+            ShowG5DataOnLCD(1);
             //-----------------------------------------------------------------//
 
             //----------------------------放電---------------------------------//
@@ -200,16 +201,16 @@ int main (void)
                             
                             if(Ele_load_Data.DisChargeDone==YES){
 
-                                Write_G5_Data(0x06,0x0190); delay(3);//將g5reset電壓點降成40v    //此時目前安時數會為52.5ah
-                                Write_G5_Data(0x06,0x0253); delay(3);//將g5reset電壓點改回59.5v  //此時目前安時數會為52.5ah
-                                Read_ALL_G5_Data(); delay(2);
-//                                do{Write_G5_Data(0x06,0x0190); delay(3); Read_ALL_G5_Data(); delay(2);}while(G5_Data.x2!=0x0190);//將g5reset電壓點降成40v    //此時目前安時數會為52.5ah
-//                                do{Write_G5_Data(0x06,0x0253); delay(3); Read_ALL_G5_Data(); delay(2);}while(G5_Data.x2!=0x0253);//將g5reset電壓點改回59.5v  //此時目前安時數會為52.5ah
+//                                Write_G5_Data(0x06,0x0190); delay(3);//將g5reset電壓點降成40v    //此時目前安時數會為52.5ah
+//                                Write_G5_Data(0x06,0x0253); delay(3);//將g5reset電壓點改回59.5v  //此時目前安時數會為52.5ah
+//                                Read_ALL_G5_Data(); delay(2);
+                                do{Write_G5_Data(0x06,0x0190); delay(3); Read_ALL_G5_Data(); delay(2); G5_Get.RIF=0; delay(1);}while(G5_Data.x2!=0x0190);//將g5reset電壓點降成40v    //此時目前安時數會為52.5ah
+                                do{Write_G5_Data(0x06,0x0253); delay(3); Read_ALL_G5_Data(); delay(2); G5_Get.RIF=0; delay(1);}while(G5_Data.x2!=0x0253);//將g5reset電壓點改回59.5v  //此時目前安時數會為52.5ah
                                 
                                 if((G5_Data.Current == 0x00) && (G5_Data.Voltage <= Discharge_Voltage)){//放電完成
                                     Ele_load_Data.DisChargeDone=YES;
 
-                                    do{Write_G5_Data(0x07,0x02); delay(3); Read_ALL_G5_Data(); G5_Get.RIF=0; delay(5); }while(G5_Data.Residual_Electricity>0x0002);//寫0.2Ah進去 01 06 00 07 00 02 crc
+                                    do{Write_G5_Data(0x07,0x02); delay(3); Read_ALL_G5_Data(); delay(2); G5_Get.RIF=0; delay(1); }while(G5_Data.Residual_Electricity>0x0002);//寫0.2Ah進去 01 06 00 07 00 02 crc
                                     
                                     if(G5_Data.Residual_Electricity <= 0x0002){//確認是否為0.1或0.2Ah
                                         IC_Data.WriteZeroAh = YES; //寫入0.2安時數成功
@@ -220,8 +221,8 @@ int main (void)
                                         LCD_Init(DriverIC_I2C_LCD_Addr);
                                         delay(2);
                                         LCD_write_Char(1, 1 , "Write 0.2Ah To G5 complete");
-                                        delay(30);
-                                        IC_Data.time.Regual_Read_G5=0;//恢復每秒讀電子附載機與g5
+                                        Ele_load_Data.GoTo_Write_Ele_load=YES;//不需要再跟電子附載機通訊了
+                                        IC_Data.time.Regual_Read_G5=0;//恢復每秒讀g5
                                         
                                     }
                                     else{//沒有的話再寫一次
@@ -249,14 +250,13 @@ int main (void)
 
             //-----------------------------充電--------------------------------//
             if(IC_Data.WriteZeroAh == YES){//寫好0.1安時後開始充電
-//                if(delayThirtySecond()){
                     POWER = Charge;
-                    delay(5);
-                    if(G5_Data.Current <= Charge_Stop_Current){//充電完畢
+//                    ShowG5DataOnLCD(1);
+                    if((G5_Data.Current <= Charge_Stop_Current) && (G5_Data.Voltage>Discharge_Voltage)){//充電完畢
                         
                         POWER = StopCharge;
                         
-                        do{Write_G5_Data(0x09 , 0x01); delay(3); Read_ALL_G5_Data(); delay(2); }while(G5_Data.Now_Total_Capacity != G5_Data.Residual_Electricity);//跟G5說將現在的安時數寫到滿安時數 01 06 00 09 00 01 crc
+                        do{Write_G5_Data(0x09 , 0x01); delay(3); Read_ALL_G5_Data(); G5_Get.RIF=0; delay(2); }while(G5_Data.Now_Total_Capacity != G5_Data.Residual_Electricity);//跟G5說將現在的安時數寫到滿安時數 01 06 00 09 00 01 crc
                         
                         if(G5_Data.Now_Total_Capacity == G5_Data.Residual_Electricity){//確認是否將現在的安時數寫到滿安時數
                             WriteWholeAh = YES; //寫入滿安時數成功
@@ -279,7 +279,6 @@ int main (void)
                         }
 
                     }
-//                }
                 //------------------------------------------------------------------//
             }
         }

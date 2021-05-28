@@ -8,9 +8,9 @@ unsigned int    math_b=0; //判斷要不要更新LCD
 unsigned int    math_c=5; //100秒整個LCD頁面更新
 //---------------[ LCD應用]-------------------
 //--------------------------------------------------
-void ShowG5DataOnLCD(void){
+void ShowG5DataOnLCD(unsigned int i){
     delay(1);
-    if(math_c>=4) { //120秒要更新整個LCD
+    if(math_c>=4 || i==1) { //120秒要更新整個LCD
         First_Write_to_LCD();
         math_c=0;
     }
