@@ -48,13 +48,6 @@ void Read_ALL_G5_Data(void)
 {
     unsigned int math_a;
     unsigned char math_b;
-    //一開始先讀g5的資料
-    //放到g5電壓為42(之後測)
-    //再做之後的事
-    //
-    //充電過程中一直讀g5資料
-    //直到電壓>=253h
-    //再寫
     
 		G5_Sent.ID=0x01;
 		G5_Sent.Fuc=0x03;	

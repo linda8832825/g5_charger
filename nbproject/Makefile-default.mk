@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=Main.c Initial.c G5_Function.c Function.c G5_Interrupt_Fuction.c timer1.c I2C_LCD.c I2C_Interrupt.c Ele_load_Interrupt.c Ele_load_Function.c
+SOURCEFILES_QUOTED_IF_SPACED=Main.c Initial.c G5_Function.c Function.c G5_Interrupt_Fuction.c timer1.c I2C_LCD.c I2C_Interrupt.c Ele_load_Interrupt.c Ele_load_Function.c Coulomb_Function.c Coulomb_Interrupt.c User_data_Function.c User_Interrupt.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/Main.o ${OBJECTDIR}/Initial.o ${OBJECTDIR}/G5_Function.o ${OBJECTDIR}/Function.o ${OBJECTDIR}/G5_Interrupt_Fuction.o ${OBJECTDIR}/timer1.o ${OBJECTDIR}/I2C_LCD.o ${OBJECTDIR}/I2C_Interrupt.o ${OBJECTDIR}/Ele_load_Interrupt.o ${OBJECTDIR}/Ele_load_Function.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/Main.o.d ${OBJECTDIR}/Initial.o.d ${OBJECTDIR}/G5_Function.o.d ${OBJECTDIR}/Function.o.d ${OBJECTDIR}/G5_Interrupt_Fuction.o.d ${OBJECTDIR}/timer1.o.d ${OBJECTDIR}/I2C_LCD.o.d ${OBJECTDIR}/I2C_Interrupt.o.d ${OBJECTDIR}/Ele_load_Interrupt.o.d ${OBJECTDIR}/Ele_load_Function.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/Main.o ${OBJECTDIR}/Initial.o ${OBJECTDIR}/G5_Function.o ${OBJECTDIR}/Function.o ${OBJECTDIR}/G5_Interrupt_Fuction.o ${OBJECTDIR}/timer1.o ${OBJECTDIR}/I2C_LCD.o ${OBJECTDIR}/I2C_Interrupt.o ${OBJECTDIR}/Ele_load_Interrupt.o ${OBJECTDIR}/Ele_load_Function.o ${OBJECTDIR}/Coulomb_Function.o ${OBJECTDIR}/Coulomb_Interrupt.o ${OBJECTDIR}/User_data_Function.o ${OBJECTDIR}/User_Interrupt.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/Main.o.d ${OBJECTDIR}/Initial.o.d ${OBJECTDIR}/G5_Function.o.d ${OBJECTDIR}/Function.o.d ${OBJECTDIR}/G5_Interrupt_Fuction.o.d ${OBJECTDIR}/timer1.o.d ${OBJECTDIR}/I2C_LCD.o.d ${OBJECTDIR}/I2C_Interrupt.o.d ${OBJECTDIR}/Ele_load_Interrupt.o.d ${OBJECTDIR}/Ele_load_Function.o.d ${OBJECTDIR}/Coulomb_Function.o.d ${OBJECTDIR}/Coulomb_Interrupt.o.d ${OBJECTDIR}/User_data_Function.o.d ${OBJECTDIR}/User_Interrupt.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/Main.o ${OBJECTDIR}/Initial.o ${OBJECTDIR}/G5_Function.o ${OBJECTDIR}/Function.o ${OBJECTDIR}/G5_Interrupt_Fuction.o ${OBJECTDIR}/timer1.o ${OBJECTDIR}/I2C_LCD.o ${OBJECTDIR}/I2C_Interrupt.o ${OBJECTDIR}/Ele_load_Interrupt.o ${OBJECTDIR}/Ele_load_Function.o
+OBJECTFILES=${OBJECTDIR}/Main.o ${OBJECTDIR}/Initial.o ${OBJECTDIR}/G5_Function.o ${OBJECTDIR}/Function.o ${OBJECTDIR}/G5_Interrupt_Fuction.o ${OBJECTDIR}/timer1.o ${OBJECTDIR}/I2C_LCD.o ${OBJECTDIR}/I2C_Interrupt.o ${OBJECTDIR}/Ele_load_Interrupt.o ${OBJECTDIR}/Ele_load_Function.o ${OBJECTDIR}/Coulomb_Function.o ${OBJECTDIR}/Coulomb_Interrupt.o ${OBJECTDIR}/User_data_Function.o ${OBJECTDIR}/User_Interrupt.o
 
 # Source Files
-SOURCEFILES=Main.c Initial.c G5_Function.c Function.c G5_Interrupt_Fuction.c timer1.c I2C_LCD.c I2C_Interrupt.c Ele_load_Interrupt.c Ele_load_Function.c
+SOURCEFILES=Main.c Initial.c G5_Function.c Function.c G5_Interrupt_Fuction.c timer1.c I2C_LCD.c I2C_Interrupt.c Ele_load_Interrupt.c Ele_load_Function.c Coulomb_Function.c Coulomb_Interrupt.c User_data_Function.c User_Interrupt.c
 
 
 
@@ -177,6 +177,34 @@ ${OBJECTDIR}/Ele_load_Function.o: Ele_load_Function.c  nbproject/Makefile-${CND_
 	@${RM} ${OBJECTDIR}/Ele_load_Function.o 
 	@${FIXDEPS} "${OBJECTDIR}/Ele_load_Function.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -omf=elf -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -Wall -MMD -MF "${OBJECTDIR}/Ele_load_Function.o.d" -o ${OBJECTDIR}/Ele_load_Function.o Ele_load_Function.c    -legacy-libc
 	
+${OBJECTDIR}/Coulomb_Function.o: Coulomb_Function.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/Coulomb_Function.o.d 
+	@${RM} ${OBJECTDIR}/Coulomb_Function.o.ok ${OBJECTDIR}/Coulomb_Function.o.err 
+	@${RM} ${OBJECTDIR}/Coulomb_Function.o 
+	@${FIXDEPS} "${OBJECTDIR}/Coulomb_Function.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -omf=elf -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -Wall -MMD -MF "${OBJECTDIR}/Coulomb_Function.o.d" -o ${OBJECTDIR}/Coulomb_Function.o Coulomb_Function.c    -legacy-libc
+	
+${OBJECTDIR}/Coulomb_Interrupt.o: Coulomb_Interrupt.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/Coulomb_Interrupt.o.d 
+	@${RM} ${OBJECTDIR}/Coulomb_Interrupt.o.ok ${OBJECTDIR}/Coulomb_Interrupt.o.err 
+	@${RM} ${OBJECTDIR}/Coulomb_Interrupt.o 
+	@${FIXDEPS} "${OBJECTDIR}/Coulomb_Interrupt.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -omf=elf -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -Wall -MMD -MF "${OBJECTDIR}/Coulomb_Interrupt.o.d" -o ${OBJECTDIR}/Coulomb_Interrupt.o Coulomb_Interrupt.c    -legacy-libc
+	
+${OBJECTDIR}/User_data_Function.o: User_data_Function.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/User_data_Function.o.d 
+	@${RM} ${OBJECTDIR}/User_data_Function.o.ok ${OBJECTDIR}/User_data_Function.o.err 
+	@${RM} ${OBJECTDIR}/User_data_Function.o 
+	@${FIXDEPS} "${OBJECTDIR}/User_data_Function.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -omf=elf -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -Wall -MMD -MF "${OBJECTDIR}/User_data_Function.o.d" -o ${OBJECTDIR}/User_data_Function.o User_data_Function.c    -legacy-libc
+	
+${OBJECTDIR}/User_Interrupt.o: User_Interrupt.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/User_Interrupt.o.d 
+	@${RM} ${OBJECTDIR}/User_Interrupt.o.ok ${OBJECTDIR}/User_Interrupt.o.err 
+	@${RM} ${OBJECTDIR}/User_Interrupt.o 
+	@${FIXDEPS} "${OBJECTDIR}/User_Interrupt.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -omf=elf -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -Wall -MMD -MF "${OBJECTDIR}/User_Interrupt.o.d" -o ${OBJECTDIR}/User_Interrupt.o User_Interrupt.c    -legacy-libc
+	
 else
 ${OBJECTDIR}/Main.o: Main.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
@@ -247,6 +275,34 @@ ${OBJECTDIR}/Ele_load_Function.o: Ele_load_Function.c  nbproject/Makefile-${CND_
 	@${RM} ${OBJECTDIR}/Ele_load_Function.o.ok ${OBJECTDIR}/Ele_load_Function.o.err 
 	@${RM} ${OBJECTDIR}/Ele_load_Function.o 
 	@${FIXDEPS} "${OBJECTDIR}/Ele_load_Function.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE)  -g -omf=elf -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -Wall -MMD -MF "${OBJECTDIR}/Ele_load_Function.o.d" -o ${OBJECTDIR}/Ele_load_Function.o Ele_load_Function.c    -legacy-libc
+	
+${OBJECTDIR}/Coulomb_Function.o: Coulomb_Function.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/Coulomb_Function.o.d 
+	@${RM} ${OBJECTDIR}/Coulomb_Function.o.ok ${OBJECTDIR}/Coulomb_Function.o.err 
+	@${RM} ${OBJECTDIR}/Coulomb_Function.o 
+	@${FIXDEPS} "${OBJECTDIR}/Coulomb_Function.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE)  -g -omf=elf -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -Wall -MMD -MF "${OBJECTDIR}/Coulomb_Function.o.d" -o ${OBJECTDIR}/Coulomb_Function.o Coulomb_Function.c    -legacy-libc
+	
+${OBJECTDIR}/Coulomb_Interrupt.o: Coulomb_Interrupt.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/Coulomb_Interrupt.o.d 
+	@${RM} ${OBJECTDIR}/Coulomb_Interrupt.o.ok ${OBJECTDIR}/Coulomb_Interrupt.o.err 
+	@${RM} ${OBJECTDIR}/Coulomb_Interrupt.o 
+	@${FIXDEPS} "${OBJECTDIR}/Coulomb_Interrupt.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE)  -g -omf=elf -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -Wall -MMD -MF "${OBJECTDIR}/Coulomb_Interrupt.o.d" -o ${OBJECTDIR}/Coulomb_Interrupt.o Coulomb_Interrupt.c    -legacy-libc
+	
+${OBJECTDIR}/User_data_Function.o: User_data_Function.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/User_data_Function.o.d 
+	@${RM} ${OBJECTDIR}/User_data_Function.o.ok ${OBJECTDIR}/User_data_Function.o.err 
+	@${RM} ${OBJECTDIR}/User_data_Function.o 
+	@${FIXDEPS} "${OBJECTDIR}/User_data_Function.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE)  -g -omf=elf -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -Wall -MMD -MF "${OBJECTDIR}/User_data_Function.o.d" -o ${OBJECTDIR}/User_data_Function.o User_data_Function.c    -legacy-libc
+	
+${OBJECTDIR}/User_Interrupt.o: User_Interrupt.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/User_Interrupt.o.d 
+	@${RM} ${OBJECTDIR}/User_Interrupt.o.ok ${OBJECTDIR}/User_Interrupt.o.err 
+	@${RM} ${OBJECTDIR}/User_Interrupt.o 
+	@${FIXDEPS} "${OBJECTDIR}/User_Interrupt.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE)  -g -omf=elf -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -Wall -MMD -MF "${OBJECTDIR}/User_Interrupt.o.d" -o ${OBJECTDIR}/User_Interrupt.o User_Interrupt.c    -legacy-libc
 	
 endif
 

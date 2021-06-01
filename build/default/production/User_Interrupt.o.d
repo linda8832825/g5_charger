@@ -1,5 +1,5 @@
-build/default/production/Main.o:  \
-Main.c  \
+build/default/production/User_Interrupt.o:  \
+User_Interrupt.c  \
 Main_Define.h  \
 p24FJ128GA106.h  \
 Ele_load_Define.h  \

@@ -18,7 +18,7 @@ void __attribute__((interrupt, no_auto_psv)) _T3Interrupt(void) //Åª§¹g5©Î¼g§¹ ¦
         {
             if(G5_Sent.W_R == Read)
             {
-                if(CRC_Check())
+                if(CRC_Check(&G5_Get.ID, G5_Get.RTIndex))
                 {
                     G5_Get.Value_L=G5_Get.Reg_L;
                     G5_Get.Value_H=G5_Get.Reg_H;

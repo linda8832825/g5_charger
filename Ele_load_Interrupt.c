@@ -1,7 +1,5 @@
 #include "Main_Define.h"
 
-Ele_load_Data_define Ele_load_Data; 
-Ele_load_Get_Data_struct_define Ele_load_Get;
 void __attribute__((interrupt, no_auto_psv)) _T2Interrupt(void) //讀完電子附載機讀或寫完 收到的資料做整理
 {
         unsigned char math_a,math_c;
@@ -16,11 +14,10 @@ void __attribute__((interrupt, no_auto_psv)) _T2Interrupt(void) //讀完電子附載機
         Erro_IF=0;
 
         if(Ele_load_Get.RTIndex>0)
-//        if((Ele_load_Get.RTIndex>0) && (Ele_load_Get.SORT==YES))
         {
             if(Ele_load_Sent.W_R == Read)
             {
-                if(CRC_Check_Ele_load())
+                if(CRC_Check(&Ele_load_Get.ID, Ele_load_Get.RTIndex))
                 {
                     //是用04讀取的
                     Ele_load_Get.Value_L=Ele_load_Get.Reg_L;

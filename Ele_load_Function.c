@@ -1,5 +1,6 @@
 #include "Main_Define.h"
 
+Ele_load_Get_Data_struct_define Ele_load_Get;
 Ele_load_Sent_Data_struct_define Ele_load_Sent;
 
 void Set_Ele_load(){ //設定電子附載機

@@ -9,6 +9,8 @@
       <itemPath>p24FJ128GA106.h</itemPath>
       <itemPath>I2C_LCD.h</itemPath>
       <itemPath>Ele_load_Define.h</itemPath>
+      <itemPath>Coulomb.h</itemPath>
+      <itemPath>User.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -27,6 +29,10 @@
       <itemPath>I2C_Interrupt.c</itemPath>
       <itemPath>Ele_load_Interrupt.c</itemPath>
       <itemPath>Ele_load_Function.c</itemPath>
+      <itemPath>Coulomb_Function.c</itemPath>
+      <itemPath>Coulomb_Interrupt.c</itemPath>
+      <itemPath>User_data_Function.c</itemPath>
+      <itemPath>User_Interrupt.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

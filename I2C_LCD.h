@@ -48,5 +48,6 @@ void LCD_write_Char(unsigned char ROW, unsigned char COL , char* Str);
 void LCD_write_Variable(unsigned char ROW, unsigned char COL , unsigned int variable);
 void First_Write_to_LCD(void);
 void Other_Time_Write_to_LCD(void);
+void ShowG5DataOnLCD(unsigned int i); //i=1時更新整個畫面
 
 #endif

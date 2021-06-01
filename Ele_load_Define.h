@@ -143,7 +143,6 @@ typedef struct tagEle_load_Get_Data_struct {
             unsigned                        W_R:2;
 			unsigned						TIF:1;	
             unsigned                    	RIF :1;		//資料接收完成
-            unsigned                        SORT:1;     //1=資料接收完可以排列了
             unsigned                       	ERRIF:1;	//資料接收或傳送錯誤
 		};
 	};

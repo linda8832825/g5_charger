@@ -1,5 +1,5 @@
-build/default/production/Main.o:  \
-Main.c  \
+build/default/production/User_data_Function.o:  \
+User_data_Function.c  \
 Main_Define.h  \
 p24FJ128GA106.h  \
 Ele_load_Define.h  \

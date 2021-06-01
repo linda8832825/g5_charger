@@ -8,15 +8,15 @@
 
 #include "p24FJ128GA106.h"
 
-//#include "./Coulomb/Coulomb_define.h"
-//
-//#include "./I2C/I2C_define.h"
-
 #include "Ele_load_Define.h"
 
 #include "G5_define.h"
 
 #include "I2C_LCD.h"
+
+#include "Coulomb.h"
+
+#include "User.h"
 
 #include "stdio.h"
 
@@ -64,6 +64,7 @@ extern  unsigned char I2C_Buffer;
 #define My_ID                       0x01
 #define DriverIC_I2C_LCD_Addr       0x4E //LCD的ID
 #define Ele_load_ID                 0x01 //電子附載機的ID
+#define Coulomb_ID                  0x01 //庫倫計id
 
 #define BuzzMusicType               0x02   //蜂鳴器響的時候的音樂
 #define DISCHARGECURRENT            0x0064   //10A放電
@@ -124,29 +125,41 @@ extern  unsigned char I2C_Buffer;
 #define led_Toggle()            LED = ~LED;
   
 
-void Initial_Clock(void); 
 void Initial_IO(void);
+void Initial_Clock(void); 
+void Initial_Variable(void); //變數的初始化
 void Initial_Coulomb_UART(void);
+void Initial_Ele_load_UART(void);
 void Initial_G5_UART(void);
-void Timer1_initial(void);
-void Initial_UART2(void);
-void I2C_Initial(void);	
-void master_init(void);
-void G5_reset_work(void);
-void Read_ALL_G5_Data(void);
-void Write_G5_Data(unsigned int Regest,unsigned int Data);
-unsigned int CRC_Check(void);
+void Initial_Timer1(void);
+void Initial_I2C(void);	
+
+
+unsigned int CRC_Check(unsigned char* crc_address, unsigned char crc_length);
 unsigned int CRC_Make(unsigned char *Buffer , unsigned char Quantity);
 void delay(unsigned char i);
 void delayms(unsigned int i);
-void Initial_Ele_load_UART(void);
+unsigned char delayThirtySecond(void);
+
+
+void Read_ALL_G5_Data(void);
+void Write_G5_Data(unsigned int Regest,unsigned int Data);
+
+
+void Set_Ele_load(void);
 void ReadEleLoadState(void);
 void ReadAllEleLoadData(void);
 void WriteEleLoadState(unsigned char math_c, unsigned char math_d);
 void WriteEleLoadSetting(unsigned char math_c, unsigned char math_d, unsigned char math_e);
-unsigned int CRC_Check_Ele_load(void);
-void Set_Ele_load(void);
-unsigned char delayThirtySecond(void);
-void ShowG5DataOnLCD(unsigned int i); //i=1時更新整個畫面
+
+
+void Unlock_Coulomb(void);
+void Write_Coulomb_Data(unsigned int Regest,unsigned int Data);
+void Read_ALL_Coulomb_Data(void);
+unsigned int Prevention_Zero_Ah(void);
+
+
+void SortUserData(void);
+
 
 #endif
