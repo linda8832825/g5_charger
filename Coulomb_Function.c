@@ -8,23 +8,22 @@ unsigned int Prevention_Zero_Ah(void){
     //---------------------------------更改reset安時數---------------------------------//
     Coulomb_Data.Residual_Electricity = 0x0002;
     Unlock_Coulomb();
-    Write_Coulomb_Data(0x09,Coulomb_Data.Residual_Electricity);//0x0009  標準電池容量 0.0~6553.5AH 把當時的目前電容量寫到滿安時
+    do{ Write_Coulomb_Data(0x09,Coulomb_Data.Residual_Electricity); delay(2); }while(Coulomb_Receiver.TIF==0);//0x0009  標準電池容量 0.0~6553.5AH 
     //----------------------------------------------------------------------------------//
 
     //--------------------------------降低reset電壓------------------------------------//
     Coulomb_Data.x2=0x0190; //將reset電壓點設40.0v
-    Unlock_Coulomb();
-    Write_Coulomb_Data(0x0A,Coulomb_Data.x2);//將reset電壓改為40.0v
+    do{ Write_Coulomb_Data(0x0A,Coulomb_Data.x2); delay(2); }while(Coulomb_Receiver.TIF==0); //將reset電壓改為40.0v
+    
     //---------------------------------------------------------------------------------//
     
     //--------------------------------改回reset電壓------------------------------------//
     Coulomb_Data.x2=0x0000; //將reset電壓點設0.0v
-    Unlock_Coulomb();
-    Write_Coulomb_Data(0x0A,Coulomb_Data.x2);//將reset電壓改為40.0v
+    do{ Write_Coulomb_Data(0x0A,Coulomb_Data.x2); delay(2); }while(Coulomb_Receiver.TIF==0);//將reset電壓改為40.0v
     //---------------------------------------------------------------------------------//
                                             
-                                            
-    if(Coulomb_Data.Residual_Electricity==0x0002) return 1;
+    delay(5);                                    
+    if(Coulomb_Data.Residual_Electricity<=0x0002) return 1;
     else return 0;
 
 }
@@ -38,7 +37,7 @@ void Unlock_Coulomb(void)
     Coulomb_Sent.Reg_L = '=';
 
     Coulomb_Sent.Quantity_H= '0';
-    Coulomb_Sent.Quantity_L = '4';
+    Coulomb_Sent.Quantity_L = '6';
     Coulomb_Sent.CRC_L = '3';
     Coulomb_Sent.CRC_H = '0';
 

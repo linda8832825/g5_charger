@@ -103,7 +103,7 @@ int main (void)
                 delay(1);
                 Read_ALL_Coulomb_Data(); //跟庫倫計要資料
                 delay(1);
-                math_d=Prevention_Zero_Ah();
+                while(!Prevention_Zero_Ah());
                 
                 if((G5_Data.ID == My_ID) && (Coulomb_Data.ID == Coulomb_ID) && math_d){//有要到正確資料
                     POWER = StopCharge;
