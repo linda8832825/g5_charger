@@ -38,7 +38,13 @@ void Write_G5_Data(unsigned int Regest,unsigned int Data) //用寫入安時數
 		
 	
 		G5_Sent.RTIndex=1;
-		if(IEC5bits.U3TXIE == 0)IEC5bits.U3TXIE = 1;
+        if(!U3STAbits.UTXEN){
+            U3STAbits.UTXEN=1;
+        }
+        while(IFS5bits.U3TXIF){
+            IFS5bits.U3TXIF=0;
+            IEC5bits.U3TXIE=1;
+        }
 		U3TXREG=G5_Sent.ID;	
 		
 	

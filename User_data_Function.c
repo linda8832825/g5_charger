@@ -38,7 +38,13 @@ void SortUserData(void) {
     User_Data.Index+=2;
 
     User_Data.RTIndex=1;
-    if(IEC5bits.U4TXIE == 0)IEC5bits.U4TXIE = 1;
+    
+    if(!U4STAbits.UTXEN) U4STAbits.UTXEN=1;
+    
+    while(IFS5bits.U4TXIF){
+        IFS5bits.U4TXIF=0;
+        IEC5bits.U4TXIE=1;
+    }
     U4TXREG=User_Data.ID_G5;	
     
 }
