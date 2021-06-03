@@ -131,6 +131,7 @@ void Initial_Variable(void); //變數的初始化
 void Initial_Coulomb_UART(void);
 void Initial_Ele_load_UART(void);
 void Initial_G5_UART(void);
+void Initial_User_UART(void);
 void Initial_Timer1(void);
 void Initial_I2C(void);	
 

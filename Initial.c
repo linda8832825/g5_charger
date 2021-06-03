@@ -51,8 +51,8 @@ void Initial_Coulomb_UART(void)
 	
 	U1BRG = BR_9600;
 		
-	RPINR18bits.U1RXR = 30;
-	RPOR8bits.RP16R = 3;
+	RPINR18bits.U1RXR = 30; //把RPINR18的U1RXR的功能 指向RP30 //rx在RP30
+	RPOR8bits.RP16R = 3; //把RPOR8bits.RP16R的腳位 指向功能3 //TX在RP16
 	
 	IFS0bits.U1RXIF = 0;		// Clear Interrupt flag11
 	IFS0bits.U1TXIF = 0;		
@@ -84,7 +84,7 @@ void Initial_Ele_load_UART(void)
 	U2BRG = BR_9600;
 	
 	RPINR19bits.U2RXR = 10;//把RPINR19的U2RXR的功能 指向RP10 //rx在RP10
- 	RPOR8bits.RP17R = 5;	//把RPOR8bits.RP17R的腳位 指向功能28 //TX在RP17
+ 	RPOR8bits.RP17R = 5;	//把RPOR8bits.RP17R的腳位 指向功能5 //TX在RP17 
 
 	IFS1bits.U2RXIF = 0;		// Clear Interrupt flag11
 	IFS1bits.U2TXIF = 0;		
@@ -94,7 +94,7 @@ void Initial_Ele_load_UART(void)
 	IPC7bits.U2RXIP=5; //接收優先權
 	IPC7bits.U2TXIP=5; //送出優先權
 	U2STAbits.UTXEN=1; //允許TX
-	U2MODEbits.UARTEN=1;	
+	U2MODEbits.UARTEN=1;
     
 
 	
@@ -115,7 +115,6 @@ void Initial_G5_UART(void)
 	U3STAbits.URXISEL=1;	
 	U3BRG = BR_115200;
 	
-		//CON4原本
 	RPINR17bits.U3RXR = 7;//把RPINR17的U3RXR的功能 指向RP7
 	RPOR3bits.RP6R = 28;	//把RPOR3bits.RP7R的腳位 指向功能28 
 			
@@ -140,13 +139,11 @@ void Initial_G5_UART(void)
 
 void Initial_User_UART(void)
 {
-	
 	U4MODE=0x0008;//只使用UxTX跟UxRX腳位 UxRX腳位空閒電位為0	
 	U4STA=0x2440;//UxTX腳位空閒電位為1
 	U4STAbits.URXISEL=1;	
 	U4BRG = BR_9600;
-	
-		//CON4原本
+		
 	RPINR27bits.U4RXR = 2;  //把RPINR27的U4RXR的功能 指向RP2     //rx在pr2
 	RPOR2bits.RP4R = 30;	//把RPOR2bits.RP4R的腳位 指向功能30  //tx在pr4
 			
@@ -157,8 +154,8 @@ void Initial_User_UART(void)
 		
 	IPC22bits.U4RXIP=4;
 	IPC22bits.U4TXIP=4;
-	U4STAbits.UTXEN=1;
-	U4MODEbits.UARTEN=1;	
+	U4STAbits.UTXEN=1; //TX智能
+	U4MODEbits.UARTEN=1;	//UART智能
 
 //	T4CON=0;
 //	IEC1bits.T4IE=1;            //TIMER中斷允許位 1=允許

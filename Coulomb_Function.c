@@ -4,26 +4,33 @@ Coulomb_Sent_Data_struct_define Coulomb_Sent;
 Coulomb_Receiver_Data_define Coulomb_Receiver; 
 
 unsigned int Prevention_Zero_Ah(void){
+    Unlock_Coulomb();
+    //--------------------------------------------------------------------------------//
+    do{ Write_Coulomb_Data(0x07,0x0190); }while(!Coulomb_Receiver.TIF);//0x0009  標準電池容量 0.0~6553.5AH  將reset安時數設為0.2ah
+    Coulomb_Receiver.TIF=0;
+    //--------------------------------------------------------------------------------//
     
     //---------------------------------更改reset安時數---------------------------------//
-    Unlock_Coulomb();
-    do{ Write_Coulomb_Data(0x09,0x0002); }while(!Coulomb_Receiver.TIF);//0x0009  標準電池容量 0.0~6553.5AH  將reset安時數設為0.2ah
+    do{ Write_Coulomb_Data(0x09,0x01F4); }while(!Coulomb_Receiver.TIF);//0x0009  標準電池容量 0.0~6553.5AH  將reset安時數設為0.2ah
     Coulomb_Receiver.TIF=0;
-    //----------------------------------------------------------------------------------//
+    //---------------------------------------------------------------------------------//
 
     //--------------------------------降低reset電壓------------------------------------//
     do{ Write_Coulomb_Data(0x0A,0x0190); }while(!Coulomb_Receiver.TIF); //將reset電壓改為40.0v
     Coulomb_Receiver.TIF=0;
     //---------------------------------------------------------------------------------//
     delay(2);
-    //--------------------------------改回reset電壓------------------------------------//
-    do{ Write_Coulomb_Data(0x0A,0x02BC); }while(!Coulomb_Receiver.TIF); //將reset電壓改為0v
-    Coulomb_Receiver.TIF=0;
-    //---------------------------------------------------------------------------------//
+
             
     Coulomb_Receiver.RIF=0;
     do{ Read_ALL_Coulomb_Data(); } while(!Coulomb_Receiver.RIF); //跟G5要資料                                
-    if(Coulomb_Data.Residual_Electricity<=0x0002) return 1;
+    if((Coulomb_Data.Residual_Electricity<=0x01F4) && (Coulomb_Data.Residual_Electricity>0x01EF)) {
+           //--------------------------------改回reset電壓------------------------------------//
+            do{ Write_Coulomb_Data(0x0A,0x02BC); }while(!Coulomb_Receiver.TIF); //將reset電壓改為0v
+            Coulomb_Receiver.TIF=0;
+            //---------------------------------------------------------------------------------// 
+        return 1;
+    }
     else return 0;
 
 }

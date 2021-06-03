@@ -65,6 +65,7 @@ int main (void)
     Initial_Coulomb_UART();
     Initial_Ele_load_UART();
 	Initial_G5_UART();
+    Initial_User_UART();
     Initial_Timer1();
     Initial_I2C();
     LCD_Init(DriverIC_I2C_LCD_Addr);
@@ -213,7 +214,8 @@ int main (void)
                                 if((G5_Data.Current == 0x00) && (G5_Data.Voltage <= Discharge_Voltage)){//放電完成
                                     Ele_load_Data.DisChargeDone=YES;
 
-                                    do{Write_G5_Data(0x07,0x02); delay(3); Read_ALL_G5_Data(); delay(2); G5_Get.RIF=0; delay(1); }while(G5_Data.Residual_Electricity>0x0002);//寫0.2Ah進去 01 06 00 07 00 02 crc
+                                    do{ Write_G5_Data(0x07,0x02); delay(3); Read_ALL_G5_Data(); delay(2); G5_Get.RIF=0; delay(1); }while(G5_Data.Residual_Electricity>0x0002);//寫0.2Ah進去 01 06 00 07 00 02 crc
+                                    do{ Write_Coulomb_Data(0x07,0x0002); delay(1); Read_ALL_Coulomb_Data(); delay(1); }while(!Coulomb_Receiver.TIF);//0x0007  標準電池容量 0.0~6553.5AH  將目前安時數設為0.2ah
                                     
                                     if(G5_Data.Residual_Electricity <= 0x0002){//確認是否為0.1或0.2Ah
                                         IC_Data.WriteZeroAh = YES; //寫入0.2安時數成功
