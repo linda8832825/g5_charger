@@ -80,6 +80,14 @@ int main (void)
     LCD_write_Char(2, 1 , " iNer");
     LCD_write_Char(3, 1 , " iNer");
     LCD_write_Char(4, 1 , " iNer");
+    
+    do{
+        Read_ALL_Coulomb_Data(); //跟庫倫計要資料
+        delay(1);
+    }while(Prevention_Zero_Ah()!=1);
+    
+    LCD_Init(DriverIC_I2C_LCD_Addr);
+    LCD_write_Char(1, 1 , "Coulomb set complete");
  
 	while(1)
 	{
@@ -89,7 +97,7 @@ int main (void)
                 Initial_Variable(); //變數初始化
                 IC_Data.DoIamStarted = YES; //按鈕被按下過
                 BUZZ = BUZZ_ON;
-                delay(1);
+                delay(2);
                 BUZZ = BUZZ_OFF;
             }
         }
@@ -103,44 +111,44 @@ int main (void)
                 delay(1);
                 Read_ALL_Coulomb_Data(); //跟庫倫計要資料
                 delay(1);
-                while(!Prevention_Zero_Ah());
+//                while(Prevention_Zero_Ah()==1){
                 
-                if((G5_Data.ID == My_ID) && (Coulomb_Data.ID == Coulomb_ID) && math_d){//有要到正確資料
-                    POWER = StopCharge;
-                    do{Write_G5_Data(0x05,0x01F4); delay(3); Read_ALL_G5_Data(); G5_Get.RIF=0; delay(2);}while(G5_Data.Nominal_Battery_Capacity!=0x01F4); //將滿安時數改成50ah
-                    do{Write_G5_Data(0x06,0x0190); delay(3); Read_ALL_G5_Data(); G5_Get.RIF=0; delay(2);}while(G5_Data.x2!=0x0190);//將g5reset電壓點降成40v    //此時目前安時數會為52.5ah
-                    do{Write_G5_Data(0x06,0x0253); delay(3); Read_ALL_G5_Data(); G5_Get.RIF=0; delay(2);}while(G5_Data.x2!=0x0253);//將g5reset電壓點改回59.5v  //此時目前安時數會為52.5ah
-                    IC_Data.GetTheWhatYouWant = YES;
-                    IC_Data.time.Regual_Read_G5=0; //之後可以常態的與G5通訊
-                    math_a=0;
-                }
-                else{// 沒有要到正確資料 就充電三十秒
-                    if(delayThirtySecond()==0){
-                        POWER = Charge;
-                        LCD_Clear();
-                        delay(1);
-                        LCD_write_Char(1, 1 , "Charging");
-                    }
-                    else{
+                    if((G5_Data.ID == My_ID) && (Coulomb_Data.ID == Coulomb_ID)){//有要到正確資料
                         POWER = StopCharge;
-                        math_a++;
-                        LCD_Clear();
-                        delay(1);
-                        if(math_a>3){//充電4次都沒辦法讓g5傳資料出來就宣告失敗
-                            POWER = StopCharge;
-                            IC_Data.GetTheWhatYouWant= NO; 
-                            IC_Data.DoIamStarted = NO; //等待啟動鈕再被按下
-                            BUZZ = BUZZ_ON;
-                            BatteryError = Turn_ON; //battery燈亮 代表g5沒電了
-                            WriteError = Turn_OFF;
+                        do{Write_G5_Data(0x05,0x01F4); delay(3); Read_ALL_G5_Data(); G5_Get.RIF=0; delay(2);}while(G5_Data.Nominal_Battery_Capacity!=0x01F4); //將滿安時數改成50ah
+                        do{Write_G5_Data(0x06,0x0190); delay(3); Read_ALL_G5_Data(); G5_Get.RIF=0; delay(2);}while(G5_Data.x2!=0x0190);//將g5reset電壓點降成40v    //此時目前安時數會為52.5ah
+                        do{Write_G5_Data(0x06,0x0253); delay(3); Read_ALL_G5_Data(); G5_Get.RIF=0; delay(2);}while(G5_Data.x2!=0x0253);//將g5reset電壓點改回59.5v  //此時目前安時數會為52.5ah
+                        IC_Data.GetTheWhatYouWant = YES;
+                        IC_Data.time.Regual_Read_G5=0; //之後可以常態的與G5通訊
+                        math_a=0;
+                    }
+                    else{// 沒有要到正確資料 就充電三十秒
+                        if(delayThirtySecond()==0){
+                            POWER = Charge;
                             LCD_Clear();
                             delay(1);
-                            LCD_write_Char(1, 1 , "Connection To G5 error occurred");
-                            math_a = 0;
+                            LCD_write_Char(1, 1 , "Charging");
+                        }
+                        else{
+                            POWER = StopCharge;
+                            math_a++;
+                            LCD_Clear();
+                            delay(1);
+                            if(math_a>3){//充電4次都沒辦法讓g5傳資料出來就宣告失敗
+                                POWER = StopCharge;
+                                IC_Data.GetTheWhatYouWant= NO; 
+                                IC_Data.DoIamStarted = NO; //等待啟動鈕再被按下
+                                BUZZ = BUZZ_ON;
+                                BatteryError = Turn_ON; //battery燈亮 代表g5沒電了
+                                WriteError = Turn_OFF;
+                                LCD_Clear();
+                                delay(1);
+                                LCD_write_Char(1, 1 , "Connection To G5 error occurred");
+                                math_a = 0;
+                            }
                         }
                     }
-                }
-                
+//                }
             }
         }
         //----------------------------------------------------------------------------//
