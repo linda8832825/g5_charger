@@ -164,7 +164,6 @@ typedef struct tagCoulomb_Data_struct {
 		unsigned  			 	IF1 :1;		//資料傳送完成
 		unsigned  			 	IF2 :1;		//資料接收完成
 		unsigned  			 	IF3 :1;	  //資料接收或傳送錯誤	
-//		unsigned int 			Read_Timer;	
 		
 	};		
 	

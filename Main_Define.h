@@ -2,8 +2,10 @@
 #define MAIN_define_H
 
 
-//T1CON 目前用在 計時用
-//T2CON 目前用在 庫倫計的接收資料計時器
+//T4CON 目前用在 計時用
+//T1CON 目前用在 庫倫計的接收資料整理
+//T2CON 用在電子附載機的資料整理
+//T3CON G5的接收資料整理
 
 
 #include "p24FJ128GA106.h"
@@ -30,8 +32,6 @@ typedef struct tedIC_Data_Struct{
     unsigned    DoIamStarted       : 1; //有無被按下啟動鈕
     unsigned    GetTheWhatYouWant  : 1; //有無拿到正確資料
     unsigned    WriteZeroAh        : 1; //有時寫入0.1安時數成功
-//    unsigned    WriteWholeAh       : 1; //有無寫入滿安時數成功   //不知道為啥不能放在這邊 所以改成在main的最外面放
-//    unsigned    FirstWriteLCD      : 1;
 }IC_Data_Define;
 extern IC_Data_Define IC_Data;
 
@@ -88,13 +88,6 @@ extern  unsigned char I2C_Buffer;
 
 #define BUZZ_ON 			1  // 1
 #define BUZZ_OFF 			0  // 0
-
-
-#define Flick_Fast 			2000  //越小越快
-#define Flick_Middle 		5000
-#define Flick_Slow 			8000
-#define Brightness_Hz 		100
-#define Flick_Freq 			Flick_Slow 
 
 
 #define WriteError              LATEbits.LATE2  //黃 寫值進G5四次都失敗

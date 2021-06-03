@@ -61,8 +61,8 @@ void Initial_Coulomb_UART(void)
 		
 	IPC2bits.U1RXIP=6; //接收優先權
 	IPC3bits.U1TXIP=6; //送出優先權
-	U1MODEbits.UARTEN=1; //允許tx
-	U1STAbits.UTXEN=1;
+	U1MODEbits.UARTEN=1;  //uart智能
+	U1STAbits.UTXEN=1; //允許tx
 	
 
 
@@ -94,7 +94,7 @@ void Initial_Ele_load_UART(void)
 	IPC7bits.U2RXIP=5; //接收優先權
 	IPC7bits.U2TXIP=5; //送出優先權
 	U2STAbits.UTXEN=1; //允許TX
-	U2MODEbits.UARTEN=1;
+	U2MODEbits.UARTEN=1; //uart智能
     
 
 	
@@ -125,8 +125,8 @@ void Initial_G5_UART(void)
 		
 	IPC20bits.U3RXIP=7;
 	IPC20bits.U3TXIP=7;
-	U3STAbits.UTXEN=1;
-	U3MODEbits.UARTEN=1;	
+	U3STAbits.UTXEN=1; //允許tx
+	U3MODEbits.UARTEN=1; //uart智能
 
 	T3CON=0;
 	IEC0bits.T3IE=1;            //TIMER中斷允許位 1=允許
@@ -156,14 +156,6 @@ void Initial_User_UART(void)
 	IPC22bits.U4TXIP=4;
 	U4STAbits.UTXEN=1; //TX智能
 	U4MODEbits.UARTEN=1;	//UART智能
-
-//	T4CON=0;
-//	IEC1bits.T4IE=1;            //TIMER中斷允許位 1=允許
-//	IFS1bits.T4IF=0;            //TIMER中斷標誌狀態位 0=未受到中斷
-//	T4CONbits.TCKPS=1;
-//	T4CONbits.TCS=0;            //內部clock (FOSC/2
-////	PR4=15000;                   //1秒去一次 _T3Interrupt
-//    T4CONbits.TON=1;// 啟動timer4
 }
 
 

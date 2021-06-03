@@ -9,9 +9,9 @@ typedef struct tagG5_Data_struct {
 	{					
 		struct                              //0x01 H:Voltage states L:Current states 0x03=正  0x13=負
 		{	
-			unsigned Current_Point	:4;		//電壓後小數點 註解是對的 英文才是錯的名子
+			unsigned Current_Point	:4;		//電流後小數點
 			unsigned Current_statue	:4;		//
-			unsigned Voltage_Point	:4;		//電流後小數點(大概)
+			unsigned Voltage_Point	:4;		//電壓後小數點
 			unsigned Voltage_statue	:4;		//		
 		};		
 	};
@@ -35,8 +35,7 @@ typedef struct tagG5_Data_struct {
 	{
 		unsigned  			 	IF1 :1;             //資料傳送完成
 		unsigned  			 	IF2 :1;             //資料接收完成
-		unsigned  			 	IF3 :1;             //資料接收或傳送錯誤	
-//		unsigned int 			Read_Timer;	
+		unsigned  			 	IF3 :1;             //資料接收或傳送錯誤
 	};		
 	
 }G5_Data_struct_define;

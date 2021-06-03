@@ -63,7 +63,6 @@ void __attribute__((interrupt, no_auto_psv)) _T2Interrupt(void) //讀完電子附載機
                         Ele_load_Get.ERRIF=1;
                     }
                     else{
-//                        Ele_load_Data.GoTo_Write_Ele_load=NO; //不需要再次寫入電子附載機
                         Ele_load_Data.WriteIF=1;//寫入電子附載機成功
                         Ele_load_Get.ERRIF=0;
                         Ele_load_Get.RTIndex=0;
@@ -97,11 +96,7 @@ void __attribute__((interrupt, no_auto_psv)) _U2RXInterrupt(void)
 		static unsigned char Fuction;
         if(Ele_load_Get.RIF==0)
 		{
-			TMR2=0;		
-//			if(!T2CONbits.TON) //u2有接收到東西時才會讓timer3啟動
-//			{
-//				T2CONbits.TON=1;
-//			}
+			TMR2=0;	
 			if(Ele_load_Get.RTIndex==0)
 			{
 				index=&Ele_load_Get.ID;
@@ -121,7 +116,6 @@ void __attribute__((interrupt, no_auto_psv)) _U2RXInterrupt(void)
 				}	
 				else
 				{
-//					T2CONbits.TON=0;
 					math_a=U2RXREG;
 					Ele_load_Get.RTIndex=0;	
 				}

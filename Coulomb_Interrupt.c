@@ -3,7 +3,6 @@
 void __attribute__((interrupt, no_auto_psv)) _T4Interrupt(void)
 {	
 	unsigned char math_a,math_c,math_d;
-	unsigned int 	math_b;
 	unsigned int 	*index1;
 	unsigned char *index2,Quantity,*index3;
 	
@@ -15,14 +14,12 @@ void __attribute__((interrupt, no_auto_psv)) _T4Interrupt(void)
 	
 	Erro_IF=0;
 	
-//	IC_Data.Coulomb_No_Reback = Coulomb_No_Reback_Time;//庫倫計延時計時器的計時復歸
 	if(Coulomb_Receiver.RTIndex>0)
 	{
 		if(Coulomb_Sent.W_R == Read)
 		{
 			if(CRC_Check(&Coulomb_Receiver.ID, Coulomb_Receiver.RTIndex))
 			{
-//				IC_Data.Coulomb_No_Reback=0;	//確定資料正確後關閉庫倫計延時計時器
 				Coulomb_Receiver.ERR_Count=0;
 				Coulomb_Receiver.Value_L=Coulomb_Sent.Reg_L;
 				Coulomb_Receiver.Value_H=Coulomb_Sent.Reg_H;
@@ -93,7 +90,6 @@ void __attribute__((interrupt, no_auto_psv)) _T4Interrupt(void)
 void __attribute__((interrupt, no_auto_psv)) _U1RXInterrupt(void)
 {		unsigned int math_a;
 		static unsigned char *index;
-		static unsigned char Data_Statue;   //1=Master_Command  2=Slaver_return;	
 		
 		TMR4=0;		
 		if(!T4CONbits.TON)
@@ -130,7 +126,6 @@ void __attribute__((interrupt, no_auto_psv)) _U1RXInterrupt(void)
 void __attribute__((interrupt, no_auto_psv)) _U1TXInterrupt(void)
 {
 	static unsigned char *index;
-	unsigned int math_a;
 	
 	if(Coulomb_Sent.RTIndex<Coulomb_Sent.Index)
 	{
