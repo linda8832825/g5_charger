@@ -11,6 +11,7 @@ unsigned int    math_c=5; //100秒整個LCD頁面更新
 void ShowG5DataOnLCD(unsigned int i){
     delay(1);
     if(math_c>=4 || i==1) { //120秒要更新整個LCD
+        led_Toggle();
         First_Write_to_LCD();
         math_c=0;
     }

@@ -16,20 +16,30 @@ void Initial_Clock(void)
 
 void Initial_IO(void)
 {
-    TRISE_WriteError        = Output;
-    TRISE_BatteryError      = Output;
-    TRISE_POWER             = Output;
-	TRISE_BUZZ 				= Output;
-	TRISE_LED           	= Output; 		
-	TRISE_SW                = Input; 
+    TRIS_WriteError        = Output;
+    TRIS_BatteryError      = Output;
+    TRIS_POWER             = Output;
+	TRIS_BUZZ              = Output;
+	TRIS_LED               = Output; 		
+	TRIS_SW                = Input; 
 	AD1PCFGL=0xFFFF; //1=數位輸入
 	AD1PCFGH=0xFFFF;	
 
 	BUZZ = BUZZ_ON;
     POWER = StopCharge;
 	
-	TRISE_U1RX = Input; 
-	TRISE_U1TX = Output;	
+	TRIS_U1RX = Input; 
+	TRIS_U1TX = Output;	
+    
+    TRIS_U2RX = Input;
+    TRIS_U2TX = Output;
+    
+    TRIS_U3RX = Input;
+    TRIS_U3TX = Output;
+    
+    TRIS_U4RX = Input;
+    TRIS_U4TX = Output;
+    
 }
 
 void Initial_Timer1(void)
@@ -115,8 +125,8 @@ void Initial_G5_UART(void)
 	U3STAbits.URXISEL=1;	
 	U3BRG = BR_115200;
 	
-	RPINR17bits.U3RXR = 7;//把RPINR17的U3RXR的功能 指向RP7
-	RPOR3bits.RP6R = 28;	//把RPOR3bits.RP7R的腳位 指向功能28 
+	RPINR17bits.U3RXR = 7;//把RPINR17的U3RXR的功能 指向RP7 //rx在RP7
+	RPOR3bits.RP6R = 28;	//把RPOR3bits.RP7R的腳位 指向功能28  //TX在RP6
 			
 	IFS5bits.U3RXIF = 0;		// Clear Interrupt flag11
 	IFS5bits.U3TXIF = 0;		

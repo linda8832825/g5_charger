@@ -32,6 +32,7 @@ typedef struct tedIC_Data_Struct{
     unsigned    DoIamStarted       : 1; //有無被按下啟動鈕
     unsigned    GetTheWhatYouWant  : 1; //有無拿到正確資料
     unsigned    WriteZeroAh        : 1; //有時寫入0.1安時數成功
+    
 }IC_Data_Define;
 extern IC_Data_Define IC_Data;
 
@@ -93,21 +94,30 @@ extern  unsigned char I2C_Buffer;
 #define WriteError              LATEbits.LATE2  //黃 寫值進G5四次都失敗
 #define BatteryError            LATEbits.LATE3  //紅 g5充電4次也救不起來的錯誤
 #define POWER                   LATEbits.LATE4  //充電器的開與關
-#define LED         			LATEbits.LATE5  //藍 狀態led，每次讀G5資料對反轉狀態
+#define LED         			LATEbits.LATE5  //綠 狀態led，每次讀G5資料對反轉狀態
 #define SW       				PORTEbits.RE6   //啟動鈕
 #define BUZZ     				LATEbits.LATE7  //開機叫一聲
 
 
-#define TRISE_WriteError        TRISEbits.TRISE2
-#define TRISE_BatteryError      TRISEbits.TRISE3 
-#define TRISE_POWER             TRISEbits.TRISE4 
-#define TRISE_LED               TRISEbits.TRISE5 //1為輸入 0為輸出
-#define TRISE_SW      			TRISEbits.TRISE6	
-#define TRISE_BUZZ              TRISEbits.TRISE7
+#define TRIS_WriteError        TRISEbits.TRISE2
+#define TRIS_BatteryError      TRISEbits.TRISE3 
+#define TRIS_POWER             TRISEbits.TRISE4 
+#define TRIS_LED               TRISEbits.TRISE5 //1為輸入 0為輸出
+#define TRIS_SW      			TRISEbits.TRISE6	
+#define TRIS_BUZZ              TRISEbits.TRISE7
 
 
-#define TRISE_U1RX		 		TRISFbits.TRISF2
-#define TRISE_U1TX		 		TRISFbits.TRISF3
+#define TRIS_U1RX		 		TRISFbits.TRISF2
+#define TRIS_U1TX		 		TRISFbits.TRISF3
+
+#define TRIS_U2RX		 		TRISFbits.TRISF4
+#define TRIS_U2TX		 		TRISFbits.TRISF5
+
+#define TRIS_U3RX		 		TRISBbits.TRISB6
+#define TRIS_U3TX		 		TRISBbits.TRISB7
+
+#define TRIS_U4RX		 		TRISDbits.TRISD8
+#define TRIS_U4TX		 		TRISDbits.TRISD9
 
 #define TRISx_SCL		 		TRISGbits.TRISG2
 #define TRISx_SDA		 		TRISGbits.TRISG3

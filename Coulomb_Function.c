@@ -29,7 +29,7 @@ unsigned int Prevention_Zero_Ah(void){
     if((Coulomb_Data.Residual_Electricity<=0x01F4) && (Coulomb_Data.Residual_Electricity>0x01EF)) {
         
        //--------------------------------改回reset電壓------------------------------------//
-        do{ Write_Coulomb_Data(0x0A,0x02BC); }while(!Coulomb_Receiver.TIF); //將reset電壓改為0v
+        do{ Write_Coulomb_Data(0x0A,0x02BC); }while(!Coulomb_Receiver.TIF); //將reset電壓改為70v
         Coulomb_Receiver.TIF=0;
         //---------------------------------------------------------------------------------// 
             

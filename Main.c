@@ -77,11 +77,14 @@ int main (void)
     BUZZ = BUZZ_OFF;
     LED = Turn_OFF;
     delay(3);
-	LCD_write_Char(1, 1 , " iNer");
-    LCD_write_Char(2, 1 , " iNer");
-    LCD_write_Char(3, 1 , " iNer");
-    LCD_write_Char(4, 1 , " iNer");
-    
+	LCD_write_Char(1, 1 , " iNNer");
+    LCD_write_Char(2, 1 , " iNNer");
+    LCD_write_Char(3, 1 , " iNNer");
+    LCD_write_Char(4, 1 , " iNNer");
+    LED = Turn_OFF;
+    WriteError = Turn_OFF;
+    BatteryError = Turn_OFF;
+            
     do{
         Read_ALL_Coulomb_Data(); //跟庫倫計要資料
         delay(1);
@@ -207,7 +210,7 @@ int main (void)
                             if(Ele_load_Data.DisChargeDone==YES){
 
                                 do{Write_G5_Data(0x06,0x0190); delay(3); Read_ALL_G5_Data(); delay(2); G5_Get.RIF=0; delay(1);}while(G5_Data.x2!=0x0190);//將g5reset電壓點降成40v    //此時目前安時數會為52.5ah
-                                do{Write_G5_Data(0x06,0x0253); delay(3); Read_ALL_G5_Data(); delay(2); G5_Get.RIF=0; delay(1);}while(G5_Data.x2!=0x0253);//將g5reset電壓點改回59.5v  //此時目前安時數會為52.5ah
+                                do{Write_G5_Data(0x06,0x02BC); delay(3); Read_ALL_G5_Data(); delay(2); G5_Get.RIF=0; delay(1);}while(G5_Data.x2!=0x02BC);//將g5reset電壓點改回70v  //此時目前安時數會為52.5ah
                                 
                                 if((G5_Data.Current == 0x00) && (G5_Data.Voltage <= Discharge_Voltage)){//放電完成
                                     Ele_load_Data.DisChargeDone=YES;
@@ -231,7 +234,7 @@ int main (void)
                                     else{//沒有的話再寫一次
                                         math_b++;
                                     }
-                                    if(math_b>=5){//寫入0.1安時失敗
+                                    if(math_b>=5){//寫入0.2安時失敗
                                         WriteError = Turn_ON;
                                         BUZZ = BUZZ_ON;
                                         delay(3);
@@ -252,7 +255,7 @@ int main (void)
             //-----------------------------------------------------------------//
 
             //-----------------------------充電--------------------------------//
-            if(IC_Data.WriteZeroAh == YES){//寫好0.1安時後開始充電
+            if(IC_Data.WriteZeroAh == YES){//寫好0.2安時後開始充電
                     POWER = Charge;
 //                    ShowG5DataOnLCD(1);
                     if((G5_Data.Current <= Charge_Stop_Current) && (G5_Data.Voltage>Discharge_Voltage)){//充電完畢
@@ -260,6 +263,8 @@ int main (void)
                         POWER = StopCharge;
                         
                         do{Write_G5_Data(0x09 , Coulomb_Data.Residual_Electricity); delay(3); Read_ALL_G5_Data(); G5_Get.RIF=0; delay(2); }while(G5_Data.Now_Total_Capacity != Coulomb_Data.Residual_Electricity);//跟G5說將現在的安時數寫到滿安時數 01 06 00 09 00 01 crc
+                        do{Write_G5_Data(0x06,0x0190); delay(3); Read_ALL_G5_Data(); delay(2); G5_Get.RIF=0; delay(1);}while(G5_Data.Residual_Electricity!=Coulomb_Data.Residual_Electricity);//將g5reset電壓點改為40v //會將目前安時數改為滿安時數
+                        do{Write_G5_Data(0x06,0x0253); delay(3); Read_ALL_G5_Data(); delay(2); G5_Get.RIF=0; delay(1);}while(G5_Data.x2!=0x0253);//將g5reset電壓點改為59.5v
                         
                         if(G5_Data.Now_Total_Capacity == G5_Data.Residual_Electricity){//確認是否將現在的安時數寫到滿安時數
                             WriteWholeAh = YES; //寫入滿安時數成功
